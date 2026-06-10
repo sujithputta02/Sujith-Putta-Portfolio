@@ -12,7 +12,7 @@
 
 A premium, interactive developer portfolio built with Next.js 16, TypeScript, and Framer Motion — featuring smooth scroll animations, 3D card interactions, a RAG pipeline visualizer, and a fully functional contact system.
 
-[Live Site](https://sujithputta.dev) · [LinkedIn](https://linkedin.com/in/sujithputta02) · [GitHub](https://github.com/sujithputta02)
+[Live Site](https://sujith-putta-portfolio.vercel.app) · [LinkedIn](https://linkedin.com/in/sujithputta02) · [GitHub](https://github.com/sujithputta02/Sujith-Putta-Portfolio)
 
 </div>
 

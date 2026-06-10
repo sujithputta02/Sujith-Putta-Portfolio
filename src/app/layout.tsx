@@ -13,7 +13,7 @@ const jetbrainsMono = JetBrains_Mono({
   subsets: ["latin"],
 });
 
-const BASE_URL = "https://sujithputta.dev";
+const BASE_URL = "https://sujith-putta-portfolio.vercel.app";
 
 export const metadata: Metadata = {
   metadataBase: new URL(BASE_URL),
