@@ -213,6 +213,18 @@ export const profileData: ProfileData = {
       dataOrchestration: "Structured target encoding and clustering pipelines to map pricing patterns. Orchestrated an ensemble of 5 gradient boosting models optimized via distinct loss criteria (MAE, Huber, RMSE).",
       performanceVector: "Achieved a competitive leaderboard SMAPE score of 56.2% on the full competition test set, utilizing 3-fold stratified cross-validation bins based on price quantiles.",
       githubLink: "https://github.com/sujithputta02/Team-Dataminers"
+    },
+    {
+      title: "CyberConstituent-SLM",
+      metadata: "Constitutional AI-Aligned Cybersecurity Threat Classifier",
+      status: "89% Val Accuracy",
+      techStack: ["DistilBERT", "PyTorch", "Transformers", "Streamlit", "Hugging Face", "Python", "Google Colab", "FP16 Mixed-Precision"],
+      engineeredCore: "Fine-tuned a DistilBERT Small Language Model (SLM) on a Google Colab T4 GPU to classify cybersecurity logs into 6 threat vectors under an Anthropic-inspired Constitutional AI alignment layer.",
+      securityMatrix: "Aligned under Constitutional AI guidelines to filter out actionable exploit syntax (malicious scripts, SQL injections) and sanitize logs of unverified geopolitical attribution bias.",
+      dataOrchestration: "Built a tokenization and classification data pipeline routing raw threat descriptions, predicting threat categories, and generating confidence metrics.",
+      performanceVector: "Achieved 89% validation accuracy with a compact 67M parameter architecture optimized for low-latency inference and resource-constrained environment deployments.",
+      liveLink: "https://huggingface.co/sujithputta02/cyber-threat-constitutional-slm",
+      githubLink: "https://github.com/sujithputta02/cyber-constituent-slm"
     }
   ],
   timeline: [

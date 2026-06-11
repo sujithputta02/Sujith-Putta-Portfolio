@@ -36,7 +36,7 @@ const dotVariants: Variants = {
   visible: { 
     scale: 1, 
     backgroundColor: "#C7FF3D",
-    borderColor: "transparent",
+    borderColor: "rgba(17, 17, 17, 0)",
     transition: {
       type: "spring",
       stiffness: 140,

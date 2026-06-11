@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { Mail, Phone, Send, Loader2, Check } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 
 const Github = (props: React.SVGProps<SVGSVGElement>) => (
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={props.className}>
@@ -87,7 +88,13 @@ export default function ContactFooter() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start pb-20 border-b border-white/10">
           
           {/* Info Side (col-span-5) */}
-          <div className="lg:col-span-5 text-left">
+          <motion.div 
+            initial={{ opacity: 0, x: -30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ type: "spring", stiffness: 80, damping: 18 }}
+            className="lg:col-span-5 text-left"
+          >
             <span className="font-mono text-xs text-[#C7FF3D] tracking-widest uppercase">
               09 // CONVERSION CORE
             </span>
@@ -148,21 +155,34 @@ export default function ContactFooter() {
                 <Github className="w-5 h-5" />
               </a>
             </div>
-          </div>
+          </motion.div>
 
           {/* Form Side (col-span-7) */}
-          <div className="lg:col-span-7 bg-[#1C1C1A] border border-white/10 rounded-3xl p-6 md:p-8 shadow-2xl relative text-left">
-            {isSent && (
-              <div className="absolute inset-0 bg-[#111111]/95 z-20 flex flex-col items-center justify-center rounded-3xl text-center p-6 animate-in fade-in duration-300">
-                <div className="p-4 bg-[#C7FF3D] rounded-full text-[#111111] mb-4">
-                  <Check className="w-8 h-8" />
-                </div>
-                <h3 className="text-xl font-display font-medium text-white">Client Dispatched</h3>
-                <p className="text-sm text-[#A3A3A3] mt-2 max-w-sm">
-                  Form payload validated. Redirecting to your local {dispatchMethod === "email" ? "Email" : "SMS"} client to complete sending.
-                </p>
-              </div>
-            )}
+          <motion.div 
+            initial={{ opacity: 0, x: 30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ type: "spring", stiffness: 80, damping: 18 }}
+            className="lg:col-span-7 bg-[#1C1C1A] border border-white/10 rounded-3xl p-6 md:p-8 shadow-2xl relative text-left"
+          >
+            <AnimatePresence>
+              {isSent && (
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.95 }}
+                  className="absolute inset-0 bg-[#111111]/95 z-20 flex flex-col items-center justify-center rounded-3xl text-center p-6"
+                >
+                  <div className="p-4 bg-[#C7FF3D] rounded-full text-[#111111] mb-4">
+                    <Check className="w-8 h-8" />
+                  </div>
+                  <h3 className="text-xl font-display font-medium text-white">Client Dispatched</h3>
+                  <p className="text-sm text-[#A3A3A3] mt-2 max-w-sm">
+                    Form payload validated. Redirecting to your local {dispatchMethod === "email" ? "Email" : "SMS"} client to complete sending.
+                  </p>
+                </motion.div>
+              )}
+            </AnimatePresence>
 
             <span className="font-mono text-[9px] text-[#C7FF3D] tracking-widest uppercase block mb-6">
               // TELEMETRY GATEWAY FORM
@@ -272,7 +292,7 @@ export default function ContactFooter() {
                 </button>
               </div>
             </form>
-          </div>
+          </motion.div>
         </div>
 
         {/* Footer Row */}

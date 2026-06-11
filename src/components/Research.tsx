@@ -1,15 +1,22 @@
 "use client";
 
 import React from "react";
-import { BookOpen, Calendar, HelpCircle, User } from "lucide-react";
+import { BookOpen, Calendar, User } from "lucide-react";
+import { motion } from "framer-motion";
 
 export default function Research() {
   return (
-    <section className="py-24 bg-white border-b border-[#111111]/8 scroll-mt-20">
+    <section className="py-24 bg-white border-b border-[#111111]/8 scroll-mt-20 overflow-hidden">
       <div className="max-w-4xl mx-auto px-4 md:px-8">
         
         {/* Section Header */}
-        <div className="mb-12 text-center">
+        <motion.div
+          initial={{ opacity: 0, y: -20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+          className="mb-12 text-center"
+        >
           <span className="font-mono text-xs text-[#555555] tracking-widest uppercase">
             06 // ACADEMIC RESEARCH & PAPERS
           </span>
@@ -19,10 +26,16 @@ export default function Research() {
           <p className="text-[#555555] font-sans text-sm mt-3 max-w-xl mx-auto">
             Reviewing deterministic answers in air-gapped, zero-network environments.
           </p>
-        </div>
+        </motion.div>
 
         {/* LaTeX Styled Document Block */}
-        <div className="latex-block bg-[#FAF9F6] border border-[#111111]/8 p-8 md:p-12 rounded-3xl shadow-sm relative text-left">
+        <motion.div
+          initial={{ opacity: 0, y: 40, scale: 0.98 }}
+          whileInView={{ opacity: 1, y: 0, scale: 1 }}
+          viewport={{ once: true, margin: "-10%" }}
+          transition={{ type: "spring", stiffness: 60, damping: 15 }}
+          className="latex-block bg-[#FAF9F6] border border-[#111111]/8 p-8 md:p-12 rounded-3xl shadow-sm relative text-left"
+        >
           
           {/* Header Metadata */}
           <div className="flex flex-wrap items-center gap-6 border-b border-[#111111]/8 pb-6 mb-8 text-xs font-mono text-[#555555]">
@@ -77,7 +90,7 @@ export default function Research() {
             </div>
           </div>
 
-        </div>
+        </motion.div>
 
       </div>
     </section>

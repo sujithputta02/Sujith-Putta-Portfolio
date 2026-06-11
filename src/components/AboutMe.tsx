@@ -1,127 +1,247 @@
 "use client";
 
-import React, { useRef } from "react";
-import { Sparkles, HeartHandshake, Cpu } from "lucide-react";
+import React, { useState } from "react";
+import { motion, Variants } from "framer-motion";
+import { Sparkles, HeartHandshake, Cpu, Award, GraduationCap } from "lucide-react";
 
-interface PhilosophyCardProps {
-  title: string;
-  icon: React.ReactNode;
-  subtitle: string;
-  description: string;
-  isDark?: boolean;
-}
+export default function AboutMe() {
+  const [isFlipped, setIsFlipped] = useState(false);
+  const [activeSkillBadge, setActiveSkillBadge] = useState<string>("Click a bar to view achievements");
 
-function PhilosophyCard({ title, icon, subtitle, description, isDark = false }: PhilosophyCardProps) {
-  const cardRef = useRef<HTMLDivElement>(null);
+  const skillGauges = [
+    { 
+      label: "AI & Agent RAG", 
+      percent: 95, 
+      color: "bg-[#C7FF3D]", 
+      badge: "Kaggle 5-Day Agents badge, FAISS vector indexes, Neo4j graphs" 
+    },
+    { 
+      label: "Full Stack APIs", 
+      percent: 90, 
+      color: "bg-[#3b82f6]", 
+      badge: "FastAPI REST microservices, Node.js controllers, React/TypeScript client views" 
+    },
+    { 
+      label: "Security Alignment", 
+      percent: 88, 
+      color: "bg-rose-500", 
+      badge: "Constitutional AI Log validation, OWASP top 10 controls, JWT sessions" 
+    },
+    { 
+      label: "DevOps & Cloud", 
+      percent: 85, 
+      color: "bg-purple-500", 
+      badge: "AWS Academics foundation, Google Cloud CI/CD badge, Docker containment" 
+    }
+  ];
 
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!cardRef.current) return;
-    const rect = cardRef.current.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-    cardRef.current.style.setProperty("--mouse-x", `${x}px`);
-    cardRef.current.style.setProperty("--mouse-y", `${y}px`);
+  const stats = [
+    { value: "3+ Years", label: "Active Code", desc: "FastAPI/React builds" },
+    { value: "5+ Hacks", label: "Rapid Prototypes", desc: "Space Apps & Hackathons" },
+    { value: "25+ Repos", label: "GitHub Repos", desc: "Public code bases" },
+    { value: "9 Badges", label: "Credentials", desc: "AWS, GCP & Kaggle certs" }
+  ];
+
+  // Framer Motion Spring entry animations
+  const bentoItemVariants: Variants = {
+    hidden: { opacity: 0, y: 30, scale: 0.98 },
+    visible: { 
+      opacity: 1, 
+      y: 0, 
+      scale: 1,
+      transition: {
+        type: "spring" as const,
+        stiffness: 75,
+        damping: 15,
+        mass: 0.9
+      }
+    }
   };
 
   return (
-    <div
-      ref={cardRef}
-      onMouseMove={handleMouseMove}
-      style={{ backgroundColor: isDark ? "#111111" : "#ffffff" }}
-      className={`hover-radial-card relative p-6 md:p-8 rounded-3xl overflow-hidden group transition-all duration-300 shadow-sm hover:shadow-md flex flex-col justify-between min-h-[260px] ${
-        isDark ? "border-white/5 text-white shadow-xl" : "border-[#111111]/8 text-[#111111]"
-      }`}
-    >
-      {/* Glow highlight */}
-      <div 
-        className="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-[0.06] transition-opacity duration-500"
-        style={{
-          background: "radial-gradient(400px circle at var(--mouse-x, 0px) var(--mouse-y, 0px), #C7FF3D 0%, transparent 80%)"
-        }}
-      />
-
-      {isDark && (
-        <div 
-          className="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-3xl"
-          style={{
-            border: "1px solid rgba(199, 255, 61, 0.15)",
-            background: "radial-gradient(350px circle at var(--mouse-x, 0px) var(--mouse-y, 0px), rgba(199, 255, 61, 0.08) 0%, transparent 85%)"
-          }}
-        />
-      )}
-
-      <div className="relative z-10">
-        <div className={`flex items-center gap-2 border-b pb-4 mb-6 ${isDark ? "border-white/10" : "border-[#111111]/5"}`}>
-          <div className={`p-2 rounded-xl shrink-0 ${isDark ? "bg-white/5 text-[#C7FF3D]" : "bg-[#C7FF3D]/20 text-[#111111]"}`}>
-            {icon}
-          </div>
-          <span className={`font-mono text-[9px] uppercase tracking-wider ${isDark ? "text-white/55" : "text-[#555555]"}`}>
-            {subtitle}
-          </span>
-        </div>
-
-        <h3 className={`text-lg font-sans font-bold ${isDark ? "text-white" : "text-[#111111]"}`}>
-          {title}
-        </h3>
-        <p className={`text-xs mt-2 leading-relaxed ${isDark ? "text-white/70" : "text-[#555555]"}`}>
-          {description}
-        </p>
-      </div>
-
-      <div className={`relative z-10 border-t pt-4 mt-6 font-mono text-[8px] flex justify-between ${isDark ? "border-white/10 text-white/45" : "border-[#111111]/5 text-[#555555]"}`}>
-        <span>MINDSET: DEV & DESIGN</span>
-        <span className={isDark ? "text-[#C7FF3D]" : "text-[#111111] font-semibold"}>SOLID DESIGN</span>
-      </div>
-    </div>
-  );
-}
-
-export default function AboutMe() {
-  return (
-    <section id="about" className="py-24 bg-white border-b border-[#111111]/8 relative overflow-hidden scroll-mt-20 select-none">
-      {/* Dynamic background element */}
-      <div className="absolute top-0 right-0 w-[50vw] h-[50vw] bg-radial from-[#C7FF3D]/10 to-transparent blur-[100px] pointer-events-none" />
+    <section id="about" className="py-24 bg-white border-b border-[#111111]/8 relative overflow-hidden scroll-mt-20 select-none text-left">
+      {/* Editorial background gradient overlay */}
+      <div className="absolute top-0 right-0 w-[50vw] h-[50vw] bg-radial from-[#C7FF3D]/8 to-transparent blur-[100px] pointer-events-none" />
       
       <div className="max-w-6xl mx-auto px-4 md:px-8 relative z-10">
         
         {/* Editorial Heading */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start mb-16">
-          <div className="lg:col-span-4 text-left">
-            <span className="font-mono text-xs text-[#555555] tracking-widest uppercase">
-              00 // IDENTITY & CORE
-            </span>
-            <h2 className="text-3xl md:text-5xl font-display font-medium text-[#111111] mt-3 leading-tight">
-              About Me
-            </h2>
-          </div>
-          <div className="lg:col-span-8 text-left">
-            <p className="text-base md:text-lg font-sans font-light text-[#555555] leading-relaxed">
-              Computer Science and Technology undergraduate with hands-on experience building and shipping production-grade features using Python/FastAPI, React/TypeScript, and REST microservices on Azure and AWS. Proven track record as an AI Engineer and UI/UX Designer, delivering scalable backend APIs, intelligent RAG pipelines, CI/CD integrations, and component-driven frontends with polished user interactions. Hands-on experience with Docker, Git workflows, and system design paradigms. Looking to get on board with a fast-paced SaaS engineering team.
-            </p>
-          </div>
+        <div className="mb-12">
+          <span className="font-mono text-xs text-[#555555] tracking-widest uppercase">
+            00 // IDENTITY & CORE
+          </span>
+          <h2 className="text-3xl md:text-5xl font-display font-medium text-[#111111] mt-3">
+            Identity Profile
+          </h2>
         </div>
 
-        {/* 3-Column Philosophy Cards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12">
-          <PhilosophyCard
-            title="AI Autonomy & Agents"
-            subtitle="Agentic Intelligence"
-            icon={<Sparkles className="w-4.5 h-4.5" />}
-            description="Deploying containerized RAG chains, dense FAISS vectors, and offline Neo4j graph schemas to build highly responsive, air-gapped system orchestrations."
-          />
-          <PhilosophyCard
-            title="UX-First Architecture"
-            subtitle="Interface Engineering"
-            icon={<HeartHandshake className="w-4.5 h-4.5" />}
-            description="Focusing heavily on responsive grids, coordinate hover glow highlights, custom easing variables, and clean components for elegant user workflows."
-          />
-          <PhilosophyCard
-            isDark
-            title="Scalable System Design"
-            subtitle="Microservices & Scale"
-            icon={<Cpu className="w-4.5 h-4.5" />}
-            description="Structuring microservice frameworks (FastAPI/NodeJS) running isolated Docker volumes on AWS/Azure, optimizing production release cycles."
-          />
+        {/* Bento Grid layout */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 items-stretch">
+          
+          {/* Bento Card 1: Biography */}
+          <motion.div
+            variants={bentoItemVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-10%" }}
+            className="col-span-1 md:col-span-2 lg:col-span-2 bg-[#FAF9F6] border border-[#111111]/8 p-6 sm:p-8 rounded-[2rem] sm:rounded-[2.5rem] flex flex-col justify-between hover:border-[#111111]/15 hover:shadow-lg transition-all duration-300"
+          >
+            <div className="space-y-4">
+              <div className="flex items-center gap-2">
+                <span className="p-2 bg-[#C7FF3D]/25 rounded-xl text-[#111111] shrink-0">
+                  <GraduationCap className="w-4 h-4" />
+                </span>
+                <span className="font-mono text-[9px] text-[#555555] uppercase tracking-wider font-semibold">CST Undergraduate</span>
+              </div>
+              <h3 className="text-2xl md:text-3xl font-display font-medium text-[#111111] leading-snug">
+                I build sovereign AI engines and high-end interactive interfaces.
+              </h3>
+              <p className="text-xs md:text-sm font-sans font-light text-[#555555] leading-relaxed">
+                Computer Science and Technology undergraduate with hands-on experience building and shipping production-grade features using Python/FastAPI, React/TypeScript, and REST microservices on Azure and AWS. Proven track record as an AI Engineer and UI/UX Designer, delivering scalable backend APIs, intelligent RAG pipelines, CI/CD integrations, and component-driven frontends with polished user interactions. Hands-on experience with Docker, Git workflows, and system design paradigms.
+              </p>
+            </div>
+            <div className="border-t border-[#111111]/5 pt-4 mt-6 flex justify-between items-center text-[10px] text-[#555555] font-mono">
+              <span>DAYANANDA SAGAR UNIVERSITY</span>
+              <span className="font-bold text-[#111111]">EST. 2023</span>
+            </div>
+          </motion.div>
+
+          {/* Bento Card 2: Philosophy Flip Card */}
+          <motion.div
+            variants={bentoItemVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-10%" }}
+            onClick={() => setIsFlipped(!isFlipped)}
+            className="col-span-1 md:col-span-1 lg:col-span-1 relative h-full min-h-[260px] md:min-h-[280px] [perspective:1000px] cursor-pointer group select-none text-left"
+          >
+            <div 
+              className="relative w-full h-full duration-700 [transform-style:preserve-3d]"
+              style={{ transform: isFlipped ? "rotateY(180deg)" : "rotateY(0deg)" }}
+            >
+              {/* Front Side */}
+              <div className="absolute inset-0 w-full h-full [backface-visibility:hidden] bg-[#111111] text-white rounded-[2.2rem] sm:rounded-[2.5rem] p-6 sm:p-8 flex flex-col justify-between border border-white/10 shadow-2xl">
+                <div className="flex items-center justify-between">
+                  <span className="font-mono text-[9px] text-[#C7FF3D] uppercase tracking-wider">01 // CORE MINDSET</span>
+                  <span className="p-2 bg-[#C7FF3D]/10 rounded-xl text-[#C7FF3D] shrink-0">
+                    <Sparkles className="w-4 h-4 animate-pulse" />
+                  </span>
+                </div>
+                <div>
+                  <h3 className="text-3xl font-display text-white mt-4 lowercase">dev & design</h3>
+                  <p className="text-[10px] text-white/50 font-sans mt-2">Click to rotate panel card</p>
+                </div>
+                <div className="border-t border-white/10 pt-4 font-mono text-[8px] text-white/40 flex justify-between items-center">
+                  <span>PHILOSOPHY</span>
+                  <span>FLIP CARD ↗</span>
+                </div>
+              </div>
+
+              {/* Back Side */}
+              <div 
+                className="absolute inset-0 w-full h-full [backface-visibility:hidden] bg-[#FAF9F6] text-[#111111] rounded-[2.2rem] sm:rounded-[2.5rem] p-6 sm:p-8 flex flex-col justify-between border border-[#111111]/8 shadow-2xl text-left"
+                style={{ transform: "rotateY(180deg)" }}
+              >
+                <div className="flex items-center justify-between">
+                  <span className="font-mono text-[9px] text-[#555555] uppercase tracking-wider font-semibold">01 // REVEALED</span>
+                  <span className="p-2 bg-[#111111]/5 rounded-xl text-[#111111] shrink-0">
+                    <HeartHandshake className="w-4 h-4" />
+                  </span>
+                </div>
+                <p className="text-xs leading-relaxed text-[#555555] font-sans mt-4">
+                  Structuring decoupled backends (FastAPI/Node) containerized on isolated volumes, paired with cursor coordinate highlights and custom cubic easings.
+                </p>
+                <div className="border-t border-[#111111]/5 pt-4 font-mono text-[8px] text-[#555555]/55 flex justify-between items-center">
+                  <span>SYSTEM VALUES</span>
+                  <span>CLICK TO ROTATE</span>
+                </div>
+              </div>
+            </div>
+          </motion.div>
+
+          {/* Bento Card 3: Skills Proficiency Meter Gauge */}
+          <motion.div
+            variants={bentoItemVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-10%" }}
+            className="col-span-1 md:col-span-1 lg:col-span-1 bg-[#111111] text-[#F7F7F5] border border-[#111111] p-5 sm:p-6 rounded-[2rem] sm:rounded-[2.5rem] flex flex-col justify-between min-h-[300px] shadow-2xl relative overflow-hidden group"
+          >
+            {/* Subtle background glow grid overlay */}
+            <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:16px_16px] opacity-40 z-0" />
+            
+            <div className="relative z-10 flex flex-col justify-between h-full gap-6">
+              
+              <div className="flex items-center justify-between border-b border-white/10 pb-3">
+                <span className="font-mono text-[9px] text-white/55 tracking-wider uppercase">02 // CAPABILITIES MATRIX</span>
+                <span className="p-1.5 bg-white/5 rounded-lg text-[#C7FF3D] shrink-0">
+                  <Cpu className="w-3.5 h-3.5" />
+                </span>
+              </div>
+
+              {/* Dynamic Bar Charts */}
+              <div className="space-y-3">
+                {skillGauges.map((skill, idx) => (
+                  <div 
+                    key={idx} 
+                    onClick={() => setActiveSkillBadge(skill.badge)}
+                    className="space-y-1 cursor-pointer group/bar text-left animate-fade-in"
+                  >
+                    <div className="flex justify-between text-[10px] font-mono text-white/70 group-hover/bar:text-white transition-colors">
+                      <span>{skill.label}</span>
+                      <span className="font-bold">{skill.percent}%</span>
+                    </div>
+                    <div className="w-full bg-white/10 h-1.5 rounded-full overflow-hidden">
+                      <div 
+                        className={`h-full transition-all duration-500 ${skill.color}`}
+                        style={{ width: `${skill.percent}%` }}
+                      />
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              {/* Dynamic badge readout panel */}
+              <div className="bg-white/5 border border-white/5 rounded-2xl p-3 text-left min-h-[60px] flex items-center">
+                <p className="text-[9px] font-mono text-white/80 leading-relaxed truncate-3-lines">
+                  {activeSkillBadge}
+                </p>
+              </div>
+
+            </div>
+          </motion.div>
+
+          {/* Bento Card 4: Quick Stats */}
+          <motion.div
+            variants={bentoItemVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-10%" }}
+            className="col-span-1 md:col-span-2 lg:col-span-2 bg-[#FAF9F6] border border-[#111111]/8 p-5 sm:p-6 rounded-[2rem] sm:rounded-[2.5rem] flex flex-col justify-between hover:border-[#111111]/15 hover:shadow-lg transition-all duration-300"
+          >
+            <div className="flex items-center gap-2 border-b border-[#111111]/5 pb-3">
+              <span className="p-1.5 bg-[#111111]/5 rounded-lg text-[#111111] shrink-0">
+                <Award className="w-3.5 h-3.5 animate-pulse" />
+              </span>
+              <span className="font-mono text-[9px] text-[#555555] uppercase tracking-wider font-semibold">Production Credentials</span>
+            </div>
+            
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-6">
+              {stats.map((stat, sIdx) => (
+                <div 
+                  key={sIdx} 
+                  className="bg-white border border-[#111111]/8 hover:border-[#111111]/20 rounded-3xl p-5 flex flex-col justify-between min-h-[110px] transition-all duration-300 hover:shadow-sm hover:scale-[1.02] cursor-default text-left"
+                >
+                  <span className="text-2xl font-mono font-bold tracking-tight text-[#111111]">{stat.value}</span>
+                  <div className="space-y-0.5 mt-2">
+                    <span className="text-[9px] font-sans font-bold text-[#111111] uppercase tracking-wide block">{stat.label}</span>
+                    <span className="text-[8px] font-sans font-normal text-[#555555] block leading-snug">{stat.desc}</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </motion.div>
+
         </div>
 
       </div>

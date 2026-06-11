@@ -1,12 +1,12 @@
 "use client";
 
-import React, { useRef, useState, useEffect } from "react";
-import { motion } from "framer-motion";
+import React, { useRef, useState } from "react";
+import { motion, Variants } from "framer-motion";
 import { profileData } from "@/data/profile";
 import { BookOpen, Award, GraduationCap } from "lucide-react";
 
 // Staggered grid entrance variants
-const containerVariants = {
+const containerVariants: Variants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
@@ -18,7 +18,7 @@ const containerVariants = {
 };
 
 // Luxury ease card transition
-const cardVariants = {
+const cardVariants: Variants = {
   hidden: {
     opacity: 0,
     y: 45,
@@ -35,7 +35,20 @@ const cardVariants = {
   },
 };
 
-const headerVariants = {
+const itemVariants: Variants = {
+  hidden: { opacity: 0, y: 15 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      type: "spring",
+      stiffness: 90,
+      damping: 14,
+    },
+  },
+};
+
+const headerVariants: Variants = {
   hidden: { opacity: 0, y: -20 },
   visible: {
     opacity: 1,
@@ -50,6 +63,7 @@ const headerVariants = {
 export default function Education() {
   const edu = profileData.education;
   const cardRef = useRef<HTMLDivElement>(null);
+  const [logoError, setLogoError] = useState(false);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!cardRef.current) return;
@@ -115,12 +129,16 @@ export default function Education() {
 
               <div className="flex items-start gap-4">
                 <div className="w-20 h-20 rounded-2xl overflow-hidden border border-[#111111]/8 bg-white flex items-center justify-center shrink-0 shadow-sm">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
-                    src="/dayananda-sagar-logo.jpg"
-                    alt="Dayananda Sagar University Logo"
-                    className="w-full h-full object-cover"
-                  />
+                  {!logoError ? (
+                    <img
+                      src="/dayananda-sagar-logo.jpg"
+                      alt="Dayananda Sagar University Logo"
+                      className="w-full h-full object-cover"
+                      onError={() => setLogoError(true)}
+                    />
+                  ) : (
+                    <GraduationCap className="w-10 h-10 text-[#111111]/60" />
+                  )}
                 </div>
                 <div className="space-y-1">
                   <span className="font-mono text-[10px] text-[#555555] uppercase tracking-widest block font-bold">
@@ -165,15 +183,18 @@ export default function Education() {
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 {edu.coursework.map((course, idx) => (
-                  <div
+                  <motion.div
                     key={course}
-                    className="p-3.5 rounded-2xl bg-[#FAF9F6] border border-[#111111]/5 text-xs text-[#555555] font-sans hover:border-[#111111]/15 hover:text-[#111111] hover:bg-white transition-all duration-300 flex items-center justify-between group/item"
+                    variants={itemVariants}
+                    whileHover={{ scale: 1.02, y: -2 }}
+                    transition={{ duration: 0.2 }}
+                    className="p-3.5 rounded-2xl bg-[#FAF9F6] border border-[#111111]/5 text-xs text-[#555555] font-sans hover:border-[#111111]/15 hover:text-[#111111] hover:bg-white transition-all duration-300 flex items-center justify-between group/item cursor-default"
                   >
                     <span>{course}</span>
                     <span className="font-mono text-[8px] text-[#555555]/45 group-hover/item:text-[#111111]/70 transition-colors">
                       [0{idx + 1}]
                     </span>
-                  </div>
+                  </motion.div>
                 ))}
               </div>
             </div>

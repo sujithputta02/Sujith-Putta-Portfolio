@@ -2,6 +2,7 @@
 
 import React, { useState, useRef } from "react";
 import { Terminal, Copy, Check } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 
 export default function DesignSystem() {
   const [copied, setCopied] = useState(false);
@@ -178,38 +179,69 @@ export default function DesignSystem() {
               </div>
 
               {/* Selector Tabs */}
-              <div className="flex gap-2 mb-6 font-mono text-[10px]">
+              <div className="flex gap-2 mb-6 font-mono text-[10px] relative z-10">
                 <button
                   onClick={() => { setActiveTab("css"); setCopied(false); }}
-                  className={`px-3 py-1 rounded transition-colors ${
-                    activeTab === "css" ? "bg-white/10 text-white border border-white/10" : "text-white/50 hover:text-white"
+                  className={`relative px-3 py-1 rounded transition-colors duration-300 cursor-pointer ${
+                    activeTab === "css" ? "text-white" : "text-white/50 hover:text-white"
                   }`}
                 >
                   tokens.config
+                  {activeTab === "css" && (
+                    <motion.div
+                      layoutId="designTabBg"
+                      className="absolute inset-0 bg-white/10 rounded border border-white/10 -z-10"
+                      transition={{ type: "spring", stiffness: 300, damping: 25 }}
+                    />
+                  )}
                 </button>
                 <button
                   onClick={() => { setActiveTab("btn"); setCopied(false); }}
-                  className={`px-3 py-1 rounded transition-colors ${
-                    activeTab === "btn" ? "bg-white/10 text-white border border-white/10" : "text-white/50 hover:text-white"
+                  className={`relative px-3 py-1 rounded transition-colors duration-300 cursor-pointer ${
+                    activeTab === "btn" ? "text-white" : "text-white/50 hover:text-white"
                   }`}
                 >
                   button.tsx
+                  {activeTab === "btn" && (
+                    <motion.div
+                      layoutId="designTabBg"
+                      className="absolute inset-0 bg-white/10 rounded border border-white/10 -z-10"
+                      transition={{ type: "spring", stiffness: 300, damping: 25 }}
+                    />
+                  )}
                 </button>
                 <button
                   onClick={() => { setActiveTab("card"); setCopied(false); }}
-                  className={`px-3 py-1 rounded transition-colors ${
-                    activeTab === "card" ? "bg-white/10 text-white border border-white/10" : "text-white/50 hover:text-white"
+                  className={`relative px-3 py-1 rounded transition-colors duration-300 cursor-pointer ${
+                    activeTab === "card" ? "text-white" : "text-white/50 hover:text-white"
                   }`}
                 >
                   card.tsx
+                  {activeTab === "card" && (
+                    <motion.div
+                      layoutId="designTabBg"
+                      className="absolute inset-0 bg-white/10 rounded border border-white/10 -z-10"
+                      transition={{ type: "spring", stiffness: 300, damping: 25 }}
+                    />
+                  )}
                 </button>
               </div>
 
               {/* Code window */}
               <div className="bg-black/60 rounded-2xl p-4 border border-white/5 font-mono text-[11px] overflow-x-auto text-left shadow-inner">
-                <pre className="text-white/95">
-                  <code>{codeSnippets[activeTab]}</code>
-                </pre>
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={activeTab}
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -10 }}
+                    transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
+                  >
+                    <pre className="text-white/95">
+                      <code>{codeSnippets[activeTab]}</code>
+                    </pre>
+                  </motion.div>
+                </AnimatePresence>
               </div>
             </div>
 

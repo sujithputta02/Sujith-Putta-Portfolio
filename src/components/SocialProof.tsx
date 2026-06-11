@@ -3,6 +3,7 @@
 import React from "react";
 import { profileData } from "@/data/profile";
 import { Award, Compass, Cloud, Trophy } from "lucide-react";
+import { motion } from "framer-motion";
 
 export default function SocialProof() {
   const getIcon = (idx: number) => {
@@ -22,14 +23,16 @@ export default function SocialProof() {
   const repeatedItems = [...profileData.socialProof, ...profileData.socialProof, ...profileData.socialProof];
 
   return (
-    <section className="py-12 border-y border-[#111111]/8 bg-white/40 backdrop-blur-sm relative z-10 overflow-hidden w-full">
+    <section className="py-12 border-y border-[#111111]/8 bg-white/40 backdrop-blur-sm relative z-10 overflow-hidden w-full select-none">
       <div className="w-full flex overflow-hidden">
         {/* Infinite marquee block */}
         <div className="flex gap-8 md:gap-16 shrink-0 animate-marquee min-w-full justify-around pr-8">
           {repeatedItems.map((item, idx) => (
-            <div
+            <motion.div
               key={`${item.text}-${idx}`}
-              className="flex items-center gap-4 py-2 px-6 rounded-2xl bg-[#F7F7F5]/80 border border-[#111111]/5 shadow-sm hover:border-[#111111]/12 hover:bg-white transition-colors duration-300 pointer-events-auto"
+              whileHover={{ scale: 1.05, y: -2 }}
+              transition={{ duration: 0.2 }}
+              className="flex items-center gap-4 py-2 px-6 rounded-2xl bg-[#F7F7F5]/80 border border-[#111111]/5 shadow-sm hover:border-[#111111]/12 hover:bg-white transition-all duration-300 pointer-events-auto cursor-default"
             >
               <div className="p-2 rounded-xl bg-[#C7FF3D]/40">
                 {getIcon(idx % 4)}
@@ -42,7 +45,7 @@ export default function SocialProof() {
                   {item.subtext}
                 </span>
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
       </div>

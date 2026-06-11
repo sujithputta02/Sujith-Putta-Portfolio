@@ -3,13 +3,13 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { profileData } from "@/data/profile";
-import { Terminal, Shield, Cpu, Activity, Award, ChevronLeft, ChevronRight, BookOpen, Database } from "lucide-react";
+import { Terminal, Shield, Cpu, Activity, Award, ChevronLeft, ChevronRight, BookOpen, Database, Lock } from "lucide-react";
 
 // DineInGo Reservation Simulator
 function DineInGoWidget() {
   const [bookingStep, setBookingStep] = useState<"idle" | "loading" | "success">("idle");
   const [selectedTime, setSelectedTime] = useState("08:00 PM");
-  
+
   const handleBook = () => {
     setBookingStep("loading");
     setTimeout(() => {
@@ -23,7 +23,7 @@ function DineInGoWidget() {
         <span className="font-mono text-[9px] text-[#C7FF3D] uppercase font-bold">DINEINGO RESERVATION SYSTEM</span>
         <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
       </div>
-      
+
       {bookingStep === "idle" && (
         <>
           <div className="space-y-1">
@@ -43,11 +43,10 @@ function DineInGoWidget() {
                 <button
                   key={t}
                   onClick={() => setSelectedTime(t)}
-                  className={`py-1 rounded text-[10px] border transition-all cursor-pointer ${
-                    selectedTime === t 
-                      ? "border-[#C7FF3D] text-[#C7FF3D] bg-[#C7FF3D]/5" 
+                  className={`py-1 rounded text-[10px] border transition-all cursor-pointer ${selectedTime === t
+                      ? "border-[#C7FF3D] text-[#C7FF3D] bg-[#C7FF3D]/5"
                       : "border-white/10 text-white/60 hover:border-white/25"
-                  }`}
+                    }`}
                 >
                   {t}
                 </button>
@@ -151,12 +150,12 @@ function NEXORAWidget() {
             <div
               key={i}
               className={
-                isResult 
-                  ? "text-[#C7FF3D] font-bold border-l border-[#C7FF3D] pl-1.5 mt-1" 
-                  : isCommand 
-                    ? "text-[#C7FF3D]" 
-                    : isCheck 
-                      ? "text-purple-300 font-semibold" 
+                isResult
+                  ? "text-[#C7FF3D] font-bold border-l border-[#C7FF3D] pl-1.5 mt-1"
+                  : isCommand
+                    ? "text-[#C7FF3D]"
+                    : isCheck
+                      ? "text-purple-300 font-semibold"
                       : "text-white/60"
               }
             >
@@ -186,9 +185,9 @@ function NEXORAWidget() {
       {/* Action buttons */}
       <div className="border-t border-white/5 pt-2 flex flex-col gap-1 flex-shrink-0">
         <button
-          onClick={() => 
+          onClick={() =>
             runRAG(
-              "F16 wing stress anomaly", 
+              "F16 wing stress anomaly",
               "Anomaly localized at joint L24. Struct fatigue: 12%. Check mandated."
             )
           }
@@ -198,9 +197,9 @@ function NEXORAWidget() {
           &gt; Query F16 Structural logs
         </button>
         <button
-          onClick={() => 
+          onClick={() =>
             runRAG(
-              "Access permissions audit", 
+              "Access permissions audit",
               "Access Approved. Authenticated via RBAC Level 2 Clearance."
             )
           }
@@ -247,8 +246,8 @@ function LifeFlowWidget() {
     if (id === 1) return; // keep first step verified for demo
     setSteps(prev =>
       prev.map(step =>
-        step.id === id 
-          ? { ...step, completed: !step.completed, verified: false } 
+        step.id === id
+          ? { ...step, completed: !step.completed, verified: false }
           : step
       )
     );
@@ -280,21 +279,19 @@ function LifeFlowWidget() {
         <div className="grid grid-cols-2 gap-1.5">
           <button
             onClick={() => handleTemplateChange("hospital")}
-            className={`py-1 rounded text-[10px] font-mono border transition-all cursor-pointer ${
-              selectedTemplate === "hospital"
+            className={`py-1 rounded text-[10px] font-mono border transition-all cursor-pointer ${selectedTemplate === "hospital"
                 ? "border-[#C7FF3D] text-[#C7FF3D] bg-[#C7FF3D]/5"
                 : "border-white/10 text-white/50 hover:border-white/20"
-            }`}
+              }`}
           >
             Hospital Admission
           </button>
           <button
             onClick={() => handleTemplateChange("passport")}
-            className={`py-1 rounded text-[10px] font-mono border transition-all cursor-pointer ${
-              selectedTemplate === "passport"
+            className={`py-1 rounded text-[10px] font-mono border transition-all cursor-pointer ${selectedTemplate === "passport"
                 ? "border-[#C7FF3D] text-[#C7FF3D] bg-[#C7FF3D]/5"
                 : "border-white/10 text-white/50 hover:border-white/20"
-            }`}
+              }`}
           >
             Passport Application
           </button>
@@ -309,28 +306,26 @@ function LifeFlowWidget() {
             <div
               key={step.id}
               onClick={() => toggleStep(step.id)}
-              className={`flex items-center justify-between p-2 rounded-lg border transition-all text-[10px] cursor-pointer ${
-                step.completed 
-                  ? "bg-white/5 border-white/10 text-white" 
+              className={`flex items-center justify-between p-2 rounded-lg border transition-all text-[10px] cursor-pointer ${step.completed
+                  ? "bg-white/5 border-white/10 text-white"
                   : "bg-[#1C1C1A]/50 border-white/5 text-white/40 hover:border-white/10"
-              }`}
+                }`}
             >
               <div className="flex items-center gap-2">
-                <input 
+                <input
                   type="checkbox"
                   checked={step.completed}
-                  onChange={() => {}} // handled by onClick
+                  onChange={() => { }} // handled by onClick
                   className="rounded border-white/20 accent-[#C7FF3D] pointer-events-none"
                 />
                 <span className={step.completed ? "" : "line-through opacity-50"}>{step.text}</span>
               </div>
-              
+
               {step.completed && (
-                <span className={`text-[8px] font-mono px-1.5 py-0.5 rounded ${
-                  step.verified 
-                    ? "bg-emerald-500/20 text-emerald-400 border border-emerald-500/30" 
+                <span className={`text-[8px] font-mono px-1.5 py-0.5 rounded ${step.verified
+                    ? "bg-emerald-500/20 text-emerald-400 border border-emerald-500/30"
                     : "bg-amber-500/20 text-amber-400 border border-amber-500/30 animate-pulse"
-                }`}>
+                  }`}>
                   {step.verified ? "VERIFIED" : "PENDING"}
                 </span>
               )}
@@ -443,7 +438,7 @@ function RunaGenWidget() {
               <span className="text-amber-400">GCP Vertex, TypeScript</span>
             </div>
           </div>
-          
+
           <button
             onClick={() => setState("upload")}
             className="w-full mt-1.5 bg-white/10 hover:bg-white/15 text-white py-1 rounded text-[9px] font-mono transition-colors cursor-pointer"
@@ -467,7 +462,7 @@ function SpitchWidget() {
     setActiveAction(type);
     setPulse(true);
     setStatus(`Hearing: "${text}"`);
-    
+
     // Step 1: Processing
     setTimeout(() => {
       if (type === "vision") {
@@ -496,14 +491,13 @@ function SpitchWidget() {
 
       {/* Voice Waveform pulsing visual */}
       <div className="flex-1 flex flex-col justify-center items-center py-2 relative">
-        <div className={`w-11 h-11 bg-white/5 hover:bg-white/10 rounded-full border border-white/10 flex items-center justify-center text-lg cursor-pointer transition-colors shadow-lg ${
-          pulse ? "scale-110 border-purple-500 shadow-purple-500/10" : ""
-        }`}
+        <div className={`w-11 h-11 bg-white/5 hover:bg-white/10 rounded-full border border-white/10 flex items-center justify-center text-lg cursor-pointer transition-colors shadow-lg ${pulse ? "scale-110 border-purple-500 shadow-purple-500/10" : ""
+          }`}
           onClick={() => runAction("vision", "Take a screenshot and tell me what's on my screen", "I see a web browser showing your developer portfolio page. Everything is compiling clean!")}
         >
           🎙️
         </div>
-        
+
         {/* Soundwave lines */}
         <div className="flex items-center gap-1.5 mt-3 h-4">
           {[0.6, 1.2, 0.4, 1.4, 0.8].map((scale, i) => (
@@ -517,7 +511,7 @@ function SpitchWidget() {
             />
           ))}
         </div>
-        
+
         <p className="text-[9px] font-mono text-center text-white/70 px-2 mt-2 leading-relaxed min-h-[24px]">
           {status}
         </p>
@@ -559,7 +553,7 @@ function MuseVerseWidget() {
 
   const runCuration = () => {
     setCurationState("curating");
-    
+
     const agentsSequence = [
       "TopicIntakeAgent: Enriched keyword semantic nodes...",
       "ResearchAgent: Pulled 14 Google Search fact indexes...",
@@ -594,7 +588,7 @@ function MuseVerseWidget() {
         <div className="flex-1 flex flex-col justify-between pt-3 text-left">
           <div className="space-y-1">
             <label className="text-white/50 text-[8px] uppercase font-mono tracking-wider">exhibition prompt</label>
-            <input 
+            <input
               type="text"
               value={topic}
               onChange={(e) => setTopic(e.target.value)}
@@ -635,7 +629,7 @@ function MuseVerseWidget() {
               <span className="bg-emerald-500/10 px-1 rounded">SQLite Synced</span>
             </div>
           </div>
-          
+
           <button
             onClick={() => setCurationState("idle")}
             className="w-full mt-1.5 bg-white/10 hover:bg-white/15 text-white py-1 rounded text-[9px] font-mono transition-colors cursor-pointer"
@@ -680,14 +674,14 @@ function AmazonMLWidget() {
 
   const handlePredict = () => {
     setPredictionState("running");
-    
+
     // Simulate feature extraction and model inference
     setTimeout(() => {
       const matched = samples.find(s => s.desc === description) || {
         features: { ipq: 6, weight: "14 oz", category: "Home & Kitchen", cluster: 142 },
         price: 18.45
       };
-      
+
       setExtractedFeatures(matched.features);
       setPredictedPrice(matched.price);
       setPredictionState("result");
@@ -712,7 +706,7 @@ function AmazonMLWidget() {
               className="w-full bg-white/5 border border-white/10 text-white rounded-lg px-2 py-1 focus:outline-none focus:border-[#C7FF3D] text-[10px] resize-none font-sans"
             />
           </div>
-          
+
           <div className="space-y-1">
             <label className="text-white/50 text-[8px] uppercase font-mono tracking-wider">Load Sample Data</label>
             <div className="flex gap-1 overflow-x-auto pb-1 scrollbar-dark">
@@ -766,12 +760,168 @@ function AmazonMLWidget() {
               <span className="text-emerald-400 font-bold font-sans text-xs">${predictedPrice.toFixed(2)}</span>
             </div>
           </div>
-          
+
           <button
             onClick={() => setPredictionState("idle")}
             className="w-full mt-1.5 bg-white/10 hover:bg-white/15 text-white py-1 rounded text-[9px] font-mono transition-colors cursor-pointer"
           >
             ← Predict Another Product
+          </button>
+        </div>
+      )}
+    </div>
+  );
+}
+
+// CyberConstituent-SLM Classifier Simulator
+function CyberConstituentWidget() {
+  const [logInput, setLogInput] = useState("ALERT: Database validation form bypass query manipulation. SELECT * FROM users WHERE admin = 1; --");
+  const [classifierState, setClassifierState] = useState<"idle" | "running" | "result">("idle");
+  const [confidence, setConfidence] = useState<number>(0);
+  const [prediction, setPrediction] = useState<string>("");
+  const [chartData, setChartData] = useState<number[]>([]);
+
+  const samples = [
+    {
+      text: "ALERT: Database validation form bypass query manipulation. SELECT * FROM users WHERE admin = 1; --",
+      label: "💉 SQL Injection",
+      confidence: 94.6,
+      chart: [5, 2, 4, 1, 94, 2]
+    },
+    {
+      text: "WARNING: Cryptographic file encryption process active. Bulk directory extension modification to .locked.",
+      label: "🔒 Ransomware Attack",
+      confidence: 91.2,
+      chart: [3, 91, 1, 2, 1, 2]
+    },
+    {
+      text: "URGENT: Credential harvesting portal discovered. Spoofed Microsoft login forms redirecting to external domain.",
+      label: "🎣 Phishing Campaign",
+      confidence: 88.7,
+      chart: [2, 3, 88, 1, 2, 4]
+    }
+  ];
+
+  const runClassifier = (text: string) => {
+    setLogInput(text);
+    setClassifierState("running");
+
+    setTimeout(() => {
+      const found = samples.find(s => text.toLowerCase().includes(s.text.substring(0, 30).toLowerCase()) || s.text.toLowerCase().includes(text.toLowerCase()));
+      if (found) {
+        setPrediction(found.label);
+        setConfidence(found.confidence);
+        setChartData(found.chart);
+      } else {
+        setPrediction("🦠 Malware Attack");
+        setConfidence(86.4);
+        setChartData([86, 2, 3, 4, 2, 3]);
+      }
+      setClassifierState("result");
+    }, 1400);
+  };
+
+  return (
+    <div className="w-full bg-[#0a0f1d]/95 border border-[#3b82f6]/20 rounded-2xl p-4 flex flex-col justify-between h-[230px] font-sans text-xs">
+      <div className="flex items-center justify-between border-b border-white/5 pb-2 flex-shrink-0">
+        <span className="font-mono text-[9px] text-[#C7FF3D] uppercase font-bold">CYBERCONSTITUENT CLASSIFIER</span>
+        <span className="text-[9px] text-emerald-400 font-mono">CONSTITUTIONAL ALIGNED</span>
+      </div>
+
+      {classifierState === "idle" && (
+        <div className="flex-1 flex flex-col justify-between pt-2 text-left">
+          <div className="space-y-1">
+            <label className="text-white/50 text-[8px] uppercase font-mono tracking-wider">Raw Security Log Input</label>
+            <textarea
+              value={logInput}
+              onChange={(e) => setLogInput(e.target.value)}
+              rows={2}
+              className="w-full bg-white/5 border border-white/10 text-white rounded-lg px-2 py-1 focus:outline-none focus:border-[#C7FF3D] text-[10px] resize-none font-sans"
+            />
+          </div>
+
+          <div className="space-y-1">
+            <label className="text-white/50 text-[8px] uppercase font-mono tracking-wider">Inject Threat Alert Logs</label>
+            <div className="flex gap-1 overflow-x-auto pb-1 scrollbar-dark">
+              {samples.map((s, idx) => (
+                <button
+                  key={idx}
+                  onClick={() => runClassifier(s.text)}
+                  className="px-2 py-0.5 rounded text-[8px] bg-white/5 hover:bg-white/10 border border-white/10 text-white/70 whitespace-nowrap cursor-pointer"
+                >
+                  {s.label.split(" ")[1]} Log
+                </button>
+              ))}
+            </div>
+          </div>
+
+          <button
+            onClick={() => runClassifier(logInput)}
+            className="w-full bg-[#C7FF3D] text-[#111111] font-bold py-1.5 rounded-lg hover:bg-white transition-colors text-[10px] cursor-pointer"
+          >
+            Analyze Log Safety & Vector
+          </button>
+        </div>
+      )}
+
+      {classifierState === "running" && (
+        <div className="flex-1 flex flex-col items-center justify-center gap-3">
+          <div className="w-6 h-6 border-2 border-[#3b82f6] border-t-transparent rounded-full animate-spin" />
+          <div className="text-center px-2">
+            <span className="text-[9px] font-mono text-[#C7FF3D] block uppercase animate-pulse">Aligning & Preprocessing</span>
+            <p className="text-[8px] text-white/50 font-mono mt-1 leading-snug">Constitutional AI Layer scrubbing exploit payload strings...</p>
+          </div>
+        </div>
+      )}
+
+      {classifierState === "result" && (
+        <div className="flex-1 flex flex-col justify-between pt-2 text-left">
+          <div className="bg-white/5 border border-white/5 p-2 rounded-xl text-[9px] space-y-1.5 font-mono text-white/85">
+            <div className="flex justify-between border-b border-white/5 pb-1 text-[8px] text-white/50">
+              <span>Threat Category:</span>
+              <span className="text-[#C7FF3D] font-bold">{prediction}</span>
+            </div>
+
+            <div className="space-y-1 text-[8px] font-sans">
+              <div className="flex justify-between">
+                <span className="text-white/60">Confidence:</span>
+                <span className="text-emerald-400 font-bold">{confidence.toFixed(1)}%</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-white/60">Constitutional Safe Check:</span>
+                <span className="text-emerald-400">🛡️ Sanitized & Approved</span>
+              </div>
+            </div>
+
+            {/* Micro bar chart */}
+            <div className="pt-1.5 border-t border-white/5">
+              <div className="flex items-end justify-between h-5 gap-1 pt-1">
+                {chartData.map((val, idx) => (
+                  <div key={idx} className="flex-1 flex flex-col items-center">
+                    <div
+                      className={`w-full rounded-t-sm transition-all duration-300 ${idx === chartData.indexOf(Math.max(...chartData)) ? "bg-[#C7FF3D]" : "bg-white/20"
+                        }`}
+                      style={{ height: `${Math.max(2, val * 0.18)}px` }}
+                    />
+                  </div>
+                ))}
+              </div>
+              <div className="flex justify-between text-[6px] text-white/40 pt-1 font-mono">
+                <span>MAL</span>
+                <span>RANS</span>
+                <span>PHISH</span>
+                <span>DDOS</span>
+                <span>SQLI</span>
+                <span>MITM</span>
+              </div>
+            </div>
+          </div>
+
+          <button
+            onClick={() => setClassifierState("idle")}
+            className="w-full mt-1.5 bg-white/10 hover:bg-white/15 text-white py-1 rounded text-[9px] font-mono transition-colors cursor-pointer"
+          >
+            ← Input New Log
           </button>
         </div>
       )}
@@ -809,6 +959,8 @@ export default function ProjectGallery() {
         return <BookOpen className={cls} />;
       case 6:
         return <Database className={cls} />;
+      case 7:
+        return <Lock className={cls} />;
       default:
         return <BookOpen className={cls} />;
     }
@@ -830,6 +982,8 @@ export default function ProjectGallery() {
         return <MuseVerseWidget />;
       case 6:
         return <AmazonMLWidget />;
+      case 7:
+        return <CyberConstituentWidget />;
       default:
         return null;
     }
@@ -907,6 +1061,15 @@ export default function ProjectGallery() {
         { className: "bg-[#ff9900]/25 w-56 h-56 -top-12 -right-12", delay: "0s" },
         { className: "bg-[#146eb4]/15 w-48 h-48 -bottom-10 -left-10", delay: "3s" }
       ]
+    },
+    {
+      // CyberConstituent-SLM
+      gradient: "from-[#050b14] via-[#111e38] to-[#1e3a8a]",
+      title: "cyberconstituent-slm",
+      orbs: [
+        { className: "bg-[#3b82f6]/30 w-56 h-56 -top-12 -right-12", delay: "0s" },
+        { className: "bg-[#ef4444]/15 w-48 h-48 -bottom-10 -left-10", delay: "3s" }
+      ]
     }
   ];
 
@@ -922,7 +1085,7 @@ export default function ProjectGallery() {
             projects portfolio
           </h2>
         </div>
-        
+
         {/* Dynamic Slide Counter */}
         <div className="font-sans font-light text-2xl md:text-3xl text-white/50 tracking-wider">
           <span className="text-white font-medium">0{activeIndex + 1}</span> / 0{profileData.projects.length}
@@ -931,7 +1094,7 @@ export default function ProjectGallery() {
 
       {/* Main 3D Perspective Carousel Container */}
       <div className="max-w-7xl mx-auto px-4 md:px-12 relative flex items-center justify-center h-[590px] md:h-[630px] overflow-visible">
-        
+
         {/* Floating Glassmorphic Chevron Navigation Buttons */}
         <button
           onClick={handlePrev}
@@ -991,11 +1154,10 @@ export default function ProjectGallery() {
                     setActiveIndex(idx);
                   }
                 }}
-                className={`absolute rounded-[2.5rem] border transition-colors duration-500 overflow-hidden shadow-2xl group flex flex-col justify-between select-none [transform-style:preserve-3d] ${
-                  isActive 
-                    ? "border-white/15 cursor-default" 
+                className={`absolute rounded-[2.5rem] border transition-colors duration-500 overflow-hidden shadow-2xl group flex flex-col justify-between select-none [transform-style:preserve-3d] ${isActive
+                    ? "border-white/15 cursor-default"
                     : "border-white/10 cursor-pointer hover:border-white/20"
-                }`}
+                  }`}
               >
                 {/* CSS-Branded Background Container */}
                 <div className={`absolute inset-0 bg-gradient-to-tr ${bgData.gradient} overflow-hidden rounded-[2.5rem] z-0`}>
@@ -1003,9 +1165,8 @@ export default function ProjectGallery() {
                   {bgData.orbs.map((orb, oIdx) => (
                     <div
                       key={oIdx}
-                      className={`absolute rounded-full blur-[45px] mix-blend-screen filter ${orb.className} ${
-                        oIdx === 0 ? "animate-orb-1" : "animate-orb-2"
-                      }`}
+                      className={`absolute rounded-full blur-[45px] mix-blend-screen filter ${orb.className} ${oIdx === 0 ? "animate-orb-1" : "animate-orb-2"
+                        }`}
                       style={{ animationDelay: orb.delay }}
                     />
                   ))}
@@ -1020,7 +1181,7 @@ export default function ProjectGallery() {
                     /* Centered Focus View: Glassmorphic Specs details + Simulator Overlay */
                     <div className="absolute inset-2 md:inset-3 bg-[#121212]/30 backdrop-blur-xl border border-white/10 rounded-[2.2rem] p-5 md:p-7 flex flex-col justify-between z-10 text-left">
                       <div className="flex flex-col md:flex-row gap-6 flex-1 min-h-0 items-stretch justify-between">
-                        
+
                         {/* Left Column: Full Specifications */}
                         <div className="flex-1 flex flex-col justify-between min-h-0 text-left">
                           <div className="flex-shrink-0">
@@ -1143,16 +1304,16 @@ export default function ProjectGallery() {
                       {/* Active Card Bottom link actions */}
                       <div className="border-t border-white/5 pt-3 mt-3 flex flex-col sm:flex-row gap-4 items-center justify-between text-[10px] font-mono text-white/40 w-full flex-shrink-0">
                         <span>LIVE INTERACTIVE PREVIEW RUNNING</span>
-                        
+
                         {(project.liveLink || project.githubLink) && (
-                          <div 
+                          <div
                             className="flex flex-wrap items-center gap-3 relative z-20 pointer-events-auto"
                             onClick={(e) => e.stopPropagation()}
                           >
                             {project.githubLink && (
-                              <a 
+                              <a
                                 href={project.githubLink}
-                                target="_blank" 
+                                target="_blank"
                                 rel="noopener noreferrer"
                                 className="text-white/75 hover:text-[#C7FF3D] transition-colors border border-white/10 hover:border-[#C7FF3D]/30 px-2.5 py-1 rounded-full bg-white/5"
                               >
@@ -1160,9 +1321,9 @@ export default function ProjectGallery() {
                               </a>
                             )}
                             {project.earlyAccessLink && (
-                              <a 
+                              <a
                                 href={project.earlyAccessLink}
-                                target="_blank" 
+                                target="_blank"
                                 rel="noopener noreferrer"
                                 className="text-white/75 hover:text-[#C7FF3D] transition-colors border border-white/10 hover:border-[#C7FF3D]/30 px-2.5 py-1 rounded-full bg-white/5"
                               >
@@ -1170,9 +1331,9 @@ export default function ProjectGallery() {
                               </a>
                             )}
                             {project.liveLink && (
-                              <a 
+                              <a
                                 href={project.liveLink}
-                                target="_blank" 
+                                target="_blank"
                                 rel="noopener noreferrer"
                                 className="text-[#111111] bg-[#C7FF3D] hover:bg-white hover:text-[#111111] transition-colors px-2.5 py-1 rounded-full font-bold"
                               >
@@ -1190,12 +1351,12 @@ export default function ProjectGallery() {
                       <div className="p-4 bg-white/10 backdrop-blur-md rounded-2xl border border-white/20 mb-6 flex items-center justify-center shadow-lg text-white">
                         {getProjectIcon(idx, false)}
                       </div>
-                      
+
                       {/* Lowercase Title in large typography exactly like the floral screenshot */}
                       <h3 className="text-4xl md:text-5xl font-sans font-light text-white tracking-tighter mix-blend-overlay opacity-90 drop-shadow-md select-none mt-2 lowercase">
                         {bgData.title}
                       </h3>
-                      
+
                       {/* Subtitle / Metadata */}
                       <p className="text-[10px] font-mono text-white/75 mt-3 uppercase tracking-widest bg-black/20 px-3 py-1 rounded-full border border-white/10 backdrop-blur-sm">
                         {project.metadata.split(" - ")[0]}

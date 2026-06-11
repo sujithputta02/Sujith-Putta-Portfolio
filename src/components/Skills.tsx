@@ -577,15 +577,17 @@ export default function Skills() {
                         className="group cursor-pointer select-none text-left"
                         onClick={() => setSelectedCategory(category.id)}
                       >
-                        <div className="flex items-center gap-4">
-                          {/* Line indicator */}
-                          <div 
-                            className="h-[1px] bg-[#111111] transition-all duration-300"
-                            style={{ 
-                              width: isActive ? "32px" : "0px",
-                              opacity: isActive ? 1 : 0
-                            }}
-                          />
+                        <div className="flex items-center gap-4 relative py-1">
+                          {/* Active Line indicator */}
+                          <div className="w-8 h-[1px] relative flex-shrink-0">
+                            {isActive && (
+                              <motion.div 
+                                layoutId="skillsActiveLine"
+                                className="absolute inset-0 bg-[#111111]"
+                                transition={{ type: "spring", stiffness: 300, damping: 25 }}
+                              />
+                            )}
+                          </div>
                           
                           <div>
                             <div className="flex items-baseline gap-2">

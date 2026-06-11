@@ -20,9 +20,9 @@ const containerVariants = {
 const leftCardVariants = {
   hidden: {
     opacity: 0,
-    x: -50,
-    y: 30,
-    scale: 0.95,
+    x: -30,
+    y: 20,
+    scale: 0.98,
   },
   visible: {
     opacity: 1,
@@ -30,8 +30,10 @@ const leftCardVariants = {
     y: 0,
     scale: 1,
     transition: {
-      duration: 0.85,
-      ease: [0.16, 1, 0.3, 1] as const,
+      type: "spring" as const,
+      stiffness: 75,
+      damping: 15,
+      mass: 0.9,
     },
   },
 };
@@ -40,9 +42,9 @@ const leftCardVariants = {
 const rightCardVariants = {
   hidden: {
     opacity: 0,
-    x: 50,
-    y: 30,
-    scale: 0.95,
+    x: 30,
+    y: 20,
+    scale: 0.98,
   },
   visible: {
     opacity: 1,
@@ -50,8 +52,10 @@ const rightCardVariants = {
     y: 0,
     scale: 1,
     transition: {
-      duration: 0.85,
-      ease: [0.16, 1, 0.3, 1] as const,
+      type: "spring" as const,
+      stiffness: 75,
+      damping: 15,
+      mass: 0.9,
     },
   },
 };
@@ -63,8 +67,9 @@ const headerVariants = {
     opacity: 1,
     y: 0,
     transition: {
-      duration: 0.8,
-      ease: [0.16, 1, 0.3, 1] as const,
+      type: "spring" as const,
+      stiffness: 80,
+      damping: 16,
     },
   },
 };

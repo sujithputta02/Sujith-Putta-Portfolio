@@ -71,7 +71,7 @@ function CredentialCard({ cred, idx, getCredIcon }: CredentialCardProps) {
       style={{
         scale,
         opacity,
-        top: `calc(var(--sticky-top-base, 80px) + ${idx} * var(--sticky-top-step, 18px))`,
+        top: `calc(var(--sticky-top-base, 80px) + ${idx} * var(--sticky-top-step, 44px))`,
         zIndex: idx + 1,
       }}
       className="sticky w-full h-[152px] sm:h-44 origin-top"
@@ -126,7 +126,7 @@ export default function Credentials() {
         </div>
 
         {/* Credentials Stacking Cards Container */}
-        <div className="max-w-2xl mx-auto flex flex-col gap-10 sm:gap-12 relative pb-48 [--sticky-top-base:76px] [--sticky-top-step:18px] sm:[--sticky-top-base:120px] sm:[--sticky-top-step:28px]">
+        <div className="max-w-2xl mx-auto flex flex-col gap-10 sm:gap-12 relative pb-48 [--sticky-top-base:76px] [--sticky-top-step:44px] sm:[--sticky-top-base:120px] sm:[--sticky-top-step:56px]">
           {profileData.credentials.map((cred, idx) => (
             <CredentialCard
               key={cred.title}

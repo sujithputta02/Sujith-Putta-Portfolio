@@ -1,7 +1,8 @@
 "use client";
 
 import React, { useState } from "react";
-import { Terminal, Database, Server, Key, Cpu, Shield, Activity, Code } from "lucide-react";
+import { Terminal, Database, Server, Key, Cpu, Shield, Activity } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 
 interface NodeData {
   id: string;
@@ -265,45 +266,54 @@ return {
 
           {/* Interactive Code Sidebar Panel (col-span-5) */}
           <div className="lg:col-span-5 flex flex-col justify-between bg-[#111111] text-white rounded-3xl p-6 md:p-8 shadow-xl border border-white/5 overflow-hidden">
-            
-            {/* Header info */}
-            <div>
-              <div className="flex items-center justify-between border-b border-white/10 pb-4 mb-4">
-                <div className="flex items-center gap-2">
-                  <div className="p-1.5 bg-white/5 rounded-lg text-[#C7FF3D]">
-                    {activeNode.icon}
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={activeNode.id}
+                initial={{ opacity: 0, x: 15 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -15 }}
+                transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] as const }}
+                className="flex flex-col justify-between h-full flex-1"
+              >
+                {/* Header info */}
+                <div>
+                  <div className="flex items-center justify-between border-b border-white/10 pb-4 mb-4">
+                    <div className="flex items-center gap-2">
+                      <div className="p-1.5 bg-white/5 rounded-lg text-[#C7FF3D]">
+                        {activeNode.icon}
+                      </div>
+                      <span className="font-mono text-[10px] text-white/55 uppercase tracking-widest">
+                        Code Telemetry
+                      </span>
+                    </div>
+                    <div className="flex items-center gap-1">
+                      <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
+                      <span className="font-mono text-[9px] text-green-500">READY</span>
+                    </div>
                   </div>
-                  <span className="font-mono text-[10px] text-white/55 uppercase tracking-widest">
-                    Code Telemetry
-                  </span>
+
+                  <h3 className="text-lg font-sans font-bold text-white leading-tight">
+                    {activeNode.title}
+                  </h3>
+                  <p className="text-xs font-sans text-white/70 mt-2 leading-relaxed">
+                    {activeNode.description}
+                  </p>
                 </div>
-                <div className="flex items-center gap-1">
-                  <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
-                  <span className="font-mono text-[9px] text-green-500">READY</span>
+
+                {/* Code viewport */}
+                <div className="my-6 bg-black/60 rounded-2xl p-4 border border-white/5 font-mono text-[10.5px] overflow-x-auto text-left shadow-inner flex-1 flex flex-col justify-center min-h-[220px]">
+                  <pre className="text-white/95">
+                    <code>{activeNode.code}</code>
+                  </pre>
                 </div>
-              </div>
 
-              <h3 className="text-lg font-sans font-bold text-white leading-tight">
-                {activeNode.title}
-              </h3>
-              <p className="text-xs font-sans text-white/70 mt-2 leading-relaxed">
-                {activeNode.description}
-              </p>
-            </div>
-
-            {/* Code viewport */}
-            <div className="my-6 bg-black/60 rounded-2xl p-4 border border-white/5 font-mono text-[10.5px] overflow-x-auto text-left shadow-inner flex-1 flex flex-col justify-center min-h-[220px]">
-              <pre className="text-white/95">
-                <code>{activeNode.code}</code>
-              </pre>
-            </div>
-
-            {/* Sidebar footer */}
-            <div className="border-t border-white/10 pt-4 flex items-center justify-between font-mono text-[10px] text-white/45">
-              <span>NODE ID: {activeNode.id.toUpperCase()}</span>
-              <span className="text-[#C7FF3D]">NEXORA ENGINE</span>
-            </div>
-
+                {/* Sidebar footer */}
+                <div className="border-t border-white/10 pt-4 flex items-center justify-between font-mono text-[10px] text-white/45">
+                  <span>NODE ID: {activeNode.id.toUpperCase()}</span>
+                  <span className="text-[#C7FF3D]">NEXORA ENGINE</span>
+                </div>
+              </motion.div>
+            </AnimatePresence>
           </div>
 
         </div>

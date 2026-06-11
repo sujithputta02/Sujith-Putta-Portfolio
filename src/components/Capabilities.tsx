@@ -252,6 +252,8 @@ export default function Capabilities() {
         className="w-full flex overflow-hidden"
         onMouseEnter={() => setPaused(true)}
         onMouseLeave={() => setPaused(false)}
+        onTouchStart={() => setPaused(true)}
+        onTouchEnd={() => setPaused(false)}
       >
         <div
           className="flex gap-6 shrink-0 min-w-full justify-around pr-6"

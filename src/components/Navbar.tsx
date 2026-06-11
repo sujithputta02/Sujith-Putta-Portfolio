@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import { Menu, X, Terminal, Cpu } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -60,28 +61,36 @@ export default function Navbar() {
       </div>
 
       {/* Mobile Drawer menu */}
-      {isOpen && (
-        <div className="md:hidden absolute top-16 left-0 right-0 glass-panel p-6 rounded-3xl shadow-xl flex flex-col gap-4 text-center font-mono text-sm animate-in fade-in slide-in-from-top-4 duration-300">
-          {navItems.map((item) => (
-            <a
-              key={item.label}
-              href={item.href}
-              onClick={() => setIsOpen(false)}
-              className="py-2 text-[#555555] hover:text-[#111111] transition-colors border-b border-[#111111]/5"
-            >
-              {item.label}
-            </a>
-          ))}
-
-          <a
-            href="#connect"
-            onClick={() => setIsOpen(false)}
-            className="bg-[#111111] text-[#F7F7F5] hover:bg-[#C7FF3D] hover:text-[#111111] transition-all duration-300 py-3 rounded-xl font-bold"
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: -15 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -15 }}
+            transition={{ type: "spring", stiffness: 300, damping: 25 }}
+            className="md:hidden absolute top-16 left-0 right-0 glass-panel p-6 rounded-3xl shadow-xl flex flex-col gap-4 text-center font-mono text-sm"
           >
-            Hire Developer
-          </a>
-        </div>
-      )}
+            {navItems.map((item) => (
+              <a
+                key={item.label}
+                href={item.href}
+                onClick={() => setIsOpen(false)}
+                className="py-2 text-[#555555] hover:text-[#111111] transition-colors border-b border-[#111111]/5"
+              >
+                {item.label}
+              </a>
+            ))}
+
+            <a
+              href="#connect"
+              onClick={() => setIsOpen(false)}
+              className="bg-[#111111] text-[#F7F7F5] hover:bg-[#C7FF3D] hover:text-[#111111] transition-all duration-300 py-3 rounded-xl font-bold"
+            >
+              Hire Developer
+            </a>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </nav>
   );
 }
