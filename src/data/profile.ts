@@ -155,7 +155,7 @@ export const profileData: ProfileData = {
     {
       title: "NEXORA",
       metadata: "Sovereign Hybrid RAG for Air-Gapped Aerospace Intelligence",
-      status: "Under Review – NMITCON 2026",
+      status: "Research Paper",
       techStack: ["Python", "FAISS", "Neo4j", "FastAPI", "Ollama (LLaMA 3)", "REST APIs", "RBAC", "JSON", "YAML"],
       engineeredCore: "Architected an offline RAG intelligence system processing highly sensitive document queries utilizing a split vector store (FAISS) and structural graph networks (Neo4j) connected via fault-tolerant semantic retrieval pipelines.",
       performanceVector: "Sub-second query response times accomplished via optimized FAISS + Maximal Marginal Relevance (MMR) scoring, beating baseline KNN paradigms—proven conclusively via internal ablation benchmarks.",
@@ -253,10 +253,6 @@ export const profileData: ProfileData = {
     {
       text: "Microsoft Imagine Cup Participant",
       subtext: "Global Tech Hackathon"
-    },
-    {
-      text: "NMITCON 2026 Research Review",
-      subtext: "Hybrid Aerospace RAG System"
     },
     {
       text: "NASA Space Apps Participant",

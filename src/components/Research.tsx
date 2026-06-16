@@ -41,7 +41,7 @@ export default function Research() {
           <div className="flex flex-wrap items-center gap-6 border-b border-[#111111]/8 pb-6 mb-8 text-xs font-mono text-[#555555]">
             <div className="flex items-center gap-2">
               <Calendar className="w-4 h-4 text-[#111111]" />
-              <span>STATUS: PEER-REVIEW // NMITCON 2026</span>
+              <span>STATUS: RESEARCH PAPER</span>
             </div>
             <div className="flex items-center gap-2">
               <BookOpen className="w-4 h-4 text-[#111111]" />
