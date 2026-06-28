@@ -18,8 +18,10 @@
 @theme {
   --font-sacramento: var(--font-sacramento), cursive;
   --font-mono: var(--font-jetbrains-mono), monospace;
-  --font-display: "PP Mondwest", Georgia, serif;
+  --font-display: var(--font-silkscreen), monospace;
   --font-sans: "PP Neue Montreal", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --font-pixel: var(--font-pixelify-sans), monospace;
+  --font-pixel-display: var(--font-silkscreen), monospace;
   
   --color-accent: #C7FF3D;
   --color-primary-dark: #111111;
@@ -130,29 +132,36 @@ body {
 
 /* Glassmorphism primitives */
 .glass-panel {
-  background: rgba(255, 255, 255, 0.45);
-  backdrop-filter: blur(12px);
-  border: 1px solid rgba(17, 17, 17, 0.05);
+  background: #FFFFFF;
+  border: 2px solid #111111;
+  box-shadow: 4px 4px 0px 0px #111111;
 }
 
 /* Dynamic Hover Radial coordinate shadow box */
 .hover-radial-card {
   position: relative;
   background: #FFFFFF;
-  border: 1px solid rgba(17, 17, 17, 0.06);
-  transition: border-color 0.3s ease;
+  border: 2px solid #111111;
+  box-shadow: 4px 4px 0px 0px #111111;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.hover-radial-card:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0px 0px #111111;
 }
 
 .hover-radial-card::after {
   content: "";
   position: absolute;
-  inset: -1px;
+  inset: -2px;
   border-radius: inherit;
-  padding: 1px;
+  padding: 2px;
   background: radial-gradient(
-    400px circle at var(--mouse-x, 0px) var(--mouse-y, 0px),
+    350px circle at var(--mouse-x, 0px) var(--mouse-y, 0px),
     #C7FF3D 0%,
-    transparent 80%
+    rgba(199, 255, 61, 0.2) 50%,
+    transparent 100%
   );
   -webkit-mask: 
     linear-gradient(#fff 0 0) content-box, 
@@ -164,7 +173,7 @@ body {
   mask-composite: exclude;
   pointer-events: none;
   opacity: 0;
-  transition: opacity 0.5s ease;
+  transition: opacity 0.3s ease;
 }
 
 .hover-radial-card:hover::after {

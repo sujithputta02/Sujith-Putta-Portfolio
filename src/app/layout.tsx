@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Sacramento, JetBrains_Mono } from "next/font/google";
+import { Sacramento, JetBrains_Mono, Silkscreen, Pixelify_Sans } from "next/font/google";
 import "./globals.css";
 
 const sacramento = Sacramento({
@@ -10,6 +10,17 @@ const sacramento = Sacramento({
 
 const jetbrainsMono = JetBrains_Mono({
   variable: "--font-jetbrains-mono",
+  subsets: ["latin"],
+});
+
+const silkscreen = Silkscreen({
+  weight: "400",
+  variable: "--font-silkscreen",
+  subsets: ["latin"],
+});
+
+const pixelifySans = Pixelify_Sans({
+  variable: "--font-pixelify-sans",
   subsets: ["latin"],
 });
 
@@ -108,7 +119,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${sacramento.variable} ${jetbrainsMono.variable} scroll-smooth`}
+      className={`${sacramento.variable} ${jetbrainsMono.variable} ${silkscreen.variable} ${pixelifySans.variable} scroll-smooth`}
     >
       <body className="bg-[#F7F7F5] text-[#111111] min-h-screen selection:bg-[#C7FF3D] selection:text-[#111111] relative antialiased">
         {/* Grain overlay for luxury feel */}

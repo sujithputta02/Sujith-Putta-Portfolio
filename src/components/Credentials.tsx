@@ -24,7 +24,7 @@ function CredentialCard({ cred, idx, getCredIcon }: CredentialCardProps) {
   const scale = useTransform(scrollYProgress, [0, 1], [1, 0.94], { clamp: true });
   const opacity = useTransform(scrollYProgress, [0, 1], [1, 0.75], { clamp: true });
 
-  const cardClassName = `w-full h-full bg-white border border-[#111111]/6 shadow-[0_8px_30px_rgba(0,0,0,0.02)] rounded-3xl p-5 sm:p-6 flex flex-col justify-between hover:border-[#111111]/15 hover:shadow-[0_20px_50px_rgba(0,0,0,0.08)] transition-all duration-300 relative group overflow-hidden select-none block text-left ${
+  const cardClassName = `w-full h-full hover-radial-card rounded-3xl p-5 sm:p-6 flex flex-col justify-between transition-all duration-300 relative group overflow-hidden select-none block text-left ${
     cred.link ? "cursor-pointer" : ""
   }`;
 

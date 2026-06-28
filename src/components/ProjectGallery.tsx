@@ -944,25 +944,89 @@ export default function ProjectGallery() {
 
   const getProjectIcon = (idx: number, isDark = true) => {
     const cls = `w-5 h-5 ${isDark ? "text-[#111111]" : "text-white"}`;
-    switch (idx) {
+    switch (idx % 8) {
       case 0:
-        return <Terminal className={cls} />;
+        return (
+          <svg viewBox="0 0 16 16" className={cls} fill="none">
+            <path d="M 4 4 L 8 7 L 4 10" stroke="currentColor" strokeWidth="1.5" strokeLinecap="square" />
+            <line x1="9" y1="10" x2="12" y2="10" stroke="currentColor" strokeWidth="2" />
+          </svg>
+        );
       case 1:
-        return <Cpu className={cls} />;
+        return (
+          <svg viewBox="0 0 16 16" className={cls} fill="currentColor">
+            <rect x="5" y="5" width="6" height="6" />
+            <line x1="3" y1="6" x2="5" y2="6" stroke="currentColor" strokeWidth="1.2" />
+            <line x1="3" y1="8" x2="5" y2="8" stroke="currentColor" strokeWidth="1.2" />
+            <line x1="3" y1="10" x2="5" y2="10" stroke="currentColor" strokeWidth="1.2" />
+            <line x1="11" y1="6" x2="13" y2="6" stroke="currentColor" strokeWidth="1.2" />
+            <line x1="11" y1="8" x2="13" y2="8" stroke="currentColor" strokeWidth="1.2" />
+            <line x1="11" y1="10" x2="13" y2="10" stroke="currentColor" strokeWidth="1.2" />
+            <line x1="6" y1="3" x2="6" y2="5" stroke="currentColor" strokeWidth="1.2" />
+            <line x1="8" y1="3" x2="8" y2="5" stroke="currentColor" strokeWidth="1.2" />
+            <line x1="10" y1="3" x2="10" y2="5" stroke="currentColor" strokeWidth="1.2" />
+            <line x1="6" y1="11" x2="6" y2="13" stroke="currentColor" strokeWidth="1.2" />
+            <line x1="8" y1="11" x2="8" y2="13" stroke="currentColor" strokeWidth="1.2" />
+            <line x1="10" y1="11" x2="10" y2="13" stroke="currentColor" strokeWidth="1.2" />
+          </svg>
+        );
       case 2:
-        return <Activity className={cls} />;
+        return (
+          <svg viewBox="0 0 16 16" className={cls} fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="square">
+            <path d="M 2 8 H 5 L 7 4 L 9 12 L 11 8 H 14" />
+          </svg>
+        );
       case 3:
-        return <Award className={cls} />;
+        return (
+          <svg viewBox="0 0 16 16" className={cls} fill="currentColor">
+            <rect x="5" y="2" width="6" height="6" />
+            <rect x="4" y="3" width="8" height="4" />
+            <path d="M 5 8 V 13 L 7 11 L 8 12 L 9 11 L 11 13 V 8 Z" />
+          </svg>
+        );
       case 4:
-        return <Shield className={cls} />;
+        return (
+          <svg viewBox="0 0 16 16" className={cls} fill="currentColor">
+            <path d="M 3 2 H 13 V 7 C 13 11 8 14 8 14 C 8 14 3 11 3 7 Z" />
+            <path d="M 4 3 H 12 V 7 C 12 10 8 13 8 13 C 8 13 4 10 4 7 Z" fill="white" />
+            <path d="M 8 3 V 13" stroke="currentColor" strokeWidth="1" />
+          </svg>
+        );
       case 5:
-        return <BookOpen className={cls} />;
+        return (
+          <svg viewBox="0 0 16 16" className={cls} fill="currentColor">
+            <rect x="2" y="3" width="6" height="10" />
+            <rect x="8" y="3" width="6" height="10" />
+            <line x1="8" y1="3" x2="8" y2="13" stroke="white" strokeWidth="1" />
+          </svg>
+        );
       case 6:
-        return <Database className={cls} />;
+        return (
+          <svg viewBox="0 0 16 16" className={cls} fill="currentColor">
+            <rect x="3" y="2" width="10" height="3" />
+            <rect x="3" y="6" width="10" height="3" />
+            <rect x="3" y="10" width="10" height="3" />
+            <circle cx="5" cy="3.5" r="0.7" fill="white" />
+            <circle cx="5" cy="7.5" r="0.7" fill="white" />
+            <circle cx="5" cy="11.5" r="0.7" fill="white" />
+          </svg>
+        );
       case 7:
-        return <Lock className={cls} />;
+        return (
+          <svg viewBox="0 0 16 16" className={cls} fill="currentColor">
+            <path d="M 5 3 C 5 2 6 2 7 2 H 9 C 10 2 11 2 11 3 V 6 H 5 Z" fill="none" stroke="currentColor" strokeWidth="1.5" />
+            <rect x="3" y="6" width="10" height="8" />
+            <rect x="7" y="9" width="2" height="3" fill="white" />
+          </svg>
+        );
       default:
-        return <BookOpen className={cls} />;
+        return (
+          <svg viewBox="0 0 16 16" className={cls} fill="currentColor">
+            <rect x="2" y="3" width="6" height="10" />
+            <rect x="8" y="3" width="6" height="10" />
+            <line x1="8" y1="3" x2="8" y2="13" stroke="white" strokeWidth="1" />
+          </svg>
+        );
     }
   };
 
@@ -1094,20 +1158,22 @@ export default function ProjectGallery() {
 
       {/* Main 3D Perspective Carousel Container */}
       <div className="max-w-7xl mx-auto px-4 md:px-12 relative flex items-center justify-center h-[590px] md:h-[630px] overflow-visible">
-
-        {/* Floating Glassmorphic Chevron Navigation Buttons */}
         <button
           onClick={handlePrev}
-          className="absolute left-4 md:left-12 lg:left-24 z-30 w-12 h-12 rounded-full bg-white/5 hover:bg-[#C7FF3D] hover:text-[#111111] border border-white/10 hover:border-transparent flex items-center justify-center text-white transition-all duration-300 shadow-lg backdrop-blur-md cursor-pointer"
+          className="absolute left-4 md:left-12 lg:left-24 z-30 w-12 h-12 rounded-none bg-white border-2 border-black text-[#111111] hover:bg-[#C7FF3D] flex items-center justify-center transition-all duration-100 shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[-1px] hover:translate-y-[-1px] hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] cursor-pointer"
         >
-          <ChevronLeft className="w-5 h-5" />
+          <svg viewBox="0 0 16 16" className="w-5 h-5" fill="currentColor">
+            <path d="M 10 4 L 6 8 L 10 12 V 10 H 11 V 6 H 10 Z" />
+          </svg>
         </button>
 
         <button
           onClick={handleNext}
-          className="absolute right-4 md:right-12 lg:right-24 z-30 w-12 h-12 rounded-full bg-white/5 hover:bg-[#C7FF3D] hover:text-[#111111] border border-white/10 hover:border-transparent flex items-center justify-center text-white transition-all duration-300 shadow-lg backdrop-blur-md cursor-pointer"
+          className="absolute right-4 md:right-12 lg:right-24 z-30 w-12 h-12 rounded-none bg-white border-2 border-black text-[#111111] hover:bg-[#C7FF3D] flex items-center justify-center transition-all duration-100 shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[-1px] hover:translate-y-[-1px] hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] cursor-pointer"
         >
-          <ChevronRight className="w-5 h-5" />
+          <svg viewBox="0 0 16 16" className="w-5 h-5" fill="currentColor">
+            <path d="M 6 4 L 10 8 L 6 12 V 10 H 5 V 6 H 6 Z" />
+          </svg>
         </button>
 
         {/* Carousel Tracks */}
@@ -1186,12 +1252,17 @@ export default function ProjectGallery() {
                         <div className="flex-1 flex flex-col justify-between min-h-0 text-left">
                           <div className="flex-shrink-0">
                             <div className="flex items-center justify-between">
-                              <div className="p-3 bg-white/5 rounded-2xl border border-white/10 text-white">
+                              <div className="p-2.5 bg-white/5 border-2 border-white/20 rounded-none text-white shadow-[1.5px_1.5px_0px_0px_rgba(255,255,255,0.1)]">
                                 {getProjectIcon(idx, false)}
                               </div>
                               {project.status && (
-                                <span className="flex items-center gap-1.5 px-3 py-1 rounded-full text-[9px] font-mono font-semibold bg-[#C7FF3D] text-[#111111]">
-                                  <Award className="w-3 h-3 animate-pulse" /> {project.status}
+                                <span className="flex items-center gap-1.5 px-3 py-1 rounded-none border border-black/10 text-[9px] font-pixel font-bold bg-[#C7FF3D] text-[#111111] shadow-[1.5px_1.5px_0px_0px_rgba(0,0,0,1)]">
+                                  <svg viewBox="0 0 16 16" className="w-3.5 h-3.5 animate-pulse" fill="currentColor">
+                                    <rect x="5" y="2" width="6" height="6" />
+                                    <rect x="4" y="3" width="8" height="4" />
+                                    <path d="M 5 8 V 13 L 7 11 L 8 12 L 9 11 L 11 13 V 8 Z" />
+                                  </svg>
+                                  {project.status}
                                 </span>
                               )}
                             </div>

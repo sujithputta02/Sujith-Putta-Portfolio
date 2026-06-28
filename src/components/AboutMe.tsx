@@ -18,19 +18,19 @@ export default function AboutMe() {
     { 
       label: "Full Stack APIs", 
       percent: 90, 
-      color: "bg-[#3b82f6]", 
+      color: "bg-white", 
       badge: "FastAPI REST microservices, Node.js controllers, React/TypeScript client views" 
     },
     { 
       label: "Security Alignment", 
       percent: 88, 
-      color: "bg-rose-500", 
+      color: "bg-white/80", 
       badge: "Constitutional AI Log validation, OWASP top 10 controls, JWT sessions" 
     },
     { 
       label: "DevOps & Cloud", 
       percent: 85, 
-      color: "bg-purple-500", 
+      color: "bg-white/60", 
       badge: "AWS Academics foundation, Google Cloud CI/CD badge, Docker containment" 
     }
   ];
@@ -84,16 +84,18 @@ export default function AboutMe() {
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: "-10%" }}
-            className="col-span-1 md:col-span-2 lg:col-span-2 bg-[#FAF9F6] border border-[#111111]/8 p-6 sm:p-8 rounded-[2rem] sm:rounded-[2.5rem] flex flex-col justify-between hover:border-[#111111]/15 hover:shadow-lg transition-all duration-300"
+            className="col-span-1 md:col-span-2 lg:col-span-2 hover-radial-card rounded-none p-6 sm:p-8 flex flex-col justify-between"
           >
             <div className="space-y-4">
               <div className="flex items-center gap-2">
-                <span className="p-2 bg-[#C7FF3D]/25 rounded-xl text-[#111111] shrink-0">
-                  <GraduationCap className="w-4 h-4" />
+                <span className="p-1.5 bg-[#C7FF3D]/20 border border-black/10 rounded-none text-[#111111] shrink-0">
+                  <svg viewBox="0 0 16 16" className="w-4 h-4" fill="currentColor">
+                    <path d="M 8 2 L 14 5 L 8 8 L 2 5 Z M 5 7 V 9.5 H 11 V 7 M 12 5 V 9 H 13 V 5 Z" />
+                  </svg>
                 </span>
-                <span className="font-mono text-[9px] text-[#555555] uppercase tracking-wider font-semibold">CST Undergraduate</span>
+                <span className="font-pixel text-[9px] text-[#555555] uppercase tracking-wider font-bold">CST Undergraduate</span>
               </div>
-              <h3 className="text-2xl md:text-3xl font-display font-medium text-[#111111] leading-snug">
+              <h3 className="text-xl md:text-2xl font-pixel font-bold text-[#111111] leading-relaxed">
                 I build sovereign AI engines and high-end interactive interfaces.
               </h3>
               <p className="text-xs md:text-sm font-sans font-light text-[#555555] leading-relaxed">
@@ -120,18 +122,23 @@ export default function AboutMe() {
               style={{ transform: isFlipped ? "rotateY(180deg)" : "rotateY(0deg)" }}
             >
               {/* Front Side */}
-              <div className="absolute inset-0 w-full h-full [backface-visibility:hidden] bg-[#111111] text-white rounded-[2.2rem] sm:rounded-[2.5rem] p-6 sm:p-8 flex flex-col justify-between border border-white/10 shadow-2xl">
+              <div className="absolute inset-0 w-full h-full [backface-visibility:hidden] bg-[#111111] text-white rounded-none p-6 sm:p-8 flex flex-col justify-between border-2 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
                 <div className="flex items-center justify-between">
-                  <span className="font-mono text-[9px] text-[#C7FF3D] uppercase tracking-wider">01 // CORE MINDSET</span>
-                  <span className="p-2 bg-[#C7FF3D]/10 rounded-xl text-[#C7FF3D] shrink-0">
-                    <Sparkles className="w-4 h-4 animate-pulse" />
+                  <span className="font-pixel text-[9px] text-[#C7FF3D] uppercase tracking-wider">01 // CORE MINDSET</span>
+                  <span className="p-2 bg-[#C7FF3D]/10 rounded-none border border-[#C7FF3D]/20 text-[#C7FF3D] shrink-0">
+                    <svg viewBox="0 0 16 16" className="w-4 h-4 animate-pulse" fill="currentColor">
+                      <rect x="7" y="2" width="2" height="12" />
+                      <rect x="2" y="7" width="12" height="2" />
+                      <rect x="6" y="5" width="4" height="6" />
+                      <rect x="5" y="6" width="6" height="4" />
+                    </svg>
                   </span>
                 </div>
                 <div>
-                  <h3 className="text-3xl font-display text-white mt-4 lowercase">dev & design</h3>
-                  <p className="text-[10px] text-white/50 font-sans mt-2">Click to rotate panel card</p>
+                  <h3 className="text-2xl font-display text-white mt-4 lowercase">dev & design</h3>
+                  <p className="text-[9px] text-white/50 font-pixel mt-2">Click to rotate panel card</p>
                 </div>
-                <div className="border-t border-white/10 pt-4 font-mono text-[8px] text-white/40 flex justify-between items-center">
+                <div className="border-t border-white/10 pt-4 font-pixel text-[8px] text-white/40 flex justify-between items-center">
                   <span>PHILOSOPHY</span>
                   <span>FLIP CARD ↗</span>
                 </div>
@@ -139,13 +146,15 @@ export default function AboutMe() {
 
               {/* Back Side */}
               <div 
-                className="absolute inset-0 w-full h-full [backface-visibility:hidden] bg-[#FAF9F6] text-[#111111] rounded-[2.2rem] sm:rounded-[2.5rem] p-6 sm:p-8 flex flex-col justify-between border border-[#111111]/8 shadow-2xl text-left"
+                className="absolute inset-0 w-full h-full [backface-visibility:hidden] bg-[#FAF9F6] text-[#111111] rounded-none p-6 sm:p-8 flex flex-col justify-between border-2 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] text-left"
                 style={{ transform: "rotateY(180deg)" }}
               >
                 <div className="flex items-center justify-between">
-                  <span className="font-mono text-[9px] text-[#555555] uppercase tracking-wider font-semibold">01 // REVEALED</span>
-                  <span className="p-2 bg-[#111111]/5 rounded-xl text-[#111111] shrink-0">
-                    <HeartHandshake className="w-4 h-4" />
+                  <span className="font-pixel text-[9px] text-[#555555] uppercase tracking-wider font-bold">01 // REVEALED</span>
+                  <span className="p-1.5 bg-[#111111]/5 border border-black/10 rounded-none text-[#111111] shrink-0">
+                    <svg viewBox="0 0 16 16" className="w-4 h-4" fill="currentColor">
+                      <path d="M 4 8 H 12 V 12 H 4 Z M 6 6 H 10 V 8 H 6 Z M 3 9 H 4 V 11 H 3 Z M 12 9 H 13 V 11 H 12 Z" />
+                    </svg>
                   </span>
                 </div>
                 <p className="text-xs leading-relaxed text-[#555555] font-sans mt-4">
@@ -165,7 +174,7 @@ export default function AboutMe() {
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: "-10%" }}
-            className="col-span-1 md:col-span-1 lg:col-span-1 bg-[#111111] text-[#F7F7F5] border border-[#111111] p-5 sm:p-6 rounded-[2rem] sm:rounded-[2.5rem] flex flex-col justify-between min-h-[300px] shadow-2xl relative overflow-hidden group"
+            className="col-span-1 md:col-span-1 lg:col-span-1 bg-[#111111] text-[#F7F7F5] border-2 border-black p-5 sm:p-6 rounded-none flex flex-col justify-between min-h-[300px] shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] relative overflow-hidden group"
           >
             {/* Subtle background glow grid overlay */}
             <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:16px_16px] opacity-40 z-0" />
@@ -173,9 +182,23 @@ export default function AboutMe() {
             <div className="relative z-10 flex flex-col justify-between h-full gap-6">
               
               <div className="flex items-center justify-between border-b border-white/10 pb-3">
-                <span className="font-mono text-[9px] text-white/55 tracking-wider uppercase">02 // CAPABILITIES MATRIX</span>
-                <span className="p-1.5 bg-white/5 rounded-lg text-[#C7FF3D] shrink-0">
-                  <Cpu className="w-3.5 h-3.5" />
+                <span className="font-pixel text-[9px] text-white/55 tracking-wider uppercase">02 // CAPABILITIES MATRIX</span>
+                <span className="p-1.5 bg-white/5 border border-white/10 rounded-none text-[#C7FF3D] shrink-0">
+                  <svg viewBox="0 0 16 16" className="w-3.5 h-3.5" fill="currentColor">
+                    <rect x="5" y="5" width="6" height="6" />
+                    <line x1="3" y1="6" x2="5" y2="6" stroke="currentColor" strokeWidth="1.2" />
+                    <line x1="3" y1="8" x2="5" y2="8" stroke="currentColor" strokeWidth="1.2" />
+                    <line x1="3" y1="10" x2="5" y2="10" stroke="currentColor" strokeWidth="1.2" />
+                    <line x1="11" y1="6" x2="13" y2="6" stroke="currentColor" strokeWidth="1.2" />
+                    <line x1="11" y1="8" x2="13" y2="8" stroke="currentColor" strokeWidth="1.2" />
+                    <line x1="11" y1="10" x2="13" y2="10" stroke="currentColor" strokeWidth="1.2" />
+                    <line x1="6" y1="3" x2="6" y2="5" stroke="currentColor" strokeWidth="1.2" />
+                    <line x1="8" y1="3" x2="8" y2="5" stroke="currentColor" strokeWidth="1.2" />
+                    <line x1="10" y1="3" x2="10" y2="5" stroke="currentColor" strokeWidth="1.2" />
+                    <line x1="6" y1="11" x2="6" y2="13" stroke="currentColor" strokeWidth="1.2" />
+                    <line x1="8" y1="11" x2="8" y2="13" stroke="currentColor" strokeWidth="1.2" />
+                    <line x1="10" y1="11" x2="10" y2="13" stroke="currentColor" strokeWidth="1.2" />
+                  </svg>
                 </span>
               </div>
 
@@ -187,13 +210,13 @@ export default function AboutMe() {
                     onClick={() => setActiveSkillBadge(skill.badge)}
                     className="space-y-1 cursor-pointer group/bar text-left animate-fade-in"
                   >
-                    <div className="flex justify-between text-[10px] font-mono text-white/70 group-hover/bar:text-white transition-colors">
+                    <div className="flex justify-between text-[10px] font-pixel text-white/70 group-hover/bar:text-white transition-colors">
                       <span>{skill.label}</span>
                       <span className="font-bold">{skill.percent}%</span>
                     </div>
-                    <div className="w-full bg-white/10 h-1.5 rounded-full overflow-hidden">
+                    <div className="w-full bg-white/5 border border-white/20 h-3.5 p-[2px] rounded-none overflow-hidden">
                       <div 
-                        className={`h-full transition-all duration-500 ${skill.color}`}
+                        className={`h-full transition-all duration-500 rounded-none ${skill.color}`}
                         style={{ width: `${skill.percent}%` }}
                       />
                     </div>
@@ -217,24 +240,28 @@ export default function AboutMe() {
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: "-10%" }}
-            className="col-span-1 md:col-span-2 lg:col-span-2 bg-[#FAF9F6] border border-[#111111]/8 p-5 sm:p-6 rounded-[2rem] sm:rounded-[2.5rem] flex flex-col justify-between hover:border-[#111111]/15 hover:shadow-lg transition-all duration-300"
+            className="col-span-1 md:col-span-2 lg:col-span-2 hover-radial-card rounded-none p-5 sm:p-6 flex flex-col justify-between"
           >
-            <div className="flex items-center gap-2 border-b border-[#111111]/5 pb-3">
-              <span className="p-1.5 bg-[#111111]/5 rounded-lg text-[#111111] shrink-0">
-                <Award className="w-3.5 h-3.5 animate-pulse" />
+            <div className="flex items-center gap-2 border-b-2 border-black/10 pb-3">
+              <span className="p-1.5 bg-[#111111]/5 border border-black/10 rounded-none text-[#111111] shrink-0">
+                <svg viewBox="0 0 16 16" className="w-3.5 h-3.5 animate-pulse" fill="currentColor">
+                  <rect x="5" y="2" width="6" height="6" />
+                  <rect x="4" y="3" width="8" height="4" />
+                  <path d="M 5 8 V 13 L 7 11 L 8 12 L 9 11 L 11 13 V 8 Z" />
+                </svg>
               </span>
-              <span className="font-mono text-[9px] text-[#555555] uppercase tracking-wider font-semibold">Production Credentials</span>
+              <span className="font-pixel text-[9px] text-[#555555] uppercase tracking-wider font-bold">Production Credentials</span>
             </div>
             
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-6">
               {stats.map((stat, sIdx) => (
                 <div 
                   key={sIdx} 
-                  className="bg-white border border-[#111111]/8 hover:border-[#111111]/20 rounded-3xl p-5 flex flex-col justify-between min-h-[110px] transition-all duration-300 hover:shadow-sm hover:scale-[1.02] cursor-default text-left"
+                  className="bg-white border-2 border-black rounded-none p-5 flex flex-col justify-between min-h-[110px] transition-all duration-150 hover:translate-x-[-1.5px] hover:translate-y-[-1.5px] hover:shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] cursor-default text-left"
                 >
-                  <span className="text-2xl font-mono font-bold tracking-tight text-[#111111]">{stat.value}</span>
+                  <span className="text-2xl font-pixel font-bold tracking-tight text-[#111111]">{stat.value}</span>
                   <div className="space-y-0.5 mt-2">
-                    <span className="text-[9px] font-sans font-bold text-[#111111] uppercase tracking-wide block">{stat.label}</span>
+                    <span className="text-[9px] font-pixel font-bold text-[#111111] uppercase tracking-wide block">{stat.label}</span>
                     <span className="text-[8px] font-sans font-normal text-[#555555] block leading-snug">{stat.desc}</span>
                   </div>
                 </div>

@@ -98,7 +98,7 @@ function BentoCard({
     <div
       ref={cardRef}
       onMouseMove={handleMouseMove}
-      className={`hover-radial-card relative p-6 md:p-8 rounded-3xl overflow-hidden group transition-all duration-300 shadow-sm hover:shadow-md ${className}`}
+      className={`hover-radial-card relative p-6 md:p-8 rounded-none overflow-hidden group ${className}`}
     >
       {/* Dynamic light gradient shine element inside the card */}
       <div 
@@ -158,7 +158,10 @@ export default function BentoGrid() {
         viewport={{ once: false, amount: 0.2 }}
         className="mb-16 text-center md:text-left"
       >
-        <h2 className="text-3xl md:text-5xl font-display font-medium text-[#111111] leading-tight">
+        <span className="font-mono text-xs text-[#555555] tracking-widest uppercase">
+          02 // ARCHITECTURE MATRIX
+        </span>
+        <h2 className="text-3xl md:text-5xl font-display font-medium text-[#111111] mt-3 leading-tight">
           System Capability Matrix
         </h2>
         <p className="text-[#555555] font-sans text-sm md:text-base mt-3 max-w-xl">
@@ -177,10 +180,10 @@ export default function BentoGrid() {
         <motion.div variants={leftCardVariants} className="md:col-span-2 h-[380px]">
           <BentoCard className="w-full h-full">
             <div className="flex items-center justify-between">
-              <div className="p-3 bg-[#C7FF3D]/20 rounded-2xl">
-                <Cpu className="w-6 h-6 text-[#111111]" />
+              <div className="p-2.5 bg-[#C7FF3D] border-2 border-black rounded-none shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
+                <Cpu className="w-5 h-5 text-[#111111]" />
               </div>
-              <span className="font-mono text-[10px] tracking-wider text-[#555555] bg-[#111111]/5 px-2.5 py-1 rounded-full uppercase">
+              <span className="font-pixel text-[9px] font-bold tracking-wider text-[#555555] bg-[#111111]/5 px-2.5 py-1 rounded-none border border-black/10 uppercase">
                 AI Stack
               </span>
             </div>
@@ -226,10 +229,10 @@ class AirGappedRAGPipeline:
         <motion.div variants={rightCardVariants} className="md:col-span-1 h-[380px]">
           <BentoCard className="w-full h-full">
             <div>
-              <div className="p-3 bg-[#C7FF3D]/20 rounded-2xl inline-block">
-                <Server className="w-6 h-6 text-[#111111]" />
+              <div className="p-2.5 bg-white border-2 border-black rounded-none shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] inline-block">
+                <Server className="w-5 h-5 text-[#111111]" />
               </div>
-              <h3 className="text-lg md:text-xl font-sans font-bold text-[#111111] mt-6">
+              <h3 className="text-lg md:text-xl font-pixel font-bold text-[#111111] mt-6">
                 Microservices & Scale
               </h3>
               <p className="text-xs text-[#555555] mt-2 font-sans">
@@ -238,7 +241,7 @@ class AirGappedRAGPipeline:
             </div>
 
             {/* Telemetry charts */}
-            <div className="border border-[#111111]/8 bg-[#F7F7F5] rounded-2xl p-4 mt-6 font-mono text-[10px] space-y-3">
+            <div className="border-2 border-black bg-white p-4 mt-6 font-mono text-[10px] space-y-3 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
               <div className="flex items-center justify-between text-[#555555]">
                 <span>CLUSTER GATEWAY</span>
                 <span className="text-[#4ADE80] font-bold">ONLINE</span>
@@ -269,8 +272,8 @@ class AirGappedRAGPipeline:
         <motion.div variants={leftCardVariants} className="md:col-span-1 h-[380px]">
           <BentoCard className="w-full h-full">
             <div>
-              <div className="p-3 bg-[#C7FF3D]/20 rounded-2xl inline-block">
-                <ShieldAlert className="w-6 h-6 text-[#111111]" />
+              <div className="p-2.5 bg-white border-2 border-black rounded-none shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] inline-block">
+                <ShieldAlert className="w-5 h-5 text-[#111111]" />
               </div>
               <h3 className="text-lg md:text-xl font-sans font-bold text-[#111111] mt-6">
                 SecOps & Verification
@@ -305,16 +308,16 @@ class AirGappedRAGPipeline:
         <motion.div variants={rightCardVariants} className="md:col-span-2 h-[380px]">
           <BentoCard className="w-full h-full">
             <div className="flex items-center justify-between">
-              <div className="p-3 bg-[#C7FF3D]/20 rounded-2xl">
-                <GitPullRequest className="w-6 h-6 text-[#111111]" />
+              <div className="p-2.5 bg-[#C7FF3D] border-2 border-black rounded-none shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
+                <GitPullRequest className="w-5 h-5 text-[#111111]" />
               </div>
-              <span className="font-mono text-[10px] tracking-wider text-[#555555] bg-[#111111]/5 px-2.5 py-1 rounded-full uppercase">
+              <span className="font-pixel text-[9px] font-bold tracking-wider text-[#555555] bg-[#111111]/5 px-2.5 py-1 rounded-none border border-black/10 uppercase">
                 INFRASTRUCTURE
               </span>
             </div>
 
             <div className="my-6">
-              <h3 className="text-xl md:text-2xl font-sans font-bold text-[#111111]">
+              <h3 className="text-xl md:text-2xl font-pixel font-bold text-[#111111]">
                 Cloud-Native Continuous Delivery
               </h3>
               <p className="text-xs text-[#555555] mt-2 font-sans max-w-xl">
@@ -323,7 +326,7 @@ class AirGappedRAGPipeline:
             </div>
 
             {/* DevOps Pipeline visual flow chart */}
-            <div className="w-full bg-[#FAF9F6] border border-[#111111]/8 rounded-2xl p-4 flex items-center justify-around font-mono text-[10px] text-[#555555] shadow-inner select-none overflow-x-auto min-h-[120px]">
+            <div className="w-full bg-white border-2 border-black p-4 flex items-center justify-around font-mono text-[10px] text-[#555555] shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] select-none overflow-x-auto min-h-[120px]">
               <div className="flex flex-col items-center gap-2">
                 <span className="bg-[#111111] text-[#F7F7F5] px-2.5 py-1 rounded-md text-[9px]">GIT ACTIONS</span>
                 <span className="font-bold text-[#111111]">Auto Lint & Test</span>

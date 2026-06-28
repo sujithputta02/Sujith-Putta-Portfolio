@@ -204,7 +204,7 @@ function SkillCard({ skill }: { skill: SkillItem }) {
       }}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      className="relative p-5 rounded-2xl bg-white border border-[#111111]/8 flex flex-col justify-between min-h-[145px] transition-all duration-300 overflow-hidden shadow-sm hover:shadow-md hover:border-[#111111]/15"
+      className="relative p-5 rounded-none bg-white border-2 border-black flex flex-col justify-between min-h-[145px] transition-all duration-150 shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[-2px] hover:translate-y-[-2px] hover:shadow-[5px_5px_0px_0px_rgba(0,0,0,1)] overflow-hidden"
     >
       {/* Dynamic top brand colored strip on hover */}
       <div 
@@ -220,11 +220,10 @@ function SkillCard({ skill }: { skill: SkillItem }) {
           {/* Logo & Category tag row */}
           <div className="flex items-center justify-between gap-3 mb-2.5">
             <div 
-              className="w-10 h-10 rounded-xl flex items-center justify-center border border-[#111111]/6 transition-all duration-300"
+              className="w-10 h-10 rounded-none flex items-center justify-center border-2 border-black transition-all duration-150 bg-white"
               style={{ 
-                backgroundColor: isHovered ? `${brandColor}12` : "#F7F7F5",
-                borderColor: isHovered ? `${brandColor}25` : "rgba(17,17,17,0.06)",
-                transform: isHovered ? "scale(1.05) rotate(2deg)" : "none"
+                boxShadow: isHovered ? "2.5px 2.5px 0px 0px rgba(0,0,0,1)" : "1.5px 1.5px 0px 0px rgba(0,0,0,1)",
+                transform: isHovered ? "translate(-1px, -1px)" : "none"
               }}
             >
               {!imageError && skill.slug ? (
@@ -244,9 +243,9 @@ function SkillCard({ skill }: { skill: SkillItem }) {
             </div>
             
             <span 
-              className="font-mono text-[9px] px-2.5 py-0.5 rounded-full border text-[#555555] bg-white transition-all duration-300"
+              className="font-pixel text-[8px] px-2.5 py-0.5 rounded-none border text-[#555555] bg-white transition-all duration-150"
               style={{ 
-                borderColor: isHovered ? `${brandColor}25` : "rgba(17,17,17,0.08)",
+                borderColor: isHovered ? brandColor : "rgba(17,17,17,0.15)",
                 color: isHovered ? brandColor : "#555555"
               }}
             >
@@ -409,32 +408,36 @@ export default function Skills() {
         whileInView="visible"
         viewport={{ once: false, amount: 0.2 }}
         transition={{ duration: 0.6, delay: 0.1 }}
-        className="flex items-center justify-between gap-6 mb-12 bg-white/40 backdrop-blur-md border border-[#111111]/8 p-4 rounded-3xl relative z-10"
+        className="flex items-center justify-between gap-6 mb-12 bg-white border-2 border-black p-4 rounded-none shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] relative z-10"
       >
         <div className="flex items-center gap-2.5">
-          <div className="w-2.5 h-2.5 rounded-full bg-[#C7FF3D] animate-pulse" />
-          <span className="font-mono text-[10px] tracking-widest text-[#555555] uppercase">
+          <div className="w-2.5 h-2.5 rounded-none bg-[#C7FF3D] border border-black animate-pulse" />
+          <span className="font-pixel text-[10px] tracking-widest text-[#555555] uppercase">
             {isSearching ? `FILTERED SEARCH INDEX` : `EXPLORING CATEGORIES`}
           </span>
         </div>
 
         {/* Live Search Input */}
         <div className="relative flex items-center w-full sm:w-80">
-          <Search className="absolute left-4 w-4 h-4 text-[#555555]" />
+          <Search className="absolute left-4 w-4 h-4 text-[#111111] z-10" />
           <input
             type="text"
             placeholder="Search stack (e.g. Python, Docker, FAISS)..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full bg-white/70 border border-[#111111]/10 rounded-full px-5 py-2.5 text-xs font-sans focus:outline-none focus:ring-1 focus:ring-[#C7FF3D] focus:border-[#111111]/30 pl-11 text-[#111111] transition-all"
+            className="w-full bg-white border-2 border-black rounded-none px-5 py-2.5 text-xs font-pixel focus:outline-none pl-11 pr-12 text-[#111111] shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] focus:translate-x-[-1px] focus:translate-y-[-1px] focus:shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] transition-all"
           />
-          {searchQuery && (
+          {searchQuery ? (
             <button 
               onClick={() => setSearchQuery("")}
-              className="absolute right-4 p-0.5 rounded-full hover:bg-gray-100 text-[#555555] transition-colors cursor-pointer"
+              className="absolute right-4 p-0.5 rounded-none border border-black bg-white hover:bg-[#C7FF3D] text-[#111111] transition-colors cursor-pointer z-10"
             >
               <X className="w-3.5 h-3.5" />
             </button>
+          ) : (
+            <kbd className="absolute right-4 hidden sm:inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded-none border border-black bg-[#111111] font-pixel text-[8px] text-white select-none pointer-events-none shadow-[1px_1px_0px_0px_rgba(0,0,0,1)] z-10">
+              <span>⌘</span>K
+            </kbd>
           )}
         </div>
       </motion.div>
@@ -459,7 +462,7 @@ export default function Skills() {
                 {filteredSkills.length > 0 && (
                   <button 
                     onClick={() => setSearchQuery("")}
-                    className="font-mono text-[9px] text-[#555555] underline hover:text-[#111111]"
+                    className="font-pixel text-[9px] text-[#555555] underline hover:text-[#111111]"
                   >
                     CLEAR SEARCH
                   </button>
@@ -478,15 +481,15 @@ export default function Skills() {
               </motion.div>
 
               {filteredSkills.length === 0 && (
-                <div className="py-20 text-center bg-[#F7F7F5] border border-[#111111]/6 rounded-2xl">
-                  <HelpCircle className="w-10 h-10 mx-auto text-[#555555]/40 mb-3" />
-                  <h4 className="font-sans font-bold text-[#111111] text-base">No matching tools found</h4>
+                <div className="py-20 text-center bg-[#F7F7F5] border-2 border-black rounded-none shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
+                  <HelpCircle className="w-10 h-10 mx-auto text-[#111111] mb-3" />
+                  <h4 className="font-pixel font-bold text-[#111111] text-base">No matching tools found</h4>
                   <p className="font-sans text-xs text-[#555555] mt-1 max-w-sm mx-auto font-light leading-relaxed">
                     We couldn&apos;t find anything matching &quot;{searchQuery}&quot; in the expertise database. Try checking the spelling.
                   </p>
                   <button
                     onClick={() => setSearchQuery("")}
-                    className="mt-5 px-5 py-2 border border-[#111111]/15 rounded-full text-xs font-bold text-[#111111] bg-white hover:bg-gray-50 transition-all duration-300"
+                    className="mt-5 px-5 py-2 border-2 border-black rounded-none text-xs font-pixel font-bold text-[#111111] bg-white hover:bg-[#C7FF3D] shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[-1px] hover:translate-y-[-1px] hover:shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] transition-all duration-100"
                   >
                     Reset Search
                   </button>
@@ -537,11 +540,11 @@ export default function Skills() {
                             }
                             setSelectedCategory(category.id);
                           }}
-                          className="flex flex-col items-start gap-1 text-left cursor-pointer whitespace-nowrap focus:outline-none focus-visible:ring-2 focus-visible:ring-[#C7FF3D]/50 focus-visible:ring-offset-2 rounded-lg px-2 py-1 -mx-2 -my-1"
+                          className="flex flex-col items-start gap-1 text-left cursor-pointer whitespace-nowrap focus:outline-none focus-visible:ring-2 focus-visible:ring-[#C7FF3D]/50 focus-visible:ring-offset-2 rounded-none px-2 py-1 -mx-2 -my-1"
                         >
-                          <span className="font-mono text-[9px] text-[#555555]">{category.num}</span>
+                          <span className="font-pixel text-[9px] text-[#555555]">{category.num}</span>
                           <span 
-                            className="font-sans font-bold text-xs transition-colors duration-200"
+                            className="font-pixel font-bold text-xs transition-colors duration-200"
                             style={{ 
                               color: isActive ? "#111111" : "#555555",
                               fontWeight: isActive ? "700" : "500" 
@@ -579,11 +582,11 @@ export default function Skills() {
                       >
                         <div className="flex items-center gap-4 relative py-1">
                           {/* Active Line indicator */}
-                          <div className="w-8 h-[1px] relative flex-shrink-0">
+                          <div className="w-8 h-2 relative flex-shrink-0">
                             {isActive && (
                               <motion.div 
                                 layoutId="skillsActiveLine"
-                                className="absolute inset-0 bg-[#111111]"
+                                className="absolute left-0 top-0 w-6 h-2 bg-[#C7FF3D] border border-black shadow-[1px_1px_0px_0px_rgba(0,0,0,1)]"
                                 transition={{ type: "spring", stiffness: 300, damping: 25 }}
                               />
                             )}
@@ -591,11 +594,11 @@ export default function Skills() {
                           
                           <div>
                             <div className="flex items-baseline gap-2">
-                              <span className="font-mono text-[9px] text-[#555555] tracking-widest">
+                              <span className="font-pixel text-[9px] text-[#555555] tracking-widest">
                                 {category.num}
                               </span>
                               <h3 
-                                className="font-sans font-bold text-base transition-colors duration-300"
+                                className="font-pixel font-bold text-base transition-colors duration-300"
                                 style={{
                                   color: isActive ? "#111111" : "#555555",
                                   fontWeight: isActive ? "800" : "500"

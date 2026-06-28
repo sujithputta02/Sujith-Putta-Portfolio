@@ -35,7 +35,7 @@ const dotVariants: Variants = {
   },
   visible: { 
     scale: 1, 
-    backgroundColor: "#C7FF3D",
+    backgroundColor: "#111111",
     borderColor: "rgba(17, 17, 17, 0)",
     transition: {
       type: "spring",
@@ -83,13 +83,13 @@ export default function Timeline() {
   const getTimelineIcon = (idx: number) => {
     switch (idx) {
       case 0:
-        return <BookOpen className="w-4 h-4 text-[#111111]" />;
+        return <BookOpen className="w-4 h-4 text-[#C7FF3D]" />;
       case 1:
-        return <Rocket className="w-4 h-4 text-[#111111]" />;
+        return <Rocket className="w-4 h-4 text-[#C7FF3D]" />;
       case 2:
-        return <ShieldAlert className="w-4 h-4 text-[#111111]" />;
+        return <ShieldAlert className="w-4 h-4 text-[#C7FF3D]" />;
       default:
-        return <Award className="w-4 h-4 text-[#111111]" />;
+        return <Award className="w-4 h-4 text-[#C7FF3D]" />;
     }
   };
 
@@ -119,7 +119,7 @@ export default function Timeline() {
           {/* Animated active track line draws as user scrolls */}
           <motion.div 
             style={{ scaleY }}
-            className="absolute left-[11px] top-2 bottom-2 w-[1.5px] bg-[#C7FF3D] origin-top"
+            className="absolute left-[11px] top-2 bottom-2 w-[1.5px] bg-[#111111] origin-top"
           />
           
           {profileData.timeline.map((node, idx) => (
@@ -143,21 +143,21 @@ export default function Timeline() {
               {/* Card Container */}
               <motion.div 
                 variants={cardVariants}
-                className="bg-white border border-[#111111]/8 rounded-3xl p-6 md:p-8 hover:border-[#111111]/15 hover:shadow-md transition-all duration-300 relative overflow-hidden"
+                className="bg-white border-2 border-black rounded-none p-6 md:p-8 hover:translate-x-[-2px] hover:translate-y-[-2px] hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all duration-150 relative overflow-hidden"
               >
                 {/* Visual hover background glow */}
                 <div className="absolute inset-0 bg-radial from-[#C7FF3D]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
 
-                <div className="relative z-10 flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-[#111111]/5 pb-3 mb-4">
-                  <span className="font-mono text-xs font-bold text-[#C7FF3D] bg-[#111111] px-2.5 py-1 rounded-full uppercase">
+                <div className="relative z-10 flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b-2 border-black/10 pb-3 mb-4">
+                  <span className="font-pixel text-xs font-bold text-[#C7FF3D] bg-[#111111] px-2.5 py-1 rounded-none border border-black uppercase shadow-[1.5px_1.5px_0px_0px_rgba(0,0,0,1)]">
                     {node.years}
                   </span>
-                  <span className="font-mono text-[9px] text-[#555555] opacity-50 uppercase tracking-widest">
+                  <span className="font-pixel text-[9px] text-[#555555] opacity-50 uppercase tracking-widest">
                     Milestone 0{idx + 1}
                   </span>
                 </div>
 
-                <h3 className="text-lg md:text-xl font-sans font-bold text-[#111111] relative z-10">
+                <h3 className="text-lg md:text-xl font-pixel font-bold text-[#111111] relative z-10">
                   {node.title}
                 </h3>
                 <p className="text-xs md:text-sm font-sans text-[#555555] mt-2 leading-relaxed relative z-10">
