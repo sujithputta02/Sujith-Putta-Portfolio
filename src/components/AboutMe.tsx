@@ -99,7 +99,7 @@ export default function AboutMe() {
                 I build sovereign AI engines and high-end interactive interfaces.
               </h3>
               <p className="text-xs md:text-sm font-sans font-light text-[#555555] leading-relaxed">
-                Computer Science and Technology undergraduate with hands-on experience building and shipping production-grade features using Python/FastAPI, React/TypeScript, and REST microservices on Azure and AWS. Proven track record as an AI Engineer and UI/UX Designer, delivering scalable backend APIs, intelligent RAG pipelines, CI/CD integrations, and component-driven frontends with polished user interactions. Hands-on experience with Docker, Git workflows, and system design paradigms.
+                Computer Science and Technology undergraduate with hands-on experience building and shipping production-grade features using Python/FastAPI, React/TypeScript, and REST microservices on Azure and AWS. Proven track record as a Generative AI Developer and UI/UX Designer, delivering scalable backend APIs, intelligent RAG pipelines, CI/CD integrations, and component-driven frontends with polished user interactions. Hands-on experience with Docker, Git workflows, and system design paradigms.
               </p>
             </div>
             <div className="border-t border-[#111111]/5 pt-4 mt-6 flex justify-between items-center text-[10px] text-[#555555] font-mono">

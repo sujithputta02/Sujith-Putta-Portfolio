@@ -312,7 +312,7 @@ export default function ContactFooter() {
             <span className="font-sacramento text-lg text-white font-bold tracking-wide normal-case">
               Sujith Putta
             </span>
-            <span className="opacity-50">— AI Engineer & Product Developer</span>
+            <span className="opacity-50">— Generative AI Developer & Product Developer</span>
           </div>
           <div>Bengaluru, India</div>
           <div>© {new Date().getFullYear()} All Rights Reserved.</div>

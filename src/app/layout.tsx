@@ -31,18 +31,18 @@ export const metadata: Metadata = {
 
   // ── Title ──────────────────────────────────────────────────────────────────
   title: {
-    default: "Sujith Putta | AI Engineer & Product Developer",
+    default: "Sujith Putta | Generative AI Developer & Product Developer",
     template: "%s | Sujith Putta",
   },
 
   // ── Description ───────────────────────────────────────────────────────────
   description:
-    "Portfolio of Sujith Putta — AI Engineer, Full-Stack Developer, and Product Builder from Sacramento, CA. Specialising in Hybrid RAG pipelines, FastAPI microservices, React, Node.js, and cloud-native deployments on AWS & Azure.",
+    "Portfolio of Sujith Putta — Generative AI Developer, Full-Stack Developer, and Product Builder from Sacramento, CA. Specialising in Hybrid RAG pipelines, FastAPI microservices, React, Node.js, and cloud-native deployments on AWS & Azure.",
 
   // ── Keywords ──────────────────────────────────────────────────────────────
   keywords: [
     "Sujith Putta",
-    "AI Engineer",
+    "Generative AI Developer",
     "Full Stack Developer",
     "Product Developer",
     "RAG Pipeline",
@@ -87,15 +87,15 @@ export const metadata: Metadata = {
     locale: "en_US",
     url: BASE_URL,
     siteName: "Sujith Putta — Portfolio",
-    title: "Sujith Putta | AI Engineer & Product Developer",
+    title: "Sujith Putta | Generative AI Developer & Product Developer",
     description:
-      "AI Engineer & Full-Stack Developer building RAG pipelines, microservices, and premium web products. Open to opportunities in AI, backend, and product engineering.",
+      "Generative AI Developer & Full-Stack Developer building RAG pipelines, microservices, and premium web products. Open to opportunities in AI, backend, and product engineering.",
     images: [
       {
         url: "/Sujith Putta Profile.png",
         width: 800,
         height: 800,
-        alt: "Sujith Putta — AI Engineer & Product Developer",
+        alt: "Sujith Putta — Generative AI Developer & Product Developer",
       },
     ],
   },
@@ -103,9 +103,9 @@ export const metadata: Metadata = {
   // ── Twitter / X Card ──────────────────────────────────────────────────────
   twitter: {
     card: "summary_large_image",
-    title: "Sujith Putta | AI Engineer & Product Developer",
+    title: "Sujith Putta | Generative AI Developer & Product Developer",
     description:
-      "AI Engineer & Full-Stack Developer building RAG pipelines, microservices, and premium web products.",
+      "Generative AI Developer & Full-Stack Developer building RAG pipelines, microservices, and premium web products.",
     images: ["/Sujith Putta Profile.png"],
     creator: "@sujithputta02",
   },

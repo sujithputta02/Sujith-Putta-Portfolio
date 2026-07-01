@@ -7,7 +7,7 @@ import { ArrowRight } from "lucide-react";
 export default function Hero() {
   const containerRef = useRef<HTMLDivElement>(null);
   
-  const roles = ["AI Engineer", "Full Stack Developer", "UI/UX Designer"];
+  const roles = ["Generative AI Developer", "Full Stack Developer", "UI/UX Designer"];
   const [roleIdx, setRoleIdx] = useState(0);
 
   useEffect(() => {
@@ -246,7 +246,7 @@ export default function Hero() {
 
           {/* View Resume */}
           <a
-            href="/sujith-putta-resume.pdf"
+            href="/Sujith_Putta_Resume.pdf"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center justify-center px-8 py-4 border-2 border-black bg-white text-[#111111] font-pixel font-bold shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[-2px] hover:translate-y-[-2px] hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] transition-all duration-150 cursor-pointer"

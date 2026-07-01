@@ -62,7 +62,7 @@ export interface ProfileData {
 
 export const profileData: ProfileData = {
   name: "SUJITH PUTTA",
-  title: "Premium AI Engineer & Product Developer",
+  title: "Premium Generative AI Developer & Product Developer",
   email: "sujithputta02@gmail.com",
   phone: "+91 7386777701",
   location: "Bangalore, India",

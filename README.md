@@ -2,7 +2,7 @@
 
 # Sujith Putta — Developer Portfolio
 
-**AI Engineer · Full-Stack Developer · Product Builder**
+**Generative AI Developer · Full-Stack Developer · Product Builder**
 
 [![Next.js](https://img.shields.io/badge/Next.js-16-black?logo=next.js)](https://nextjs.org)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?logo=typescript&logoColor=white)](https://www.typescriptlang.org)
