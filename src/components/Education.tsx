@@ -176,7 +176,7 @@ export default function Education() {
                   </div>
                 </div>
 
-                <div className="inline-flex items-center gap-2 px-3 py-1 bg-[#C7FF3D]/20 border-2 border-black rounded-none font-pixel text-xs text-[#111111] font-bold shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
+                <div className="inline-flex items-center gap-2 px-3 py-1 bg-[#C7FF3D]/20 border-2 border-black rounded-none font-mono text-xs text-[#111111] font-bold shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
                   <svg viewBox="0 0 16 16" className="w-3.5 h-3.5" fill="currentColor">
                     <rect x="5" y="2" width="6" height="6" />
                     <rect x="4" y="3" width="8" height="4" />

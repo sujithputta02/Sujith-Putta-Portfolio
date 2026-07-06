@@ -5,7 +5,7 @@ import { Search, Cpu, LayoutGrid, ArrowUpRight, Shield, Lock } from "lucide-reac
 import { motion, AnimatePresence } from "framer-motion";
 
 export default function CaseStudy() {
-  const [activeCase, setActiveCase] = useState<"lifeflow" | "cyberconstituent">("lifeflow");
+  const [activeCase, setActiveCase] = useState<"lumaforge" | "cyberconstituent">("lumaforge");
 
   return (
     <section className="py-24 bg-[#FAF9F6] border-y-2 border-black relative overflow-hidden">
@@ -24,15 +24,15 @@ export default function CaseStudy() {
         <div className="flex justify-center mb-12 relative z-20">
           <div className="inline-flex bg-[#111111]/5 border-2 border-black p-1 rounded-none relative">
             
-            {/* Lifeflow button */}
+            {/* LumaForge button */}
             <button
-              onClick={() => setActiveCase("lifeflow")}
+              onClick={() => setActiveCase("lumaforge")}
               className={`relative z-10 px-5 py-2.5 rounded-none font-pixel text-[10px] font-bold uppercase tracking-wider transition-colors duration-150 cursor-pointer ${
-                activeCase === "lifeflow" ? "text-[#C7FF3D]" : "text-[#555555] hover:text-[#111111]"
+                activeCase === "lumaforge" ? "text-[#C7FF3D]" : "text-[#555555] hover:text-[#111111]"
               }`}
             >
-              01 // Life Flow AI
-              {activeCase === "lifeflow" && (
+              01 // LumaForge
+              {activeCase === "lumaforge" && (
                 <motion.div
                   layoutId="activeCaseBg"
                   className="absolute inset-0 bg-[#111111] rounded-none -z-10 shadow-none"
@@ -68,24 +68,24 @@ export default function CaseStudy() {
             exit={{ opacity: 0, y: -15 }}
             transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
           >
-            {activeCase === "lifeflow" ? (
+            {activeCase === "lumaforge" ? (
               <div>
                 {/* Header and metadata */}
                 <div className="flex flex-col md:flex-row md:items-end justify-between border-b-2 border-black/10 pb-8 mb-16 text-left">
                   <div>
                     <span className="font-pixel text-xs text-[#555555] uppercase tracking-wider font-bold">
-                      02 // CASE RETROSPECTIVE
+                      01 // CASE RETROSPECTIVE
                     </span>
                     <h2 className="text-3xl md:text-5xl font-display font-medium text-[#111111] mt-3">
-                      Life Flow AI
+                      LumaForge
                     </h2>
                     <p className="text-[#555555] font-sans text-sm mt-2">
-                      Microsoft Imagine Cup 2026 Innovation Deep-Dive
+                      Introducing LumaForge – An Open-Source AI Image Generation Model
                     </p>
                   </div>
                   <div className="mt-4 md:mt-0">
                     <span className="font-pixel text-[9px] text-[#111111] bg-[#C7FF3D] border-2 border-black px-3 py-1 rounded-none uppercase font-bold tracking-wider shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
-                      MICROSOFT AZURE INTEGRATION
+                      LOCAL-FIRST AI INFERENCE
                     </span>
                   </div>
                 </div>
@@ -96,19 +96,18 @@ export default function CaseStudy() {
                   <div className="bg-white border-2 border-black p-8 rounded-none flex flex-col justify-between h-56 hover:translate-x-[-2px] hover:translate-y-[-2px] hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all duration-150 text-left">
                     <div className="p-2.5 bg-[#C7FF3D]/20 border border-black/15 rounded-none w-fit text-[#111111] shadow-[1.5px_1.5px_0px_0px_rgba(0,0,0,0.15)]">
                       <svg viewBox="0 0 16 16" className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="square">
-                        <circle cx="6" cy="6" r="3.5" />
-                        <line x1="9" y1="9" x2="13" y2="13" />
+                        <path d="M 3 4 H 13 M 3 8 H 10 M 3 12 H 7" />
                       </svg>
                     </div>
                     <div>
                       <span className="text-3xl md:text-4xl font-pixel font-bold tracking-tight text-[#111111]">
-                        Hybrid
+                        Local
                       </span>
                       <p className="text-xs font-pixel text-[#555555] mt-2 font-bold uppercase tracking-wide">
-                        Search Pipeline
+                        Ollama Integration
                       </p>
                       <p className="text-[11px] font-sans text-[#555555] mt-1 leading-snug">
-                        Azure AI Search private index queries paired with a smart fallback to the Bing Web Search API for wide coverage.
+                        Local Ollama models intelligently expand prompts before diffusing, avoiding cloud APIs.
                       </p>
                     </div>
                   </div>
@@ -134,13 +133,13 @@ export default function CaseStudy() {
                     </div>
                     <div>
                       <span className="text-3xl md:text-4xl font-pixel font-bold tracking-tight text-[#111111]">
-                        AI-Led
+                        MPS/CUDA
                       </span>
                       <p className="text-xs font-pixel text-[#555555] mt-2 font-bold uppercase tracking-wide">
-                        Workflow Generator
+                        Hardware Acceleration
                       </p>
                       <p className="text-[11px] font-sans text-[#555555] mt-1 leading-snug">
-                        Translates complex bureaucratic workflows (hospital, visas) into structured interactive checklists using DeepSeek R1 & GPT-4o.
+                        Optimised inference using FP16, PyTorch, and MPS for Apple Silicon, plus CUDA and TensorRT support for Windows.
                       </p>
                     </div>
                   </div>
@@ -148,22 +147,19 @@ export default function CaseStudy() {
                   {/* Metric 3 */}
                   <div className="bg-white border-2 border-black p-8 rounded-none flex flex-col justify-between h-56 hover:translate-x-[-2px] hover:translate-y-[-2px] hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all duration-150 text-left">
                     <div className="p-2.5 bg-[#C7FF3D]/20 border border-black/15 rounded-none w-fit text-[#111111] shadow-[1.5px_1.5px_0px_0px_rgba(0,0,0,0.15)]">
-                      <svg viewBox="0 0 16 16" className="w-5 h-5" fill="currentColor">
-                        <rect x="2" y="2" width="5" height="5" />
-                        <rect x="9" y="2" width="5" height="5" />
-                        <rect x="2" y="9" width="5" height="5" />
-                        <rect x="9" y="9" width="5" height="5" />
+                      <svg viewBox="0 0 16 16" className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="square">
+                        <path d="M 2 4 L 7 8 L 2 12 M 8 4 L 13 8 L 8 12" />
                       </svg>
                     </div>
                     <div>
                       <span className="text-3xl md:text-4xl font-pixel font-bold tracking-tight text-[#111111]">
-                        3D R3F
+                        500x
                       </span>
                       <p className="text-xs font-pixel text-[#555555] mt-2 font-bold uppercase tracking-wide">
-                        Gamified Engine
+                        Vectorised NumPy
                       </p>
                       <p className="text-[11px] font-sans text-[#555555] mt-1 leading-snug">
-                        Three.js and React Three Fiber interactive node visualizations tracking user achievements in real-time.
+                        Background removal vectorized in NumPy (running in ~8.9ms) and sketch filtration (running in ~4.1ms).
                       </p>
                     </div>
                   </div>
@@ -176,21 +172,27 @@ export default function CaseStudy() {
                       // THE CHALLENGE
                     </h4>
                     <p className="text-[#111111] font-medium text-base mb-3">
-                      Simplifying complex, confusing real-world bureaucratic procedures without getting lost in paper forms or broken links.
+                      Pushing local AI image generation limits without relying on expensive, proprietary cloud APIs.
+                    </p>
+                    <p className="mb-4">
+                      I wanted to explore how far I could push local AI image generation without relying on cloud APIs. That curiosity led me to build LumaForge, an open-source image generation model built on Stable Diffusion 3.5 Medium and optimised for efficient local inference.
                     </p>
                     <p>
-                      Navigating hospital admissions, visa applications, or paperwork is typically a nightmare of disjointed steps and opaque guidelines. Traditional setups offer static instruction sheets that fail to account for dynamic individual circumstances. We built LifeFlow to transform these messy administrative workflows into simple, validated, step-by-step interactive checklists powered by sovereign AI agents.
+                      When I started this project, my initial idea was to build an ML-based prompt classification model that could identify image attributes and quality labels before passing prompts to the diffusion pipeline. However, building a reliable classifier required a much larger labelled dataset than I had available.
                     </p>
                   </div>
                   <div>
                     <h4 className="text-xs font-pixel text-[#111111] uppercase tracking-widest mb-4 font-bold">
-                      // THE ARCHITECTURE
+                      // THE RETROSPECTIVE & SOLUTION
                     </h4>
                     <p className="text-[#111111] font-medium text-base mb-3">
-                      Azure-hosted Next.js web application utilizing hybrid semantic search indexes for real-time document validation.
+                      Building a local-first workflow utilizing open models, hardware optimization, and vectorized post-processing.
+                    </p>
+                    <p className="mb-4">
+                      Instead of stopping there, I took a different approach. Rather than relying on hosted LLM APIs such as OpenAI or Gemini, I built a local-first workflow. I integrated Ollama to intelligently expand user prompts into richer, more descriptive queries before sending them to the Diffusers pipeline. I used Ollama models because they are open models, unlike frontier proprietary models. This significantly improved prompt quality, composition, lighting, and overall adherence while keeping the workflow completely local.
                     </p>
                     <p>
-                      We engineered a robust pipeline connecting Next.js with OpenRouter to dispatch queries to DeepSeek R1 and GPT-4o models. Curated, high-confidence administrative guides are indexed in private Azure AI Search indices. Interactive frontend maps are rendered using React Three Fiber, while persistent state management is coordinated via Zustand. Automated checks verify steps before generating exportable checklists.
+                      Building LumaForge gave me hands-on experience with Stable Diffusion 3.5 Medium, Hugging Face Diffusers, prompt engineering, hardware acceleration (FP16, MPS, CUDA), and designing efficient local AI inference pipelines. More importantly, it taught me that sometimes changing the approach is better than forcing the original idea.
                     </p>
                   </div>
                 </div>

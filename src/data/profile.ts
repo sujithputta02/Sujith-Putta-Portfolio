@@ -70,7 +70,7 @@ export const profileData: ProfileData = {
     degree: "Bachelor of Technology - Computer Science and Technology",
     school: "Dayananda Sagar University",
     years: "2023–Present",
-    cgpa: "8.92",
+    cgpa: "9.05",
     coursework: [
       "Full Stack Development",
       "Computer Network Fundamentals",
@@ -225,6 +225,17 @@ export const profileData: ProfileData = {
       performanceVector: "Achieved 89% validation accuracy with a compact 67M parameter architecture optimized for low-latency inference and resource-constrained environment deployments.",
       liveLink: "https://huggingface.co/sujithputta02/cyber-threat-constitutional-slm",
       githubLink: "https://github.com/sujithputta02/cyber-constituent-slm"
+    },
+    {
+      title: "LumaForge",
+      metadata: "AI Image Generation & Styling Platform (Optimized for Apple Silicon)",
+      status: "Production Ready",
+      techStack: ["Next.js", "FastAPI", "PyTorch", "Stable Diffusion 3.5 Medium", "Tailwind CSS", "NumPy", "Ollama", "Docker", "Bun"],
+      engineeredCore: "Architected a modular image generation platform combining Stable Diffusion 3.5 Medium text-to-image/img2img generation, custom image styling pipelines, and Ollama-based safety screening.",
+      performanceVector: "Achieved a 500x speedup by vectorizing processing steps in NumPy, executing background removal in ~8.9ms and pencil sketch filtering in ~4.1ms. Secured Apple Silicon MPS compatibility with attention slicing to control unified VRAM memory footprints.",
+      securityMatrix: "Configured multi-stage Ollama moderation layers pre-generation and post-generation filtering with local JSONL compliance auditing.",
+      liveLink: "https://huggingface.co/sujithputta/Lumaforge",
+      githubLink: "https://github.com/sujithputta02/Lumaforge-Imagegenerationmodel"
     }
   ],
   timeline: [

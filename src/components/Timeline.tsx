@@ -167,7 +167,7 @@ export default function Timeline() {
                 {/* Additional metrics highlight */}
                 {idx === 0 && (
                   <div className="mt-4 pt-3 border-t border-[#111111]/5 flex items-center gap-1.5 text-xs text-[#111111] font-semibold">
-                    <span className="bg-[#C7FF3D]/30 px-2 py-0.5 rounded font-mono text-[10px]">CGPA: 8.92</span>
+                    <span className="bg-[#C7FF3D]/30 px-2 py-0.5 rounded font-mono text-[10px]">CGPA: {profileData.education.cgpa}</span>
                     <span className="text-[#555555] font-light font-sans">Dayananda Sagar University CST</span>
                   </div>
                 )}

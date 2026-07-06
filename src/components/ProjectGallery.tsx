@@ -929,6 +929,205 @@ function CyberConstituentWidget() {
   );
 }
 
+// LumaForge Image Generation Platform Simulator
+function LumaForgeWidget() {
+  const [prompt, setPrompt] = useState("A futuristic cyberpunk city at sunset");
+  const [pipelineState, setPipelineState] = useState<"idle" | "generating" | "result" | "sketch" | "bg_removed">("idle");
+  const [generationStep, setGenerationStep] = useState(0);
+
+  const runPipeline = () => {
+    setPipelineState("generating");
+    setGenerationStep(0);
+    
+    // Simulate generation pipeline phases
+    const timers = [
+      setTimeout(() => setGenerationStep(1), 800),  // Ollama Check
+      setTimeout(() => setGenerationStep(2), 1600), // Prompt Expansion
+      setTimeout(() => setGenerationStep(3), 2400), // MPS Diffusion
+      setTimeout(() => {
+        setPipelineState("result");
+        setGenerationStep(4);
+      }, 3500)
+    ];
+    return () => timers.forEach(clearTimeout);
+  };
+
+  return (
+    <div className="w-full bg-[#0a0515]/95 border border-[#8b5cf6]/25 rounded-2xl p-4 flex flex-col justify-between h-[230px] font-sans text-xs text-white">
+      <div className="flex items-center justify-between border-b border-white/5 pb-2 flex-shrink-0">
+        <span className="font-mono text-[9px] text-[#C7FF3D] uppercase font-bold">LumaForge Core Pipeline</span>
+        <span className="text-[9px] text-[#ec4899] font-mono">Apple Silicon MPS Acceleration</span>
+      </div>
+
+      {pipelineState === "idle" && (
+        <div className="flex-1 flex flex-col justify-between pt-2 text-left">
+          <div className="space-y-1">
+            <label className="text-white/50 text-[8px] uppercase font-mono tracking-wider">Image Prompt</label>
+            <input
+              type="text"
+              value={prompt}
+              onChange={(e) => setPrompt(e.target.value)}
+              className="w-full bg-white/5 border border-white/10 text-white rounded-lg px-2 py-1 focus:outline-none focus:border-[#C7FF3D] text-[10px] font-sans"
+            />
+          </div>
+
+          <div className="space-y-1">
+            <label className="text-white/50 text-[8px] uppercase font-mono tracking-wider">Presets</label>
+            <div className="flex gap-1 overflow-x-auto pb-1 scrollbar-dark">
+              {[
+                "futuristic cyberpunk city",
+                "studio ghibli landscape",
+                "steampunk portrait"
+              ].map((p, idx) => (
+                <button
+                  key={idx}
+                  onClick={() => setPrompt(p)}
+                  className={`px-2 py-0.5 rounded text-[8px] border whitespace-nowrap cursor-pointer transition-colors ${
+                    prompt.toLowerCase().includes(p.substring(0, 10))
+                      ? "bg-[#C7FF3D] border-[#C7FF3D] text-[#111111] font-bold"
+                      : "bg-white/5 border-white/10 text-white/70 hover:bg-white/10"
+                  }`}
+                >
+                  {p}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          <button
+            onClick={runPipeline}
+            className="w-full bg-[#C7FF3D] text-[#111111] font-bold py-1.5 rounded-lg hover:bg-white transition-colors text-[10px] cursor-pointer"
+          >
+            Generate Image (Real Diffusion)
+          </button>
+        </div>
+      )}
+
+      {pipelineState === "generating" && (
+        <div className="flex-1 flex flex-col justify-center gap-3">
+          <div className="relative flex items-center justify-center">
+            <div className="w-8 h-8 border-2 border-t-transparent border-[#ec4899] rounded-full animate-spin z-10" />
+            <div className="absolute w-12 h-12 border border-[#8b5cf6]/20 rounded-full animate-ping opacity-35" />
+          </div>
+          <div className="text-center px-2">
+            <span className="text-[9px] font-mono text-[#C7FF3D] block uppercase animate-pulse">
+              {generationStep === 0 && "Checking Safety (Ollama)..."}
+              {generationStep === 1 && "Expanding Prompt (llama3.2)..."}
+              {generationStep === 2 && "Denoising U-Net (MPS GPU)..."}
+              {generationStep === 3 && "Finalizing Rendering..."}
+            </span>
+            <div className="w-full bg-white/10 h-1.5 rounded-full mt-2 overflow-hidden max-w-[180px] mx-auto">
+              <div 
+                className="h-full bg-gradient-to-r from-[#ec4899] to-[#8b5cf6] transition-all duration-700" 
+                style={{ width: `${(generationStep + 1) * 25}%` }}
+              />
+            </div>
+          </div>
+        </div>
+      )}
+
+      {(pipelineState === "result" || pipelineState === "sketch" || pipelineState === "bg_removed") && (
+        <div className="flex-1 flex gap-3 pt-2 text-left items-stretch min-h-0">
+          {/* Image Display */}
+          <div className="w-[110px] h-[140px] rounded-lg border border-white/10 overflow-hidden relative bg-[#121212] flex-shrink-0 flex items-center justify-center">
+            {pipelineState === "result" && (
+              <img
+                src="/lumaforge_cyberpunk.png"
+                alt="Cyberpunk generated"
+                className="w-full h-full object-cover animate-fade-in"
+              />
+            )}
+            {pipelineState === "sketch" && (
+              <img
+                src="/lumaforge_sketch.png"
+                alt="Cyberpunk sketch"
+                className="w-full h-full object-cover animate-fade-in"
+              />
+            )}
+            {pipelineState === "bg_removed" && (
+              <div className="w-full h-full relative flex items-center justify-center bg-[radial-gradient(#ffffff22_1px,transparent_1px)] bg-[size:8px_8px]">
+                <img
+                  src="/lumaforge_cyberpunk.png"
+                  alt="Background removed"
+                  className="w-[85%] h-[85%] object-cover rounded-md shadow-2xl border border-emerald-400/50"
+                  style={{
+                    filter: "drop-shadow(0 0 8px rgba(52, 211, 153, 0.4))"
+                  }}
+                />
+                <span className="absolute bottom-1 right-1 bg-emerald-500 text-black font-mono text-[6px] px-1 py-0.2 rounded font-bold">~8.9ms</span>
+              </div>
+            )}
+            {/* Status indicator overlay */}
+            <div className="absolute top-1 left-1 bg-black/60 px-1 py-0.5 rounded font-mono text-[7px] text-[#C7FF3D]">
+              {pipelineState === "result" && "COLOR MODE"}
+              {pipelineState === "sketch" && "SKETCH MODE"}
+              {pipelineState === "bg_removed" && "BG SEGMENTED"}
+            </div>
+          </div>
+
+          {/* Controls & Metrics */}
+          <div className="flex-1 flex flex-col justify-between">
+            <div className="space-y-1.5 font-mono text-[8px] text-white/70">
+              <div className="flex justify-between border-b border-white/5 pb-1">
+                <span>Latency:</span>
+                <span className="text-[#C7FF3D]">
+                  {pipelineState === "result" && "1.2s (Mock Mode)"}
+                  {pipelineState === "sketch" && "4.1ms (Vectorized)"}
+                  {pipelineState === "bg_removed" && "8.9ms (Vectorized)"}
+                </span>
+              </div>
+              <div className="flex justify-between border-b border-white/5 pb-1">
+                <span>Device:</span>
+                <span className="text-white">Apple Silicon MPS</span>
+              </div>
+              <div className="flex justify-between border-b border-white/5 pb-1">
+                <span>Safety Status:</span>
+                <span className="text-emerald-400">🛡️ APPROVED</span>
+              </div>
+            </div>
+
+            {/* Action Toggles */}
+            <div className="flex flex-col gap-1">
+              {pipelineState === "result" && (
+                <>
+                  <button
+                    onClick={() => setPipelineState("bg_removed")}
+                    className="w-full bg-[#ec4899]/20 hover:bg-[#ec4899]/35 text-[#ec4899] border border-[#ec4899]/30 font-bold py-1 rounded text-[9px] transition-colors cursor-pointer text-center"
+                  >
+                    ⚡ Remove Background (8.9ms)
+                  </button>
+                  <button
+                    onClick={() => setPipelineState("sketch")}
+                    className="w-full bg-[#8b5cf6]/20 hover:bg-[#8b5cf6]/35 text-[#8b5cf6] border border-[#8b5cf6]/30 font-bold py-1 rounded text-[9px] transition-colors cursor-pointer text-center"
+                  >
+                    🎨 Apply Sketch Filter (4.1ms)
+                  </button>
+                </>
+              )}
+
+              {pipelineState !== "result" && (
+                <button
+                  onClick={() => setPipelineState("result")}
+                  className="w-full bg-white/10 hover:bg-white/15 text-white font-bold py-1.5 rounded text-[9px] transition-colors cursor-pointer text-center"
+                >
+                  ← Back to Original Color
+                </button>
+              )}
+
+              <button
+                onClick={() => setPipelineState("idle")}
+                className="w-full bg-white/5 hover:bg-white/10 text-white/50 py-1 rounded text-[8px] font-mono transition-colors cursor-pointer text-center"
+              >
+                Reset Workstation
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
 export default function ProjectGallery() {
   const [activeIndex, setActiveIndex] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
@@ -1048,6 +1247,8 @@ export default function ProjectGallery() {
         return <AmazonMLWidget />;
       case 7:
         return <CyberConstituentWidget />;
+      case 8:
+        return <LumaForgeWidget />;
       default:
         return null;
     }
@@ -1133,6 +1334,15 @@ export default function ProjectGallery() {
       orbs: [
         { className: "bg-[#3b82f6]/30 w-56 h-56 -top-12 -right-12", delay: "0s" },
         { className: "bg-[#ef4444]/15 w-48 h-48 -bottom-10 -left-10", delay: "3s" }
+      ]
+    },
+    {
+      // LumaForge
+      gradient: "from-[#070514] via-[#5b21b6] to-[#ec4899]",
+      title: "lumaforge",
+      orbs: [
+        { className: "bg-[#ec4899]/30 w-56 h-56 -top-12 -right-12", delay: "0s" },
+        { className: "bg-[#8b5cf6]/15 w-48 h-48 -bottom-10 -left-10", delay: "3s" }
       ]
     }
   ];
@@ -1408,7 +1618,7 @@ export default function ProjectGallery() {
                                 rel="noopener noreferrer"
                                 className="text-[#111111] bg-[#C7FF3D] hover:bg-white hover:text-[#111111] transition-colors px-2.5 py-1 rounded-full font-bold"
                               >
-                                Live Site ↗
+                                {project.liveLink.includes("huggingface.co") ? "Hugging Face ↗" : "Live Site ↗"}
                               </a>
                             )}
                           </div>
