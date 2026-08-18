@@ -141,7 +141,7 @@ export default function ContactFooter() {
             {/* External social portals */}
             <div className="flex gap-4 mt-12">
               <a
-                href="https://linkedin.com/in/sujithputta"
+                href="https://www.linkedin.com/in/sujith-putta-13257a322"
                 target="_blank"
                 rel="noreferrer"
                 className="p-3 bg-white/5 rounded-none border border-white/10 text-[#A3A3A3] hover:text-[#111111] hover:bg-[#C7FF3D] hover:border-black transition-all cursor-pointer shadow-[1.5px_1.5px_0px_0px_rgba(255,255,255,0.1)] hover:translate-x-[-1px] hover:translate-y-[-1px] hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]"
