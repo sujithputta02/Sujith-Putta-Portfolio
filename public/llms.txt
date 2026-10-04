@@ -1,0 +1,44 @@
+# Sujith Putta — Generative AI Developer & Product Developer
+
+> Official machine-readable index of Sujith Putta's technical portfolio, architectures, projects, and credentials.
+
+## Overview
+Sujith Putta is a Generative AI Developer, Full-Stack Systems Architect, and Product Builder based in Bengaluru, India. He specializes in Sovereign RAG pipelines, FastAPI microservices, deterministic Rust safety gates, and cloud-native systems on Azure & AWS. He is currently pursuing a Bachelor of Technology in Computer Science and Technology at Dayananda Sagar University (CGPA 9.05).
+
+- Website: https://sujith-putta-portfolio.vercel.app
+- Email: sujithputta02@gmail.com
+- Phone: +91 7386777701
+- Location: Bengaluru, Karnataka, India / Sacramento, CA
+- GitHub: https://github.com/sujithputta02
+- LinkedIn: https://linkedin.com/in/sujithputta02
+- Hugging Face: https://huggingface.co/sujithputta02
+- Kaggle: https://www.kaggle.com/sujithputta
+
+## Core Competencies & Tech Stack
+- AI & LLM Systems: Sovereign Hybrid RAG (FAISS + Neo4j), Ollama (LLaMA 3, Llama 3.2), Vertex AI (Gemini 2.5 Flash), DeepSeek R1, PyTorch, Multi-Agent Swarms, Prompt Engineering
+- Backend & Systems: Rust (Axum, Tokio), Python (FastAPI), Node.js, Express.js, Microservices, REST & GraphQL, SOLID Principles
+- Databases: FAISS Vector DB, Neo4j Graph DB, MySQL (SQL optimization), MongoDB Atlas
+- Frontend: React 19, Next.js 16, TypeScript, Tailwind CSS v4, Framer Motion, Three.js (R3F), Component-driven UI
+- Cloud & Infrastructure: Microsoft Azure, Amazon Web Services (AWS), Docker, GitHub Actions CI/CD, Linux (Ubuntu)
+- Security & Validation: OWASP Top 10, Role-Based Access Control (RBAC), JWT Authentication, Zod runtime schemas, Rate Limiting
+
+## Featured Projects
+- ESA (Esapay): Autonomous incident remediation engine diagnosing multi-signal payment failures under a deterministic Rust safety gate. Published on NPM & PyPI. URL: https://esapay.vercel.app | Repo: https://github.com/sujithputta02/Esapay
+- DineInGo: Smart full-stack restaurant and event ticketing platform featuring 3D AR menu previews, real-time table allocation via Socket.IO, and OWASP security matrix. URL: https://dine-in-go.vercel.app | Repo: https://github.com/sujithputta02/DineInGo
+- NEXORA: Air-gapped sovereign hybrid RAG intelligence utilizing FAISS vector retrieval and Neo4j graph networks with sub-second MMR query latency. Repo: https://github.com/sujithputta02/Nexora
+- LifeFlow: Microsoft Imagine Cup 2026 innovation transforming complex bureaucratic processes into step-by-step interactive workflows powered by DeepSeek R1 and Azure AI Search. Repo: https://github.com/sujithputta02/LifeFlow-AI
+- RunaGen AI: Google Cloud Gen AI Exchange Hackathon winner utilizing Vertex AI (Gemini 2.5 Flash) and semantic vector search for context-aware career navigation. Repo: https://github.com/sujithputta02/Google-GenAI-Hackathon-RunaGen-AI
+- LumaForge: AI image generation and styling platform optimized for Apple Silicon MPS with vectorized NumPy pipelines achieving a 500x speedup. Demo: https://huggingface.co/sujithputta/Lumaforge | Repo: https://github.com/sujithputta02/Lumaforge-Imagegenerationmodel
+- CyberConstituent-SLM: Fine-tuned DistilBERT 67M model under Anthropic-inspired Constitutional AI alignment to classify cybersecurity threat vectors with 89% validation accuracy. Demo: https://huggingface.co/sujithputta02/cyber-threat-constitutional-slm | Repo: https://github.com/sujithputta02/cyber-constituent-slm
+- MuseVerse: Autonomous 14-agent museum exhibition generator using Google ADK and Gemini 2.5 Flash. Repo: https://github.com/sujithputta02/-MuseVerse-AI-Museum-Curator
+- Spitch AI: Local JARVIS-style desktop assistant integrating Ollama offline models, Gemini Vision, and Selenium automation. Repo: https://github.com/sujithputta02/Spitch-AI-Assistant
+
+## Verified Credentials
+- AWS Academy Graduate — Cloud Foundations (Credly)
+- Google Cloud — Implement CI/CD Pipelines Skill Badge (Credly)
+- Kaggle — 5-Day AI Agents Intensive Course Completion Badge
+- NASA Space Apps Challenge Global Participant (2024 & 2025)
+- Accenture Nordics — Software Engineering Simulation
+- dbt Labs — DBT Fundamentals Certified
+- DeepLearning.AI — ChatGPT Prompt Engineering for Developers
+- Hack2skill — Google Gen AI Exchange Program & Hackathon Certified

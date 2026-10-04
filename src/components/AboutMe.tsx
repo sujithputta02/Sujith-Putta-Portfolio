@@ -74,7 +74,7 @@ export default function AboutMe() {
   const rightTouchY = useTransform(smoothScroll, [0, 1], [35, -20]);
 
   return (
-    <section id="about" ref={sectionRef} className="w-full px-2 sm:px-4 md:px-5 py-3 sm:py-4 scroll-mt-20 select-none text-left relative overflow-hidden">
+    <section id="about" aria-label="About Sujith Putta — AI Systems Architect & Full-Stack Engineer" ref={sectionRef} className="w-full px-2 sm:px-4 md:px-5 py-3 sm:py-4 scroll-mt-20 select-none text-left relative overflow-hidden">
       <div className="editorial-frame w-full p-6 sm:p-10 md:p-12 relative overflow-hidden">
         
         {/* Parallax Floating Ambient Depth Orbs */}
@@ -137,7 +137,7 @@ export default function AboutMe() {
                 alt="Sujith Putta — AI Systems Architect & Full-Stack Developer"
                 width={1600}
                 height={1980}
-                priority
+                loading="lazy"
                 className="relative z-10 w-[96%] sm:w-[92%] max-h-[460px] sm:max-h-[520px] lg:max-h-[560px] object-contain object-bottom transition-transform duration-700 ease-out group-hover:scale-[1.03] drop-shadow-[0_25px_50px_rgba(0,0,0,0.9)]"
               />
             </div>
@@ -168,9 +168,9 @@ export default function AboutMe() {
             >
               {/* Header with Chevron */}
               <div className="flex items-center justify-between">
-                <h3 className="text-3xl sm:text-4xl font-serif font-normal text-white tracking-tight">
-                  Introduction
-                </h3>
+                <h2 className="text-3xl sm:text-4xl font-serif font-normal text-white tracking-tight">
+                  Introduction &amp; Philosophy
+                </h2>
                 <div className="w-9 h-9 rounded-full border border-white/20 bg-white/5 flex items-center justify-center text-white/60 hover:text-white transition-colors cursor-pointer">
                   <ChevronDown className="w-4 h-4" />
                 </div>

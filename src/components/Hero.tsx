@@ -213,8 +213,9 @@ export default function Hero({ isEntered = true }: HeroProps) {
           - On Desktop (md+): Side-by-side with generous gap framed directly
             behind the portrait photo.
          ───────────────────────────────────────────────────────────── */}
-      <motion.div
+      <motion.h1
         ref={titleBoxRef}
+        aria-label="Sujith Putta — Generative AI Developer & Product Developer"
         onMouseMove={handleMouseMove}
         onMouseLeave={handleMouseLeave}
         onClick={handleHeadlineClick}
@@ -237,6 +238,7 @@ export default function Hero({ isEntered = true }: HeroProps) {
         }
         className="absolute top-[48%] sm:top-[46%] md:top-[40%] lg:top-[40%] left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 w-full flex flex-col md:flex-row items-center justify-center gap-y-1 sm:gap-y-2 md:gap-y-0 md:gap-x-28 lg:gap-x-32 xl:gap-x-38 2xl:gap-x-44 select-none cursor-pointer overflow-visible px-4"
       >
+        <span className="sr-only">Sujith Putta — Generative AI Developer &amp; Product Developer</span>
         {nameWords.map((wordObj, wIdx) => (
           <span
             key={wIdx}
@@ -298,7 +300,7 @@ export default function Hero({ isEntered = true }: HeroProps) {
             })}
           </span>
         ))}
-      </motion.div>
+      </motion.h1>
 
       {/* ─────────────────────────────────────────────────────────────
           4. PORTRAIT IMAGE: POSITIONED ELEGANTLY IN FRONT OF SLANTED LETTERS

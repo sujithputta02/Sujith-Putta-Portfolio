@@ -1,0 +1,91 @@
+# Sujith Putta — Complete Technical Profile & Engineering Dossier
+
+## Candidate Summary
+- Full Name: Sujith Putta
+- Title: Generative AI Developer & Product Developer / AI Systems Architect
+- Email: sujithputta02@gmail.com
+- Phone: +91 7386777701
+- Location: Bengaluru, Karnataka, India / Sacramento, CA
+- Academic Affiliation: Dayananda Sagar University (B.Tech Computer Science and Technology, 2023–Present, CGPA: 9.05/10.0)
+- Online Profiles:
+  - Portfolio: https://sujith-putta-portfolio.vercel.app
+  - GitHub: https://github.com/sujithputta02
+  - LinkedIn: https://linkedin.com/in/sujithputta02
+  - Hugging Face: https://huggingface.co/sujithputta02
+  - Kaggle: https://www.kaggle.com/sujithputta
+  - Credly: https://www.credly.com/users/sujith-putta
+
+---
+
+## Detailed Project Specifications & Architectural Benchmark Data
+
+### 1. ESA — Autonomous Payment Resilience Engine
+- Status: v1.0.5 Published (NPM & PyPI)
+- Tech Stack: Rust, Python, TypeScript, Bun, Ollama (Llama 3.2), Axum, Tokio, React, Razorpay, Docker
+- Live Demo: https://esapay.vercel.app
+- GitHub Repository: https://github.com/sujithputta02/Esapay
+- Engineered Core: Autonomous incident remediation engine diagnosing multi-signal payment failures (UPI bank outages vs CPU starvation) and proposing joint recovery actions (pod scale + corridor route shift) under a deterministic Rust safety gate.
+- Performance Vector: 72.3% reduction in checkout failure window (4.1s vs 14.8s P95 > 250ms), sub-2ms reflex reasoner induction, 39.2% lower tail latency (156ms), 3.1x faster queue drainage.
+- Security Matrix: Strict separation of powers: deterministic Rust Action Gateway enforces Optimistic Concurrency Control (OCC) and policy invariants, preventing AI agents from executing unverified shell or kubectl mutations (0/650 safety violations).
+- Data Orchestration: Dual-cadence latency architecture combining a synchronous critical path (<2ms SLA via Tier-1 ARC fluid reasoner) with an asynchronous deliberative path (~1.8s via local Ollama LLM for semantic RCA), backed by a cryptographic SHA-256 Merkle audit chain.
+
+### 2. DineInGo — Smart Restaurant & Event Booking Platform
+- Status: Beta V-1.0
+- Tech Stack: React 18, TypeScript, Tailwind CSS, Node.js, Express.js, MongoDB, Firebase Auth, Socket.IO, PWA
+- Live Demo: https://dine-in-go.vercel.app
+- Early Access: https://dine-in-go-early-access.vercel.app
+- Business Portal: https://dine-in-go.vercel.app/business
+- GitHub Repository: https://github.com/sujithputta02/DineInGo
+- Engineered Core: Comprehensive dining reservation and event ticketing platform featuring a 3D AR Menu preview engine, dynamic multi-floor plans, and automatic table allocation schemas.
+- Security Matrix: OWASP-compliant identity bonding (Email + Google linking), multi-tier rate limiting, Express Validator schemas, Helmet headers, restricted CORS parameters.
+- Data Orchestration: Integrated Socket.IO for real-time table status updates, capacity metrics tracking, waitlist queues, and Nodemailer/PDFKit engines generating digital QR-code invoices.
+
+### 3. NEXORA — Sovereign Hybrid RAG for Air-Gapped Aerospace Intelligence
+- Status: Research Paper & Prototype
+- Tech Stack: Python, FAISS, Neo4j, FastAPI, Ollama (LLaMA 3), REST APIs, RBAC, JSON, YAML
+- GitHub Repository: https://github.com/sujithputta02/Nexora
+- Engineered Core: Offline RAG intelligence processing highly sensitive document queries utilizing a split vector store (FAISS) and structural graph networks (Neo4j) connected via fault-tolerant semantic retrieval pipelines.
+- Performance Vector: Sub-second query response times accomplished via optimized FAISS + Maximal Marginal Relevance (MMR) scoring, beating baseline KNN paradigms conclusively via internal ablation benchmarks.
+- Security Infrastructure: Custom Role-Based Access Control (RBAC) schemas coupled with native structural input/output schema validation to safeguard multi-tenant execution inside fully isolated, air-gapped environments.
+
+### 4. LifeFlow — Microsoft Imagine Cup 2026 Innovation
+- Status: Imagine Cup 2026 Competitor
+- Tech Stack: Next.js 15, React 19, Three.js (R3F), Tailwind CSS, Node.js, MongoDB Atlas, Azure AI Search, OpenRouter (DeepSeek R1), Zustand
+- Live Demo: https://lifeflow-webapp-c2e7habzdmc3bpbr.southeastasia-01.azurewebsites.net/
+- GitHub Repository: https://github.com/sujithputta02/LifeFlow-AI
+- Engineered Core: Intelligent administrative navigation system converting complex real-world processes (hospital admissions, government paperwork) into step-by-step interactive workflows guided by DeepSeek R1 and GPT-4o.
+- Data Orchestration: Hybrid search pipeline querying a private Azure Search Index for curated administrative guides with a smart automatic fallback to Bing Web Search API.
+- UI Optimization: Gamified 3D badge achievement visualization system using Three.js and React Three Fiber, alongside professional PDF checklist generation and voice navigation guidelines.
+
+### 5. RunaGen AI — Google Cloud Gen AI Exchange Hackathon Winner
+- Status: Hackathon Winner Prototype
+- Tech Stack: React 18, TypeScript, Three.js, Tailwind CSS, Node.js, Express.js, MongoDB, Vertex AI (Gemini 2.5 Flash), YouTube API v3, Vector Search
+- Live Demo: https://classy-llama-a6740f.netlify.app/
+- GitHub Repository: https://github.com/sujithputta02/Google-GenAI-Hackathon-RunaGen-AI
+- Engineered Core: Career companion utilizing Google Cloud Vertex AI (Gemini 2.5 Flash) and RAG architecture for context-aware resume analysis, skills gap detection, and personalized learning roadmaps.
+- Data Orchestration: Semantic Vector Search service using Google Cloud text embeddings to match candidate profiles to roles with confidence scoring, integrated with MongoDB persistence and Multer file streaming.
+
+### 6. LumaForge — AI Image Generation & Styling Platform (Apple Silicon Optimized)
+- Status: Production Ready
+- Tech Stack: Next.js, FastAPI, PyTorch, Stable Diffusion 3.5 Medium, Tailwind CSS, NumPy, Ollama, Docker, Bun
+- Live Demo: https://huggingface.co/sujithputta/Lumaforge
+- GitHub Repository: https://github.com/sujithputta02/Lumaforge-Imagegenerationmodel
+- Engineered Core: Modular image generation platform combining Stable Diffusion 3.5 Medium text-to-image/img2img generation, custom image styling pipelines, and Ollama safety screening.
+- Performance Vector: 500x speedup by vectorizing processing steps in NumPy, executing background removal in ~8.9ms and pencil sketch filtering in ~4.1ms. Secured Apple Silicon MPS compatibility with attention slicing to control unified VRAM memory footprints.
+
+### 7. CyberConstituent-SLM — Constitutional AI Cybersecurity Threat Classifier
+- Status: 89% Validation Accuracy
+- Tech Stack: DistilBERT, PyTorch, Transformers, Streamlit, Hugging Face, Python, FP16 Mixed-Precision
+- Live Demo: https://huggingface.co/sujithputta02/cyber-threat-constitutional-slm
+- GitHub Repository: https://github.com/sujithputta02/cyber-constituent-slm
+- Engineered Core: Fine-tuned DistilBERT Small Language Model (SLM) on Google Colab T4 GPU to classify cybersecurity logs into 6 threat vectors under an Anthropic-inspired Constitutional AI alignment layer.
+- Security Matrix: Aligned under Constitutional AI guidelines to filter out actionable exploit syntax and sanitize logs of unverified geopolitical attribution bias.
+
+---
+
+## Academic Background & Coursework
+- Degree: Bachelor of Technology (B.Tech) — Computer Science and Technology
+- Institution: Dayananda Sagar University, Bengaluru
+- Graduation Window: 2023–Present
+- Cumulative GPA: 9.05 / 10.0
+- Key Coursework: Full Stack Development, Data Structures & Algorithms, Object-Oriented Programming, Database Management Systems (DBMS), System Design Basics, Computer Network Fundamentals, Data Engineering, Python, MySQL.
