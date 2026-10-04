@@ -84,13 +84,13 @@ export const profileData: ProfileData = {
     ]
   },
   skills: {
-    languages: ["Python", "TypeScript", "JavaScript", "Java", "C"],
+    languages: ["Python", "TypeScript", "JavaScript", "Rust", "Java", "C"],
     frontend: ["React.js", "TypeScript", "Tailwind CSS", "HTML5/CSS3", "Vite", "Component-driven UI", "Figma (UI/UX)"],
-    backend: ["FastAPI", "Node.js", "Express.js", "REST APIs", "GraphQL", "Microservices", "SOLID principles"],
+    backend: ["Rust (Axum, Tokio)", "FastAPI", "Node.js", "Express.js", "REST APIs", "GraphQL", "Microservices", "SOLID principles"],
     databases: ["MySQL (SQL, JOINs, query optimization)", "MongoDB (NoSQL)", "FAISS (vector)", "Neo4j (graph)"],
     devops: ["Microsoft Azure", "AWS", "Docker", "GitHub Actions CI/CD", "Linux (Ubuntu)"],
     security: ["OWASP Top 10", "JWT auth", "RBAC", "rate limiting", "Zod/Joi validation", "Helmet.js", "CORS"],
-    ai: ["Gemini AI", "Kiro", "Antigravity", "Cursor", "Claude Code", "Ollama (LLaMA 3)", "RAG pipelines", "scikit-learn", "pandas", "PyTorch"]
+    ai: ["Gemini AI", "Kiro", "Antigravity", "Cursor", "Claude Code", "Ollama (LLaMA 3, Llama 3.2)", "RAG pipelines", "scikit-learn", "pandas", "PyTorch"]
   },
   credentials: [
     {
@@ -139,6 +139,18 @@ export const profileData: ProfileData = {
     }
   ],
   projects: [
+    {
+      title: "ESA — Autonomous Payment Resilience",
+      metadata: "Autonomous Incident Remediation Engine with Deterministic Rust Safety Gate",
+      status: "v1.0.5 Published (NPM & PyPI)",
+      techStack: ["Rust", "Python", "TypeScript", "Bun", "Ollama (Llama 3.2)", "Axum", "Tokio", "React", "Razorpay", "Docker"],
+      engineeredCore: "Engineered an autonomous incident remediation engine that diagnoses multi-signal payment failures (UPI bank outages vs CPU starvation) and proposes joint recovery actions (pod scale + corridor route shift) under a deterministic Rust safety gate.",
+      performanceVector: "Achieved a 72.3% reduction in checkout failure window (4.1s vs 14.8s P95 > 250ms), sub-2ms reflex reasoner induction, 39.2% lower tail latency (156ms), and 3.1x faster queue drainage.",
+      securityMatrix: "Strict separation of powers: deterministic Rust Action Gateway enforces Optimistic Concurrency Control (OCC) and policy invariants, preventing AI agents from executing unverified shell or kubectl mutations (0/650 safety violations).",
+      dataOrchestration: "Dual-cadence latency architecture combining a synchronous critical path (<2ms SLA via Tier-1 ARC fluid reasoner) with an asynchronous deliberative path (~1.8s via local Ollama LLM for semantic RCA), backed by a cryptographic SHA-256 Merkle audit chain.",
+      liveLink: "https://esapay.vercel.app",
+      githubLink: "https://github.com/sujithputta02/Esapay"
+    },
     {
       title: "DineInGo",
       metadata: "Smart Full-Stack Restaurant & Event Booking Platform",

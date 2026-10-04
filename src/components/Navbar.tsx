@@ -1,81 +1,118 @@
 "use client";
 
-import React, { useState } from "react";
-import { Menu, X, Terminal, Cpu } from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
+import React, { useState, useEffect, useRef } from "react";
+import { motion, AnimatePresence, useScroll, useSpring, useTransform } from "framer-motion";
+import { ArrowUpRight } from "lucide-react";
+import { useLiquidGlass } from "@/hooks/useLiquidGlass";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
+  const navRef = useRef<HTMLDivElement>(null);
+  const mobileDrawerRef = useRef<HTMLDivElement>(null);
+
+  // Apply authentic Apple-style Liquid Glass refraction (deepika-builds/liquid-glass)
+  // Configured with blur: 0 and fallbackBlur: 0 for crystal-clear, non-frosted optics
+  useLiquidGlass(navRef, true, {
+    scale: -112,
+    chroma: 6,
+    border: 0.07,
+    mapBlur: 12,
+    blur: 0,        // 0 blur = crystal-clear refraction, NOT frosted!
+    saturate: 1.25,
+    fallbackBlur: 0, // No frosted blur on fallback
+  });
+
+  useLiquidGlass(mobileDrawerRef, isOpen, {
+    scale: -90,
+    chroma: 5,
+    border: 0.06,
+    mapBlur: 10,
+    blur: 0,
+    saturate: 1.25,
+    radius: 24,
+    fallbackBlur: 0,
+  });
+
+  const { scrollYProgress } = useScroll();
+  const scaleX = useSpring(scrollYProgress, {
+    stiffness: 140,
+    damping: 28,
+    restDelta: 0.001
+  });
 
   const navItems = [
-    { label: "About", href: "#about" },
-    { label: "Skills", href: "#skills" },
-    { label: "Systems", href: "#bento" },
-    { label: "Projects", href: "#projects" },
-    { label: "Connect", href: "#connect" },
+    { label: "Overview", href: "#hero", index: "00" },
+    { label: "Manifesto", href: "#manifesto", index: "01" },
+    { label: "Skills", href: "#skills", index: "02" },
+    { label: "Showcase", href: "#showcase", index: "03" },
+    { label: "Chronicle", href: "#timeline", index: "04" },
+    { label: "Connect", href: "#connect", index: "05" },
   ];
 
   return (
-    <nav className="fixed top-4 left-1/2 -translate-x-1/2 z-50 w-[92%] max-w-6xl">
-      <div className="bg-[#FAF9F6] py-3 px-6 rounded-none flex items-center justify-between border-2 border-black shadow-[3px_3px_0px_0px_rgba(0,0,0,1)]">
-        {/* Brand signature */}
-        <div className="flex items-center gap-3">
-          <svg viewBox="0 0 16 16" className="w-5 h-5 text-[#111111]" fill="none">
-            <path d="M 4 4 L 8 7 L 4 10" stroke="currentColor" strokeWidth="1.5" strokeLinecap="square" />
-            <line x1="9" y1="10" x2="12" y2="10" stroke="currentColor" strokeWidth="2" />
-          </svg>
-          <span className="font-sacramento text-2xl font-bold tracking-wide select-none text-[#111111]">
-            Sujith Putta
-          </span>
-          <span className="hidden lg:inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-none text-[9px] font-bold bg-[#111111] text-[#C7FF3D] border-2 border-black font-pixel shadow-[1px_1px_0px_0px_rgba(0,0,0,1)]">
-            <svg viewBox="0 0 16 16" className="w-3 h-3 animate-pulse" fill="currentColor">
-              <rect x="5" y="5" width="6" height="6" />
-              <line x1="3" y1="6" x2="5" y2="6" stroke="currentColor" strokeWidth="1" />
-              <line x1="3" y1="8" x2="5" y2="8" stroke="currentColor" strokeWidth="1" />
-              <line x1="3" y1="10" x2="5" y2="10" stroke="currentColor" strokeWidth="1" />
-              <line x1="11" y1="6" x2="13" y2="6" stroke="currentColor" strokeWidth="1" />
-              <line x1="11" y1="8" x2="13" y2="8" stroke="currentColor" strokeWidth="1" />
-              <line x1="11" y1="10" x2="13" y2="10" stroke="currentColor" strokeWidth="1" />
-            </svg>
-            AI & PRODUCTS
-          </span>
-        </div>
+    <>
+      {/* Scroll-Linked Global Top Spectrum Progress Bar */}
+      <motion.div
+        className="fixed top-0 left-0 right-0 h-[3px] spectrum-bar origin-left z-[9999] pointer-events-none shadow-[0_0_15px_rgba(255,94,0,0.8)]"
+        style={{ scaleX }}
+      />
+
+      <nav className="fixed top-4 left-1/2 -translate-x-1/2 z-50 w-[94%] max-w-6xl">
+        <div
+          ref={navRef}
+          className="bg-[#0C0C0C]/35 py-2.5 px-5 sm:px-6 rounded-full flex items-center justify-between border border-white/15 transition-all duration-300 shadow-[0_20px_50px_rgba(0,0,0,0.5),inset_0_1px_1px_rgba(255,255,255,0.45),inset_0_-4px_14px_rgba(255,255,255,0.05),inset_0_0_0_1px_rgba(255,255,255,0.12)] hover:border-white/25"
+        >
+          
+          {/* Brand identity */}
+          <a href="#hero" className="flex items-center group py-0.5">
+            <span className="font-signature font-[family-name:var(--font-sacramento)] text-2xl sm:text-3xl text-white group-hover:text-[#FF5E00] transition-colors leading-none tracking-wide select-none">
+              Sujith Putta
+            </span>
+          </a>
 
         {/* Desktop Navigation Links */}
-        <div className="hidden md:flex items-center gap-8 font-pixel text-xs">
+        <div className="hidden md:flex items-center gap-7 font-sans text-xs">
           {navItems.map((item) => (
             <a
               key={item.label}
               href={item.href}
-              className="text-[#555555] hover:text-[#111111] transition-colors relative group py-1 font-bold"
+              className="text-white/60 hover:text-white transition-colors relative py-1 font-medium tracking-wide flex items-center gap-1.5 group"
             >
-              {item.label}
-              <span className="absolute bottom-0 left-0 w-0 h-[2px] bg-[#111111] transition-all duration-200 group-hover:w-full" />
+              <span className="font-mono text-[9px] text-white/30 group-hover:text-[#FF5E00] transition-colors">
+                {item.index}
+              </span>
+              <span>{item.label}</span>
+              <span className="absolute bottom-0 left-0 w-0 h-[1.5px] bg-gradient-to-r from-[#FF5E00] to-[#0070F3] transition-all duration-200 group-hover:w-full" />
             </a>
           ))}
+        </div>
+
+        {/* Right CTA */}
+        <div className="hidden sm:flex items-center gap-3">
           <a
             href="#connect"
-            className="bg-[#111111] text-[#F7F7F5] hover:bg-[#C7FF3D] hover:text-[#111111] border-2 border-black px-4 py-2 rounded-none font-pixel font-bold shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[-1px] hover:translate-y-[-1px] hover:shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] transition-all duration-100"
+            className="group relative inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full text-xs font-semibold bg-white text-black hover:bg-white/95 transition-all shadow-[0_0_15px_rgba(255,255,255,0.25)] hover:shadow-[0_0_20px_rgba(255,94,0,0.4)]"
           >
-            Hire Developer
+            <span>Let&apos;s Talk</span>
+            <ArrowUpRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
           </a>
         </div>
 
         {/* Mobile Toggle Button */}
         <button
           onClick={() => setIsOpen(!isOpen)}
-          className="md:hidden p-1.5 text-[#111111] hover:bg-black/5 border-2 border-black rounded-none transition-colors shadow-[1px_1px_0px_0px_rgba(0,0,0,1)] bg-white cursor-pointer"
+          className="md:hidden p-2 text-white/80 hover:text-white rounded-full bg-white/5 border border-white/10 transition-colors"
           aria-label="Toggle menu"
         >
           {isOpen ? (
-            <svg viewBox="0 0 16 16" className="w-5 h-5" fill="currentColor">
+            <svg viewBox="0 0 16 16" className="w-4 h-4" fill="currentColor">
               <path d="M 3 3 L 5 3 L 8 6 L 11 3 L 13 3 L 9 8 L 13 13 L 11 13 L 8 10 L 5 13 L 3 13 L 7 8 Z" />
             </svg>
           ) : (
-            <svg viewBox="0 0 16 16" className="w-5 h-5" fill="currentColor">
-              <rect x="2" y="3" width="12" height="2" />
-              <rect x="2" y="7" width="12" height="2" />
-              <rect x="2" y="11" width="12" height="2" />
+            <svg viewBox="0 0 16 16" className="w-4 h-4" fill="currentColor">
+              <rect x="2" y="3.5" width="12" height="1.5" rx="0.75" />
+              <rect x="2" y="7.5" width="12" height="1.5" rx="0.75" />
+              <rect x="2" y="11.5" width="12" height="1.5" rx="0.75" />
             </svg>
           )}
         </button>
@@ -85,33 +122,39 @@ export default function Navbar() {
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            initial={{ opacity: 0, y: -15 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -15 }}
-            transition={{ type: "spring", stiffness: 300, damping: 25 }}
-            className="md:hidden absolute top-16 left-0 right-0 bg-[#FAF9F6] border-2 border-black p-6 rounded-none shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] flex flex-col gap-4 text-center font-pixel text-sm"
+            ref={mobileDrawerRef}
+            initial={{ opacity: 0, y: -10, scale: 0.98 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: -10, scale: 0.98 }}
+            transition={{ type: "spring", stiffness: 350, damping: 28 }}
+            className="md:hidden mt-2 liquid-glass-clear border border-white/15 p-5 rounded-3xl shadow-[0_20px_40px_rgba(0,0,0,0.9)] flex flex-col gap-3"
           >
             {navItems.map((item) => (
               <a
                 key={item.label}
                 href={item.href}
                 onClick={() => setIsOpen(false)}
-                className="py-2 text-[#555555] hover:text-[#111111] transition-colors border-b-2 border-black/10 font-bold"
+                className="py-2.5 px-3 rounded-xl text-sm font-medium text-white/70 hover:text-white hover:bg-white/5 transition-all flex items-center justify-between"
               >
-                {item.label}
+                <span>{item.label}</span>
+                <span className="font-mono text-[10px] text-white/30">{item.index}</span>
               </a>
             ))}
 
-            <a
-              href="#connect"
-              onClick={() => setIsOpen(false)}
-              className="bg-[#111111] text-[#F7F7F5] hover:bg-[#C7FF3D] hover:text-[#111111] border-2 border-black py-3 rounded-none font-pixel font-bold shadow-[3px_3px_0px_0px_rgba(0,0,0,1)]"
-            >
-              Hire Developer
-            </a>
+            <div className="pt-2 border-t border-white/10 mt-1">
+              <a
+                href="#connect"
+                onClick={() => setIsOpen(false)}
+                className="w-full py-2.5 rounded-full text-xs font-semibold bg-white text-black flex items-center justify-center gap-1.5 shadow-[0_0_15px_rgba(255,255,255,0.2)]"
+              >
+                <span>Let&apos;s Talk</span>
+                <ArrowUpRight className="w-3.5 h-3.5" />
+              </a>
+            </div>
           </motion.div>
         )}
       </AnimatePresence>
     </nav>
+    </>
   );
 }

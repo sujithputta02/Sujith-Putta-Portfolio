@@ -1,39 +1,43 @@
 @import "tailwindcss";
 
 :root {
-  --background: #F7F7F5;
-  --foreground: #111111;
-  
-  --color-background: #F7F7F5;
-  --color-primary: #111111;
-  --color-secondary: #555555;
-  --color-accent: #C7FF3D;
-  --color-success: #4ADE80;
-  --color-card: #FFFFFF;
-  --color-border-custom: rgba(17, 17, 17, 0.08);
-  
+  --background: #060606;
+  --foreground: #EDEDED;
+
+  --color-background: #060606;
+  --color-primary: #FFFFFF;
+  --color-secondary: #999999;
+  --color-accent: #FF5E00;
+  --color-spectrum-start: #FF6B00;
+  --color-spectrum-end: #0070F3;
+  --color-card: #0E0E0E;
+  --color-border-custom: rgba(255, 255, 255, 0.12);
+
   --ease-luxury: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 @theme {
   --font-sacramento: var(--font-sacramento), cursive;
+  --font-signature: var(--font-sacramento), cursive;
   --font-mono: var(--font-jetbrains-mono), monospace;
-  --font-display: var(--font-silkscreen), monospace;
-  --font-sans: "PP Neue Montreal", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --font-display: var(--font-space-grotesk), sans-serif;
+  --font-serif: var(--font-playfair), "Newsreader", "Playfair Display", Georgia, "Times New Roman", serif;
+  --font-sans: var(--font-plus-jakarta), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-anton: var(--font-anton), sans-serif;
   --font-pixel: var(--font-pixelify-sans), monospace;
   --font-pixel-display: var(--font-silkscreen), monospace;
-  
-  --color-accent: #C7FF3D;
-  --color-primary-dark: #111111;
-  --color-secondary-grey: #555555;
-  --color-bg-light: #F7F7F5;
+
+  --color-accent: #FF5E00;
+  --color-primary-dark: #FFFFFF;
+  --color-secondary-grey: #8E8E93;
+  --color-bg-light: #060606;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
+  background: #060606;
+  color: #EDEDED;
   font-family: var(--font-sans);
-  overflow-x: hidden;
+  overflow-x: clip;
   -webkit-font-smoothing: antialiased;
 }
 
@@ -42,13 +46,16 @@ body {
   width: 6px;
   height: 6px;
 }
+
 ::-webkit-scrollbar-track {
   background: transparent;
 }
+
 ::-webkit-scrollbar-thumb {
   background: rgba(17, 17, 17, 0.15);
   border-radius: 3px;
 }
+
 ::-webkit-scrollbar-thumb:hover {
   background: rgba(17, 17, 17, 0.3);
 }
@@ -56,6 +63,7 @@ body {
 .scrollbar-dark::-webkit-scrollbar-thumb {
   background: rgba(255, 255, 255, 0.12);
 }
+
 .scrollbar-dark::-webkit-scrollbar-thumb:hover {
   background: rgba(255, 255, 255, 0.25);
 }
@@ -75,13 +83,16 @@ body {
     height: 5px;
     display: block;
   }
+
   .scrollbar-visible::-webkit-scrollbar-thumb {
     background: var(--scrollbar-thumb);
     border-radius: 3px;
   }
+
   .scrollbar-visible::-webkit-scrollbar-thumb:hover {
     background: rgba(17, 17, 17, 0.35);
   }
+
   .scrollbar-visible::-webkit-scrollbar-track {
     background: var(--scrollbar-track);
     border-radius: 3px;
@@ -90,15 +101,41 @@ body {
 
 /* Noise Overlay */
 @keyframes noise-loop {
-  0% { transform: translate(0, 0); }
-  10% { transform: translate(-5%, -5%); }
-  20% { transform: translate(-10%, 5%); }
-  30% { transform: translate(5%, -10%); }
-  40% { transform: translate(-5%, 15%); }
-  55% { transform: translate(15%, -5%); }
-  70% { transform: translate(0, 10%); }
-  85% { transform: translate(-15%, 5%); }
-  100% { transform: translate(5%, -5%); }
+  0% {
+    transform: translate(0, 0);
+  }
+
+  10% {
+    transform: translate(-5%, -5%);
+  }
+
+  20% {
+    transform: translate(-10%, 5%);
+  }
+
+  30% {
+    transform: translate(5%, -10%);
+  }
+
+  40% {
+    transform: translate(-5%, 15%);
+  }
+
+  55% {
+    transform: translate(15%, -5%);
+  }
+
+  70% {
+    transform: translate(0, 10%);
+  }
+
+  85% {
+    transform: translate(-15%, 5%);
+  }
+
+  100% {
+    transform: translate(5%, -5%);
+  }
 }
 
 .noise-overlay {
@@ -118,8 +155,13 @@ body {
 
 /* Infinite Marquee */
 @keyframes marquee {
-  0% { transform: translateX(0%); }
-  100% { transform: translateX(-50%); }
+  0% {
+    transform: translateX(0%);
+  }
+
+  100% {
+    transform: translateX(-50%);
+  }
 }
 
 .animate-marquee {
@@ -135,6 +177,25 @@ body {
   background: #FFFFFF;
   border: 2px solid #111111;
   box-shadow: 4px 4px 0px 0px #111111;
+}
+
+/* Non-Frosted Clear Liquid Glass Material (deepika-builds/liquid-glass) */
+.liquid-glass-clear {
+  background: linear-gradient(180deg, rgba(18, 18, 24, 0.42) 0%, rgba(10, 10, 15, 0.58) 100%);
+  box-shadow:
+    0 24px 60px rgba(0, 0, 0, 0.55),
+    inset 0 1px 1px rgba(255, 255, 255, 0.45),
+    inset 0 -8px 20px rgba(255, 255, 255, 0.04),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.12);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.liquid-glass-clear:hover {
+  box-shadow:
+    0 30px 70px rgba(0, 0, 0, 0.65),
+    inset 0 1px 1px rgba(255, 255, 255, 0.6),
+    inset 0 -8px 20px rgba(255, 255, 255, 0.06),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.2);
 }
 
 /* Dynamic Hover Radial coordinate shadow box */
@@ -157,17 +218,15 @@ body {
   inset: -2px;
   border-radius: inherit;
   padding: 2px;
-  background: radial-gradient(
-    350px circle at var(--mouse-x, 0px) var(--mouse-y, 0px),
-    #C7FF3D 0%,
-    rgba(199, 255, 61, 0.2) 50%,
-    transparent 100%
-  );
-  -webkit-mask: 
-    linear-gradient(#fff 0 0) content-box, 
+  background: radial-gradient(350px circle at var(--mouse-x, 0px) var(--mouse-y, 0px),
+      #C7FF3D 0%,
+      rgba(199, 255, 61, 0.2) 50%,
+      transparent 100%);
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
     linear-gradient(#fff 0 0);
-  mask: 
-    linear-gradient(#fff 0 0) content-box, 
+  mask:
+    linear-gradient(#fff 0 0) content-box,
     linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
   mask-composite: exclude;
@@ -195,16 +254,35 @@ body {
 
 /* Custom Floating Orbs for Project Card CSS Branding */
 @keyframes orb-float-1 {
-  0% { transform: translate(0, 0) scale(1); }
-  33% { transform: translate(30px, -40px) scale(1.1); }
-  66% { transform: translate(-20px, 30px) scale(0.9); }
-  100% { transform: translate(0, 0) scale(1); }
+  0% {
+    transform: translate(0, 0) scale(1);
+  }
+
+  33% {
+    transform: translate(30px, -40px) scale(1.1);
+  }
+
+  66% {
+    transform: translate(-20px, 30px) scale(0.9);
+  }
+
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
 }
 
 @keyframes orb-float-2 {
-  0% { transform: translate(0, 0) scale(1); }
-  50% { transform: translate(-30px, 30px) scale(1.15); }
-  100% { transform: translate(0, 0) scale(1); }
+  0% {
+    transform: translate(0, 0) scale(1);
+  }
+
+  50% {
+    transform: translate(-30px, 30px) scale(1.15);
+  }
+
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
 }
 
 .animate-orb-1 {
@@ -215,3 +293,86 @@ body {
   animation: orb-float-2 22s ease-in-out infinite;
 }
 
+/* ─────────────────────────────────────────────────────────────
+   EDITORIAL SUITE UTILITIES (From Reference UI)
+   ───────────────────────────────────────────────────────────── */
+
+/* High-End Editorial Framed Section */
+.editorial-frame {
+  position: relative;
+  background-color: #080808;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 1.75rem;
+  box-shadow: 0 20px 50px -10px rgba(0, 0, 0, 0.7);
+}
+
+.editorial-frame::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.5), transparent);
+  pointer-events: none;
+}
+
+/* Horizontal Rainbow Spectrum Bar */
+.spectrum-bar {
+  background: linear-gradient(90deg, #FF5E00 0%, #FF0055 22%, #A800FF 45%, #0070F3 70%, #00F0FF 100%);
+}
+
+.spectrum-pill {
+  background: linear-gradient(90deg, #FF6B00 0%, #FF2E00 25%, #E6007A 50%, #7928CA 75%, #0070F3 100%);
+  box-shadow: 0 0 12px rgba(59, 130, 246, 0.5);
+}
+
+/* 3D Extrusion Chromatic Rainbow Trailing Text (Image 1 Bottom) */
+.chromatic-trail-wrapper {
+  position: relative;
+  display: inline-block;
+  user-select: none;
+}
+
+.chromatic-trail-text {
+  font-family: var(--font-display);
+  font-weight: 900;
+  text-transform: lowercase;
+  letter-spacing: -0.04em;
+  line-height: 0.85;
+}
+
+/* Retro Parchment Card (Image 2) */
+.retro-collector-card {
+  background-color: #EDE8DF;
+  color: #151413;
+  border: 2px solid #1A1918;
+  border-radius: 1.25rem;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.retro-collector-card:hover {
+  transform: translateY(-4px) scale(1.01);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+}
+
+/* Specimen Product Ticket Cards (Image 4) */
+.specimen-card-cream {
+  background-color: #F3EFE9;
+  color: #121212;
+  border-radius: 2rem;
+  box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.5);
+}
+
+.specimen-card-blue {
+  background-color: #1254F5;
+  color: #FFFFFF;
+  border-radius: 2rem;
+  box-shadow: 0 25px 60px -15px rgba(18, 84, 245, 0.35);
+}
+
+/* Overlapping Carousel 3D perspective */
+.perspective-carousel {
+  perspective: 1200px;
+}

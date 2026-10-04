@@ -1,6 +1,18 @@
 import type { Metadata } from "next";
-import { Sacramento, JetBrains_Mono, Silkscreen, Pixelify_Sans } from "next/font/google";
+import Script from "next/script";
+import { Sacramento, JetBrains_Mono, Space_Grotesk, Plus_Jakarta_Sans, Silkscreen, Pixelify_Sans, Playfair_Display, Anton } from "next/font/google";
 import "./globals.css";
+
+const anton = Anton({
+  weight: "400",
+  variable: "--font-anton",
+  subsets: ["latin"],
+});
+
+const playfair = Playfair_Display({
+  variable: "--font-playfair",
+  subsets: ["latin"],
+});
 
 const sacramento = Sacramento({
   weight: "400",
@@ -10,6 +22,16 @@ const sacramento = Sacramento({
 
 const jetbrainsMono = JetBrains_Mono({
   variable: "--font-jetbrains-mono",
+  subsets: ["latin"],
+});
+
+const spaceGrotesk = Space_Grotesk({
+  variable: "--font-space-grotesk",
+  subsets: ["latin"],
+});
+
+const plusJakarta = Plus_Jakarta_Sans({
+  variable: "--font-plus-jakarta",
   subsets: ["latin"],
 });
 
@@ -119,9 +141,12 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${sacramento.variable} ${jetbrainsMono.variable} ${silkscreen.variable} ${pixelifySans.variable} scroll-smooth`}
+      className={`${anton.variable} ${spaceGrotesk.variable} ${plusJakarta.variable} ${playfair.variable} ${sacramento.variable} ${jetbrainsMono.variable} ${silkscreen.variable} ${pixelifySans.variable} scroll-smooth dark`}
     >
-      <body className="bg-[#F7F7F5] text-[#111111] min-h-screen selection:bg-[#C7FF3D] selection:text-[#111111] relative antialiased">
+      <head>
+        <Script src="/liquid-glass.js" strategy="beforeInteractive" />
+      </head>
+      <body className="bg-[#060606] text-[#EDEDED] min-h-screen selection:bg-[#FF5E00] selection:text-white relative antialiased overflow-x-hidden font-sans">
         {/* Grain overlay for luxury feel */}
         <div className="noise-overlay" />
         {children}

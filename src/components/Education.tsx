@@ -1,221 +1,233 @@
 "use client";
 
-import React, { useRef, useState } from "react";
-import { motion, Variants } from "framer-motion";
+import React, { useState } from "react";
 import { profileData } from "@/data/profile";
-import { BookOpen, Award, GraduationCap } from "lucide-react";
+import {
+  GraduationCap,
+  Award,
+  BookOpen,
+  CheckCircle,
+} from "lucide-react";
+import { LiquidGlassCard } from "@/components/LiquidGlassCard";
 
-// Staggered grid entrance variants
-const containerVariants: Variants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.1,
-      delayChildren: 0.05,
-    },
-  },
-};
+interface CourseItem {
+  name: string;
+  categoryLabel: string;
+  accent: string;
+}
 
-// Luxury ease card transition
-const cardVariants: Variants = {
-  hidden: {
-    opacity: 0,
-    y: 45,
-    scale: 0.97,
-  },
-  visible: {
-    opacity: 1,
-    y: 0,
-    scale: 1,
-    transition: {
-      duration: 0.85,
-      ease: [0.16, 1, 0.3, 1] as const,
-    },
-  },
-};
-
-const itemVariants: Variants = {
-  hidden: { opacity: 0, y: 15 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: {
-      type: "spring",
-      stiffness: 90,
-      damping: 14,
-    },
-  },
-};
-
-const headerVariants: Variants = {
-  hidden: { opacity: 0, y: -20 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: {
-      duration: 0.8,
-      ease: [0.16, 1, 0.3, 1] as const,
-    },
-  },
-};
+const COURSES: CourseItem[] = [
+  { name: "Data Structures & Algorithms", categoryLabel: "Core CS", accent: "#FF5E00" },
+  { name: "System Design Basics", categoryLabel: "Systems", accent: "#00F0FF" },
+  { name: "Data Engineering", categoryLabel: "Data", accent: "#A800FF" },
+  { name: "Computer Network Fundamentals", categoryLabel: "Systems", accent: "#0070F3" },
+  { name: "Object-Oriented Programming", categoryLabel: "Core CS", accent: "#FF0055" },
+  { name: "DBMS", categoryLabel: "Data", accent: "#10B981" },
+  { name: "Full Stack Development", categoryLabel: "Systems", accent: "#FFB800" },
+  { name: "Python", categoryLabel: "Core CS", accent: "#38BDF8" },
+  { name: "MySQL", categoryLabel: "Data", accent: "#F97316" },
+];
 
 export default function Education() {
   const edu = profileData.education;
-  const cardRef = useRef<HTMLDivElement>(null);
   const [logoError, setLogoError] = useState(false);
 
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!cardRef.current) return;
-    const rect = cardRef.current.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-    cardRef.current.style.setProperty("--mouse-x", `${x}px`);
-    cardRef.current.style.setProperty("--mouse-y", `${y}px`);
-  };
-
   return (
-    <section id="education" className="py-24 px-4 md:px-8 max-w-6xl mx-auto scroll-mt-20">
-      <motion.div
-        variants={headerVariants}
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: false, amount: 0.2 }}
-        className="mb-16 text-center md:text-left"
-      >
-        <span className="font-mono text-xs text-[#555555] tracking-widest uppercase">
-          02 // ACADEMIC PROFILE
-        </span>
-        <h2 className="text-3xl md:text-5xl font-display font-medium text-[#111111] leading-tight mt-3">
-          Education & Coursework
-        </h2>
-        <p className="text-[#555555] font-sans text-sm md:text-base mt-3 max-w-xl">
-          Detailed academic records, specialized focus modules, and ongoing university credentials.
-        </p>
-      </motion.div>
-
-      <motion.div
-        variants={containerVariants}
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: false, amount: 0.15 }}
-        className="w-full"
-      >
-        <motion.div
-          variants={cardVariants}
-          ref={cardRef}
-          onMouseMove={handleMouseMove}
-          style={{ backgroundColor: "#ffffff" }}
-          className="hover-radial-card relative p-6 md:p-10 rounded-none overflow-hidden group border-2 border-black text-left shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]"
-        >
-          {/* Mouse coordinate hover light glow */}
-          <div 
-            className="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-[0.06] transition-opacity duration-500"
-            style={{
-              background: "radial-gradient(450px circle at var(--mouse-x, 0px) var(--mouse-y, 0px), #C7FF3D 0%, transparent 80%)"
-            }}
-          />
-
-          <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-            
-            {/* Left Info block: Logo and Degree */}
-            <div className="lg:col-span-5 space-y-6">
-              <div className="flex items-center gap-2 border-b-2 border-black/10 pb-4">
-                <svg viewBox="0 0 16 16" className="w-5 h-5 text-[#111111]" fill="currentColor">
-                  <rect x="2" y="3" width="6" height="10" />
-                  <rect x="8" y="3" width="6" height="10" />
-                  <line x1="8" y1="3" x2="8" y2="13" stroke="white" strokeWidth="1" />
-                </svg>
-                <span className="font-pixel text-[9px] text-[#555555] uppercase tracking-wider font-bold">
-                  University Affiliation
-                </span>
-              </div>
-
-              <div className="flex items-start gap-4">
-                <div className="w-20 h-20 rounded-none overflow-hidden border-2 border-black bg-white flex items-center justify-center shrink-0 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
-                  {!logoError ? (
-                    <img
-                      src="/dayananda-sagar-logo.jpg"
-                      alt="Dayananda Sagar University Logo"
-                      className="w-full h-full object-cover"
-                      onError={() => setLogoError(true)}
-                    />
-                  ) : (
-                    <svg viewBox="0 0 16 16" className="w-10 h-10 text-[#111111]/60" fill="currentColor">
-                      <path d="M 8 2 L 14 5 L 8 8 L 2 5 Z M 5 7 V 9.5 H 11 V 7 M 12 5 V 9 H 13 V 5 Z" />
-                    </svg>
-                  )}
-                </div>
-                <div className="space-y-1">
-                  <span className="font-pixel text-[10px] text-[#555555] uppercase tracking-widest block font-bold">
-                    DSU CST DEPT
-                  </span>
-                  <h3 className="text-xl font-sans font-bold text-[#111111] leading-tight">
-                    {edu.school}
-                  </h3>
-                  <p className="text-xs text-[#555555] font-medium font-sans">
-                    Bengaluru, India
-                  </p>
-                </div>
-              </div>
-
-              <div className="pt-4 border-t border-[#111111]/5 space-y-4">
-                <div className="flex items-center gap-2.5">
-                  <div className="p-1.5 bg-[#C7FF3D]/20 border border-black/10 rounded-none text-[#111111] shrink-0">
-                    <svg viewBox="0 0 16 16" className="w-4 h-4" fill="currentColor">
-                      <path d="M 8 2 L 14 5 L 8 8 L 2 5 Z M 5 7 V 9.5 H 11 V 7 M 12 5 V 9 H 13 V 5 Z" />
-                    </svg>
-                  </div>
-                  <div>
-                    <h4 className="text-sm font-sans font-bold text-[#111111]">
-                      {edu.degree}
-                    </h4>
-                    <p className="text-xs text-[#555555] mt-0.5">
-                      Ongoing CST Specialization — <span className="font-semibold text-[#111111]">{edu.years}</span>
-                    </p>
-                  </div>
-                </div>
-
-                <div className="inline-flex items-center gap-2 px-3 py-1 bg-[#C7FF3D]/20 border-2 border-black rounded-none font-mono text-xs text-[#111111] font-bold shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
-                  <svg viewBox="0 0 16 16" className="w-3.5 h-3.5" fill="currentColor">
-                    <rect x="5" y="2" width="6" height="6" />
-                    <rect x="4" y="3" width="8" height="4" />
-                    <path d="M 5 8 V 13 L 7 11 L 8 12 L 9 11 L 11 13 V 8 Z" />
-                  </svg>
-                  <span>CGPA: {edu.cgpa} / 10.0</span>
-                </div>
-              </div>
-            </div>
-
-            {/* Right block: Coursework Tags list */}
-            <div className="lg:col-span-7 space-y-6">
-              <div className="flex items-center gap-2 border-b-2 border-black/10 pb-4">
-                <span className="font-pixel text-[9px] text-[#555555] uppercase tracking-wider block font-bold">
-                  Core Specialization Coursework
-                </span>
-              </div>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                {edu.coursework.map((course, idx) => (
-                  <motion.div
-                    key={course}
-                    variants={itemVariants}
-                    whileHover={{ scale: 1.01, y: -1 }}
-                    transition={{ duration: 0.15 }}
-                    className="p-3.5 rounded-none bg-[#FAF9F6] border-2 border-black text-xs text-[#555555] font-pixel font-bold hover:border-black hover:text-[#111111] hover:bg-[#C7FF3D]/10 hover:translate-x-[-1px] hover:translate-y-[-1px] hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] transition-all duration-100 flex items-center justify-between group/item cursor-default"
-                  >
-                    <span>{course}</span>
-                    <span className="font-pixel text-[8px] text-[#555555]/60 group-hover/item:text-[#111111]/80 transition-colors">
-                      [0{idx + 1}]
-                    </span>
-                  </motion.div>
-                ))}
-              </div>
-            </div>
-
+    <section
+      id="education"
+      className="w-full px-2 sm:px-4 md:px-5 py-4 sm:py-6 scroll-mt-20 text-left select-none"
+    >
+      <div className="editorial-frame w-full p-6 sm:p-8 md:p-10 relative overflow-hidden">
+        
+        {/* Frame Top Header */}
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-white/10 pb-4 mb-6 font-mono text-xs text-white/50">
+          <div className="flex items-center gap-2">
+            <span className="w-2 h-2 rounded-full bg-[#A800FF] animate-pulse" />
+            <span className="uppercase tracking-widest text-white/70">
+              02 // ACADEMIC PROFILE & FOUNDATIONS
+            </span>
           </div>
-        </motion.div>
-      </motion.div>
+          <div className="flex items-center gap-4">
+            <span>DSU CST Department • Class of 2027</span>
+            <div className="w-16 h-1.5 rounded-full spectrum-pill" />
+          </div>
+        </div>
+
+        {/* Section Heading */}
+        <div className="mb-6 text-left">
+          <h2 className="font-serif text-5xl sm:text-6xl md:text-7xl text-white tracking-tight leading-none font-normal">
+            Education &amp; Coursework<sup className="font-sans text-xs sm:text-sm font-mono text-white/50 ml-1.5 top-[-1.5em] sm:top-[-2.2em] font-normal">(02)</sup>
+          </h2>
+          <p className="font-sans text-xs sm:text-sm text-white/60 mt-2 max-w-xl font-light">
+            Formal computer science foundations, core systems engineering, and honors academic standing.
+          </p>
+        </div>
+
+        {/* ─────────────────────────────────────────────────────────────
+            COMPACT BENTO GRID (Left: Credentials | Right: Coursework Matrix)
+            Both sides align in height for a balanced, non-bloated section
+           ───────────────────────────────────────────────────────────── */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 sm:gap-6 items-stretch">
+          
+          {/* ─── LEFT COLUMN (5 Cols): Academic Credential Card (Liquid Glass) ─── */}
+          <LiquidGlassCard
+            className="lg:col-span-5 rounded-2xl sm:rounded-3xl border border-white/[0.1] p-5 sm:p-7 flex flex-col justify-between shadow-xl relative overflow-hidden"
+            options={{
+              radius: 24,
+              scale: -90,
+              chroma: 4,
+              border: 0.05,
+              mapBlur: 8,
+              blur: 0,
+              fallbackBlur: 0,
+            }}
+            style={{
+              background:
+                "radial-gradient(circle at 85% 20%, rgba(168, 0, 255, 0.14) 0%, rgba(14, 14, 14, 0.96) 65%)",
+            }}
+          >
+            {/* Top Status Bar */}
+            <div className="flex items-center justify-between border-b border-white/10 pb-3 mb-4">
+              <div className="flex items-center gap-2 font-mono text-[11px] text-white/70">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                <span className="uppercase font-bold tracking-wider">Active Candidate</span>
+              </div>
+              <span className="font-mono text-[10px] text-white/60 bg-white/5 border border-white/10 px-2.5 py-0.5 rounded-full font-bold">
+                {edu.years}
+              </span>
+            </div>
+
+            {/* Middle: University Crest + School + Degree */}
+            <div className="flex items-center gap-4 my-3 sm:my-4">
+              <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-white p-1.5 border-2 border-white/25 shadow-xl flex items-center justify-center shrink-0">
+                {!logoError ? (
+                  <img
+                    src="/dayananda-sagar-logo.jpg"
+                    alt="Dayananda Sagar University Crest"
+                    className="w-full h-full object-contain"
+                    onError={() => setLogoError(true)}
+                  />
+                ) : (
+                  <GraduationCap className="w-8 h-8 text-[#1254F5]" />
+                )}
+              </div>
+
+              <div className="space-y-0.5">
+                <span className="font-mono text-[9px] text-[#FF5E00] uppercase font-bold tracking-wider block">
+                  DEPARTMENT OF CST
+                </span>
+                <h3 className="font-display font-bold text-lg sm:text-xl text-white leading-tight">
+                  {edu.school}
+                </h3>
+                <p className="font-sans text-xs text-white/80 font-medium">
+                  {edu.degree}
+                </p>
+                <p className="font-sans text-[11px] text-white/40 font-light">
+                  School of Engineering • Bengaluru, India
+                </p>
+              </div>
+            </div>
+
+            {/* Bottom: CGPA Metric Block */}
+            <div className="pt-3 border-t border-white/10 flex items-center justify-between">
+              <div>
+                <div className="flex items-baseline gap-1.5">
+                  <span className="text-3xl sm:text-4xl font-display font-black text-white leading-none">
+                    {edu.cgpa}
+                  </span>
+                  <span className="font-mono text-xs text-white/40 font-bold">/ 10.0</span>
+                </div>
+                <span className="font-mono text-[9px] text-white/40 uppercase tracking-widest block mt-0.5">
+                  Cumulative GPA
+                </span>
+              </div>
+
+              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/25 text-emerald-400 font-mono text-[10px] font-bold tracking-wider">
+                <Award className="w-3.5 h-3.5 text-emerald-400" />
+                <span>HONORS STANDING</span>
+              </div>
+            </div>
+          </LiquidGlassCard>
+
+          {/* ─── RIGHT COLUMN (7 Cols): Compact Coursework Matrix (Liquid Glass) ─── */}
+          <LiquidGlassCard
+            className="lg:col-span-7 rounded-2xl sm:rounded-3xl border border-white/[0.1] p-5 sm:p-7 flex flex-col justify-between shadow-xl relative"
+            options={{
+              radius: 24,
+              scale: -90,
+              chroma: 4,
+              border: 0.05,
+              mapBlur: 8,
+              blur: 0,
+              fallbackBlur: 0,
+            }}
+            style={{ background: "rgba(14, 14, 14, 0.96)" }}
+          >
+            {/* Header */}
+            <div className="flex items-center justify-between border-b border-white/10 pb-3 mb-3 sm:mb-4">
+              <div className="flex items-center gap-2 font-mono text-xs text-white/70">
+                <BookOpen className="w-3.5 h-3.5 text-[#00F0FF]" />
+                <span className="uppercase font-bold tracking-widest text-white">
+                  Core Specialization Modules
+                </span>
+              </div>
+              <span className="font-mono text-[10px] text-white/40 font-bold tracking-wider">
+                [09 MODULES]
+              </span>
+            </div>
+
+            {/* Compact 3x3 Grid of Coursework Modules */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2 sm:gap-2.5 my-auto">
+              {COURSES.map((course, idx) => (
+                <div
+                  key={course.name}
+                  className="p-2.5 sm:p-3 rounded-xl bg-white/[0.03] hover:bg-white/[0.07] border border-white/[0.07] hover:border-white/20 transition-all duration-200 flex flex-col justify-between group shadow-sm"
+                >
+                  <div className="flex items-center justify-between mb-1.5">
+                    <span
+                      className="w-1.5 h-1.5 rounded-full"
+                      style={{ backgroundColor: course.accent }}
+                    />
+                    <span className="font-mono text-[9px] text-white/30 group-hover:text-white/60">
+                      0{idx + 1}
+                    </span>
+                  </div>
+
+                  <span className="font-sans font-semibold text-xs text-white/85 group-hover:text-white transition-colors line-clamp-2 leading-snug">
+                    {course.name}
+                  </span>
+
+                  <span className="font-mono text-[9px] text-white/40 uppercase tracking-wider mt-1.5 block">
+                    {course.categoryLabel}
+                  </span>
+                </div>
+              ))}
+            </div>
+
+            {/* Bottom Footer Note */}
+            <div className="pt-3 border-t border-white/10 flex items-center justify-between font-mono text-[10px] text-white/40 mt-3 sm:mt-4">
+              <span className="flex items-center gap-1.5 text-white/50">
+                <CheckCircle className="w-3 h-3 text-emerald-400" />
+                <span>Verified Foundation</span>
+              </span>
+              <span>CST Department Curriculum</span>
+            </div>
+          </LiquidGlassCard>
+
+        </div>
+
+        {/* Section Corner Index */}
+        <div className="mt-8 pt-4 border-t border-white/10 flex items-center justify-between text-white/40 font-mono text-xs">
+          <div className="flex items-center gap-2">
+            <span className="text-xl font-display font-black text-white">37</span>
+            <span className="uppercase tracking-widest text-[10px]">
+              Academic Records // Dayananda Sagar University
+            </span>
+          </div>
+          <span className="text-[10px] uppercase">9.05 CGPA Honors Standing</span>
+        </div>
+
+      </div>
     </section>
   );
 }
