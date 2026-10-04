@@ -193,12 +193,12 @@ export default function Hero() {
             }
             : undefined
         }
-        className="absolute top-[48%] sm:top-[46%] md:top-[38%] lg:top-[39%] left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 w-full flex flex-col md:flex-row items-center justify-center gap-y-1 sm:gap-y-2 md:gap-y-0 md:gap-x-28 lg:gap-x-32 xl:gap-x-36 2xl:gap-x-40 select-none cursor-pointer overflow-visible px-4"
+        className="absolute top-[48%] sm:top-[46%] md:top-[40%] lg:top-[40%] left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 w-full flex flex-col md:flex-row items-center justify-center gap-y-1 sm:gap-y-2 md:gap-y-0 md:gap-x-28 lg:gap-x-32 xl:gap-x-38 2xl:gap-x-44 select-none cursor-pointer overflow-visible px-4"
       >
         {nameWords.map((wordObj, wIdx) => (
           <span
             key={wIdx}
-            className="inline-flex items-baseline whitespace-nowrap [transform:skewX(-15deg)_scaleX(1.18)_scaleY(1.12)] md:[transform:skewX(-18deg)_scaleX(1.32)_scaleY(1.18)] [transform-origin:center_bottom] text-[19vw] xs:text-[21vw] sm:text-[17vw] md:text-[11.5vw] lg:text-[11vw] xl:text-[152px] 2xl:text-[180px] tracking-[0.01em] md:tracking-[0.02em] leading-[0.85] md:leading-[0.82]"
+            className="inline-flex items-baseline whitespace-nowrap [transform:skewX(-15deg)_scaleX(1.22)_scaleY(1.15)] md:[transform:skewX(-18deg)_scaleX(1.36)_scaleY(1.2)] [transform-origin:center_bottom] text-[20vw] xs:text-[22vw] sm:text-[18vw] md:text-[12.5vw] lg:text-[12vw] xl:text-[164px] 2xl:text-[196px] tracking-[0.01em] md:tracking-[0.02em] leading-[0.85] md:leading-[0.82]"
           >
             {wordObj.letters.map((item, lIdx) => {
               const globalIdx = wIdx * 10 + lIdx;
@@ -254,7 +254,7 @@ export default function Hero() {
       {/* ─────────────────────────────────────────────────────────────
           4. PORTRAIT IMAGE: POSITIONED ELEGANTLY IN FRONT OF SLANTED LETTERS
           - Hidden on smaller ratios (< md) as requested
-          - Visible and layered with butter-smooth radial feather on desktop (md+)
+          - Larger, commanding presence with butter-smooth feather on desktop (md+)
          ───────────────────────────────────────────────────────────── */}
       <motion.div
         style={{
@@ -280,7 +280,7 @@ export default function Hero() {
             height={572}
             priority
             fetchPriority="high"
-            className={`h-[48vh] sm:h-[54vh] md:h-[60vh] lg:h-[65vh] xl:h-[68vh] max-h-[640px] w-auto object-contain object-bottom transition-all duration-700 ease-out cursor-pointer ${
+            className={`md:h-[68vh] lg:h-[74vh] xl:h-[78vh] 2xl:h-[82vh] max-h-[750px] w-auto object-contain object-bottom transition-all duration-700 ease-out cursor-pointer ${
               isImageHovered || hoveredIdx !== null
                 ? "grayscale-0 contrast-105 saturate-120 brightness-100 scale-[1.012]"
                 : "grayscale contrast-110 brightness-95 scale-100"
@@ -291,7 +291,7 @@ export default function Hero() {
 
       {/* FULL-WIDTH SEAMLESS FLOOR GRADIENT: Blends bottom smoothly into grid floor across entire width */}
       <div
-        className="absolute inset-x-0 bottom-0 h-44 sm:h-52 pointer-events-none bg-gradient-to-t from-[#0A0A0A] from-20% via-[#0A0A0A]/75 via-60% to-transparent z-25"
+        className="absolute inset-x-0 bottom-0 h-48 sm:h-56 pointer-events-none bg-gradient-to-t from-[#0A0A0A] from-20% via-[#0A0A0A]/75 via-60% to-transparent z-25"
         aria-hidden="true"
       />
 
