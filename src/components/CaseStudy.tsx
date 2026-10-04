@@ -1,7 +1,7 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import React, { useState, useEffect, useRef } from "react";
+import { motion, AnimatePresence, useScroll, useTransform, useSpring } from "framer-motion";
 import {
   ArrowUpRight,
   ChevronLeft,
@@ -9,6 +9,8 @@ import {
   X,
   CheckCircle2,
 } from "lucide-react";
+import LiquidGlassButton from "@/components/LiquidGlassButton";
+import { ParallaxOrb } from "@/components/Parallax";
 
 // ─────────────────────────────────────────────────────────────
 // Type Definitions
@@ -766,39 +768,37 @@ function OpenBookReaderModal({
             <span className="text-white/60 text-[11px] sm:text-xs">
               Spread {spreadIndex + 1} of {totalSpreads}
             </span>
-            <button
+            <LiquidGlassButton
               onClick={onClose}
-              className="p-1.5 sm:p-2 rounded-full bg-white/10 hover:bg-white/20 text-white transition-colors cursor-pointer flex items-center gap-1.5 px-3 border border-white/10"
+              variant="crystal"
+              size="sm"
+              className="!p-1.5 sm:!p-2 !rounded-full text-white cursor-pointer flex items-center gap-1.5 !px-3"
               title="Close Book (Esc)"
             >
               <X className="w-4 h-4" />
               <span className="text-[11px] uppercase font-bold hidden sm:inline">Close</span>
-            </button>
+            </LiquidGlassButton>
           </div>
         </div>
 
         {/* Mobile Page Segmented Tab Switcher (Visible only on < md screens) */}
         <div className="flex md:hidden items-center justify-center gap-2 pb-2 select-none w-full">
-          <button
+          <LiquidGlassButton
             onClick={() => setMobilePageTab("left")}
-            className={`px-4 py-1 rounded-full font-mono text-[10px] uppercase font-bold transition-all cursor-pointer border ${
-              mobilePageTab === "left"
-                ? "bg-white text-black border-white shadow-md"
-                : "bg-white/10 text-white/70 border-white/10 hover:text-white"
-            }`}
+            variant={mobilePageTab === "left" ? "white" : "crystal"}
+            size="sm"
+            className="!px-3 !py-1 !rounded-full font-mono !text-[10px] uppercase font-bold"
           >
             {currentSpread.leftPage.pageNumber} • Overview
-          </button>
-          <button
+          </LiquidGlassButton>
+          <LiquidGlassButton
             onClick={() => setMobilePageTab("right")}
-            className={`px-4 py-1 rounded-full font-mono text-[10px] uppercase font-bold transition-all cursor-pointer border ${
-              mobilePageTab === "right"
-                ? "bg-white text-black border-white shadow-md"
-                : "bg-white/10 text-white/70 border-white/10 hover:text-white"
-            }`}
+            variant={mobilePageTab === "right" ? "white" : "crystal"}
+            size="sm"
+            className="!px-3 !py-1 !rounded-full font-mono !text-[10px] uppercase font-bold"
           >
             {currentSpread.rightPage.pageNumber} • Blueprint
-          </button>
+          </LiquidGlassButton>
         </div>
 
         {/* ─────────────────────────────────────────────────────────────
@@ -1044,12 +1044,14 @@ function OpenBookReaderModal({
                 <div className="pt-6 border-t border-[#161514]/15 flex items-center justify-between font-mono text-[9px] text-[#161514]/50">
                   <div className="flex items-center gap-2">
                     {spreadIndex < totalSpreads - 1 ? (
-                      <button
+                      <LiquidGlassButton
                         onClick={handleNext}
-                        className="text-[#FF5E00] font-bold hover:underline flex items-center gap-1 cursor-pointer"
+                        variant="orange"
+                        size="sm"
+                        className="!py-1 !px-2.5 !text-[10px] font-bold"
                       >
                         Turn Page →
-                      </button>
+                      </LiquidGlassButton>
                     ) : (
                       <span className="text-emerald-700 font-bold">End of Dossier ✓</span>
                     )}
@@ -1062,29 +1064,33 @@ function OpenBookReaderModal({
           </div>
 
           {/* Book Edge Flap Navigation Buttons */}
-          <button
+          <LiquidGlassButton
             onClick={handlePrev}
             disabled={spreadIndex === 0}
-            className={`absolute left-4 top-1/2 -translate-y-1/2 z-40 w-11 h-11 rounded-full bg-[#181818]/90 border border-white/20 text-white flex items-center justify-center transition-all ${
-              spreadIndex === 0 ? "opacity-20 cursor-not-allowed" : "hover:bg-white hover:text-black hover:scale-110 cursor-pointer shadow-xl"
+            variant="crystal"
+            className={`absolute left-4 top-1/2 -translate-y-1/2 z-40 !w-11 !h-11 !rounded-full flex items-center justify-center transition-all ${
+              spreadIndex === 0 ? "opacity-20 cursor-not-allowed pointer-events-none" : "hover:scale-110 cursor-pointer shadow-xl"
             }`}
             title="Previous Page"
+            aria-label="Previous Page"
           >
-            <ChevronLeft className="w-5 h-5" />
-          </button>
+            <ChevronLeft className="w-5 h-5 text-white" />
+          </LiquidGlassButton>
 
-          <button
+          <LiquidGlassButton
             onClick={handleNext}
             disabled={spreadIndex === totalSpreads - 1}
-            className={`absolute right-4 top-1/2 -translate-y-1/2 z-40 w-11 h-11 rounded-full bg-[#181818]/90 border border-white/20 text-white flex items-center justify-center transition-all ${
+            variant="crystal"
+            className={`absolute right-4 top-1/2 -translate-y-1/2 z-40 !w-11 !h-11 !rounded-full flex items-center justify-center transition-all ${
               spreadIndex === totalSpreads - 1
-                ? "opacity-20 cursor-not-allowed"
-                : "hover:bg-white hover:text-black hover:scale-110 cursor-pointer shadow-xl"
+                ? "opacity-20 cursor-not-allowed pointer-events-none"
+                : "hover:scale-110 cursor-pointer shadow-xl"
             }`}
             title="Next Page"
+            aria-label="Next Page"
           >
-            <ChevronRight className="w-5 h-5" />
-          </button>
+            <ChevronRight className="w-5 h-5 text-white" />
+          </LiquidGlassButton>
 
         </div>
 
@@ -1102,6 +1108,22 @@ function OpenBookReaderModal({
 // 3. Main CaseStudy Component Matching Reference Image
 // ─────────────────────────────────────────────────────────────
 export default function CaseStudy() {
+  const sectionRef = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start end", "end start"],
+  });
+
+  const smoothScroll = useSpring(scrollYProgress, {
+    stiffness: 100,
+    damping: 24,
+    restDelta: 0.001,
+  });
+
+  const card1Y = useTransform(smoothScroll, [0, 1], [35, -25]);
+  const card2Y = useTransform(smoothScroll, [0, 1], [-20, 25]);
+  const card3Y = useTransform(smoothScroll, [0, 1], [40, -30]);
+
   const [selectedCaseId, setSelectedCaseId] = useState<CaseStudyId | null>(null);
   const [activeFilter, setActiveFilter] = useState<string>("ALL");
 
@@ -1113,8 +1135,11 @@ export default function CaseStudy() {
   ];
 
   return (
-    <section id="casestudies" className="w-full px-2 sm:px-4 md:px-5 py-4 sm:py-6 scroll-mt-20 text-left select-none">
+    <section ref={sectionRef} id="casestudies" className="w-full px-2 sm:px-4 md:px-5 py-4 sm:py-6 scroll-mt-20 text-left select-none relative overflow-hidden">
       <div className="editorial-frame w-full p-6 sm:p-10 md:p-12 relative overflow-hidden bg-[#0A0A0A]">
+        {/* Parallax Depth Particles */}
+        <ParallaxOrb color="#FF5E00" speed={-0.3} size={380} top="15%" right="-8%" opacity={0.08} />
+        <ParallaxOrb color="#00F0FF" speed={0.35} size={360} top="65%" left="-8%" opacity={0.07} />
         
         {/* ─────────────────────────────────────────────────────────────
             EXACT REFERENCE HEADER (Image: Big Editorial Serif + Pill (03))
@@ -1150,17 +1175,17 @@ export default function CaseStudy() {
           {/* Right Category Filter Pills */}
           <div className="flex flex-wrap items-center gap-2">
             {filterCategories.slice(1).map((f) => (
-              <button
+              <LiquidGlassButton
                 key={f.key}
                 onClick={() => setActiveFilter(activeFilter === f.key ? "ALL" : f.key)}
-                className={`px-4 py-1.5 rounded-full font-sans text-[11px] uppercase tracking-wider transition-all cursor-pointer border ${
-                  activeFilter === f.key
-                    ? "bg-white text-black font-bold border-white"
-                    : "bg-transparent text-white/70 border-white/20 hover:border-white/50 hover:text-white"
+                size="sm"
+                variant={activeFilter === f.key ? "white" : "crystal"}
+                className={`text-[11px] uppercase tracking-wider ${
+                  activeFilter === f.key ? "font-bold text-black shadow-md" : "text-white/70"
                 }`}
               >
                 {f.label}
-              </button>
+              </LiquidGlassButton>
             ))}
           </div>
         </div>
@@ -1168,12 +1193,13 @@ export default function CaseStudy() {
         {/* ─────────────────────────────────────────────────────────────
             3 COLUMN CARDS GRID (Matches Reference Image Exactly)
            ───────────────────────────────────────────────────────────── */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 items-stretch">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 items-stretch relative z-10">
 
           {/* ───────────────────────────────────────────────────────────
               CARD 1: ESA Autonomous Payment Engine (Matches Card 1)
              ─────────────────────────────────────────────────────────── */}
           <motion.div
+            style={{ y: card1Y }}
             whileHover={{ y: -6 }}
             transition={{ duration: 0.3 }}
             onClick={() => setSelectedCaseId("esapay")}
@@ -1213,6 +1239,7 @@ export default function CaseStudy() {
               CARD 2: CyberConstituent-SLM Phone Mockup (Matches Card 2)
              ─────────────────────────────────────────────────────────── */}
           <motion.div
+            style={{ y: card2Y }}
             whileHover={{ y: -6 }}
             transition={{ duration: 0.3 }}
             onClick={() => setSelectedCaseId("cyberconstituent")}
@@ -1252,6 +1279,7 @@ export default function CaseStudy() {
               CARD 3: LumaForge Liquid Chrome Studio (Matches Card 3)
              ─────────────────────────────────────────────────────────── */}
           <motion.div
+            style={{ y: card3Y }}
             whileHover={{ y: -6 }}
             transition={{ duration: 0.3 }}
             onClick={() => setSelectedCaseId("lumaforge")}

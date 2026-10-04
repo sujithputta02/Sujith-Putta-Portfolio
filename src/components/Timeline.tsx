@@ -17,6 +17,7 @@ import {
   Cpu,
 } from "lucide-react";
 import { LiquidGlassCard } from "@/components/LiquidGlassCard";
+import LiquidGlassButton from "@/components/LiquidGlassButton";
 
 // Milestone definitions formatted directly for the Gantt-style timeline
 interface MilestoneEra {
@@ -516,18 +517,20 @@ export default function Timeline() {
               {/* Quick Jump Buttons */}
               <div className="flex items-center gap-1.5 bg-black/40 border border-white/10 rounded-full p-1">
                 {MILESTONES.map((era, idx) => (
-                  <button
+                  <LiquidGlassButton
                     key={era.yearStart}
                     type="button"
                     onClick={() => jumpToStage(idx)}
-                    className={`px-3 py-1 rounded-full text-[11px] font-mono font-medium transition-all cursor-pointer ${
+                    size="sm"
+                    variant={idx === activeStage ? "white" : "crystal"}
+                    className={`px-3 py-1 rounded-full text-[11px] font-mono font-medium ${
                       idx === activeStage
-                        ? "bg-white text-black font-bold shadow-md"
-                        : "text-white/50 hover:text-white hover:bg-white/10"
+                        ? "text-black font-bold shadow-md"
+                        : "text-white/60"
                     }`}
                   >
                     {era.yearStart}
-                  </button>
+                  </LiquidGlassButton>
                 ))}
               </div>
 

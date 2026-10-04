@@ -1,7 +1,7 @@
 "use client";
 
-import React, { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import React, { useState, useRef } from "react";
+import { motion, AnimatePresence, useScroll, useTransform, useSpring } from "framer-motion";
 import {
   Copy,
   Check,
@@ -17,11 +17,28 @@ import {
   Palette,
 } from "lucide-react";
 import { LiquidGlassCard } from "@/components/LiquidGlassCard";
+import LiquidGlassButton from "@/components/LiquidGlassButton";
+import { ParallaxOrb } from "@/components/Parallax";
 
 type TokenTab = "liquid" | "chromatic" | "spectrum" | "ticket";
 type ExportFormat = "css" | "tailwind" | "react";
 
 export default function DesignSystem() {
+  const sectionRef = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start end", "end start"],
+  });
+
+  const smoothScroll = useSpring(scrollYProgress, {
+    stiffness: 100,
+    damping: 24,
+    restDelta: 0.001,
+  });
+
+  const leftColY = useTransform(smoothScroll, [0, 1], [35, -25]);
+  const rightColY = useTransform(smoothScroll, [0, 1], [-20, 30]);
+
   const [copied, setCopied] = useState(false);
   const [activeTab, setActiveTab] = useState<TokenTab>("liquid");
   const [exportFormat, setExportFormat] = useState<ExportFormat>("css");
@@ -219,13 +236,17 @@ export const SpecimenTicket = ({ variant = "${ticketVariant}", elevation = ${tic
 
   return (
     <section
+      ref={sectionRef}
       id="design-system"
-      className="w-full px-2 sm:px-4 md:px-5 py-6 sm:py-8 scroll-mt-20 text-left select-none"
+      className="w-full px-2 sm:px-4 md:px-5 py-6 sm:py-8 scroll-mt-20 text-left select-none relative overflow-hidden"
     >
       <div className="editorial-frame w-full p-6 sm:p-10 md:p-12 relative overflow-hidden">
+        {/* Parallax Depth Orbs */}
+        <ParallaxOrb color="#00F0FF" speed={0.3} size={400} top="12%" left="-8%" opacity={0.09} />
+        <ParallaxOrb color="#FF5E00" speed={-0.35} size={360} top="62%" right="-7%" opacity={0.08} />
         
         {/* Frame Top Header */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-white/10 pb-6 mb-8 font-mono text-xs text-white/50">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-white/10 pb-6 mb-8 font-mono text-xs text-white/50 relative z-10">
           <div className="flex items-center gap-2">
             <span className="w-2 h-2 rounded-full bg-[#FF5E00] animate-pulse" />
             <span className="uppercase tracking-widest text-white/70">
@@ -239,7 +260,7 @@ export const SpecimenTicket = ({ variant = "${ticketVariant}", elevation = ${tic
         </div>
 
         {/* Section Heading */}
-        <div className="mb-10">
+        <div className="mb-10 relative z-10">
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
             <div>
               <h2 className="font-serif text-5xl sm:text-6xl md:text-7xl text-white tracking-tight leading-none font-normal">
@@ -260,14 +281,15 @@ export const SpecimenTicket = ({ variant = "${ticketVariant}", elevation = ${tic
         {/* ─────────────────────────────────────────────────────────────
             INTERACTIVE BENCH GRID (Left: Canvas | Right: Compiler Terminal)
            ───────────────────────────────────────────────────────────── */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 items-stretch">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 items-stretch relative z-10">
           
-          {/* ─── LEFT COLUMN (7 Cols): INTERACTIVE TOKEN CANVAS ─── */}
-          <LiquidGlassCard
-            className="lg:col-span-7 rounded-3xl border border-white/[0.1] p-6 sm:p-8 flex flex-col justify-between space-y-6 shadow-2xl relative"
-            options={{ radius: 24, scale: -90, chroma: 4, border: 0.05, mapBlur: 8, blur: 0, fallbackBlur: 0 }}
-            style={{ background: "rgba(14, 14, 14, 0.95)" }}
-          >
+          {/* ─── LEFT COLUMN (7 Cols): INTERACTIVE TOKEN CANVAS WITH PARALLAX ─── */}
+          <motion.div style={{ y: leftColY }} className="lg:col-span-7 flex flex-col">
+            <LiquidGlassCard
+              className="w-full h-full rounded-3xl border border-white/[0.1] p-6 sm:p-8 flex flex-col justify-between space-y-6 shadow-2xl relative"
+              options={{ radius: 24, scale: -90, chroma: 4, border: 0.05, mapBlur: 8, blur: 0, fallbackBlur: 0 }}
+              style={{ background: "rgba(14, 14, 14, 0.95)" }}
+            >
             {/* Canvas Header & Token Switcher Tabs */}
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-white/10 pb-4">
               <span className="font-mono text-[11px] text-white/60 uppercase tracking-widest font-bold flex items-center gap-2">
@@ -277,57 +299,49 @@ export const SpecimenTicket = ({ variant = "${ticketVariant}", elevation = ${tic
 
               {/* Token Selector Pills */}
               <div className="flex flex-wrap gap-1.5 bg-black/40 border border-white/10 p-1 rounded-full">
-                <button
+                <LiquidGlassButton
                   type="button"
                   onClick={() => setActiveTab("liquid")}
-                  className={`px-3 py-1 rounded-full text-[10px] sm:text-[11px] font-mono uppercase transition-all cursor-pointer flex items-center gap-1.5 ${
-                    activeTab === "liquid"
-                      ? "bg-white text-black font-bold shadow-md"
-                      : "text-white/50 hover:text-white hover:bg-white/10"
-                  }`}
+                  size="sm"
+                  variant={activeTab === "liquid" ? "white" : "crystal"}
+                  className="px-3 py-1 text-[10px] sm:text-[11px] font-mono uppercase"
                 >
                   <Droplets className="w-3 h-3 text-[#00F0FF]" />
                   <span>LIQUID GLASS</span>
-                </button>
+                </LiquidGlassButton>
 
-                <button
+                <LiquidGlassButton
                   type="button"
                   onClick={() => setActiveTab("chromatic")}
-                  className={`px-3 py-1 rounded-full text-[10px] sm:text-[11px] font-mono uppercase transition-all cursor-pointer flex items-center gap-1.5 ${
-                    activeTab === "chromatic"
-                      ? "bg-white text-black font-bold shadow-md"
-                      : "text-white/50 hover:text-white hover:bg-white/10"
-                  }`}
+                  size="sm"
+                  variant={activeTab === "chromatic" ? "white" : "crystal"}
+                  className="px-3 py-1 text-[10px] sm:text-[11px] font-mono uppercase"
                 >
                   <Type className="w-3 h-3 text-[#FF5E00]" />
                   <span>CHROMATIC</span>
-                </button>
+                </LiquidGlassButton>
 
-                <button
+                <LiquidGlassButton
                   type="button"
                   onClick={() => setActiveTab("spectrum")}
-                  className={`px-3 py-1 rounded-full text-[10px] sm:text-[11px] font-mono uppercase transition-all cursor-pointer flex items-center gap-1.5 ${
-                    activeTab === "spectrum"
-                      ? "bg-white text-black font-bold shadow-md"
-                      : "text-white/50 hover:text-white hover:bg-white/10"
-                  }`}
+                  size="sm"
+                  variant={activeTab === "spectrum" ? "white" : "crystal"}
+                  className="px-3 py-1 text-[10px] sm:text-[11px] font-mono uppercase"
                 >
                   <Palette className="w-3 h-3 text-[#A800FF]" />
                   <span>SPECTRUM</span>
-                </button>
+                </LiquidGlassButton>
 
-                <button
+                <LiquidGlassButton
                   type="button"
                   onClick={() => setActiveTab("ticket")}
-                  className={`px-3 py-1 rounded-full text-[10px] sm:text-[11px] font-mono uppercase transition-all cursor-pointer flex items-center gap-1.5 ${
-                    activeTab === "ticket"
-                      ? "bg-white text-black font-bold shadow-md"
-                      : "text-white/50 hover:text-white hover:bg-white/10"
-                  }`}
+                  size="sm"
+                  variant={activeTab === "ticket" ? "white" : "crystal"}
+                  className="px-3 py-1 text-[10px] sm:text-[11px] font-mono uppercase"
                 >
                   <TicketIcon className="w-3 h-3 text-[#1254F5]" />
                   <span>TICKET</span>
-                </button>
+                </LiquidGlassButton>
               </div>
             </div>
 
@@ -622,15 +636,15 @@ export const SpecimenTicket = ({ variant = "${ticketVariant}", elevation = ${tic
 
                   <div className="flex items-center justify-between pt-1">
                     <span className="text-white/60">CONTINUOUS WAVE SHIMMER:</span>
-                    <button
+                    <LiquidGlassButton
                       type="button"
                       onClick={() => setIsAnimated(!isAnimated)}
-                      className={`px-3 py-1 rounded-full text-[10px] font-mono font-bold transition-all cursor-pointer ${
-                        isAnimated ? "bg-[#FF5E00] text-white" : "bg-white/10 text-white/40"
-                      }`}
+                      variant={isAnimated ? "orange" : "crystal"}
+                      size="sm"
+                      className="!px-3 !py-1 !rounded-full !text-[10px] font-mono font-bold"
                     >
                       {isAnimated ? "ACTIVE" : "PAUSED"}
-                    </button>
+                    </LiquidGlassButton>
                   </div>
                 </div>
               )}
@@ -642,18 +656,16 @@ export const SpecimenTicket = ({ variant = "${ticketVariant}", elevation = ${tic
                     <span className="text-white/60">COLOR PROFILE:</span>
                     <div className="flex gap-2">
                       {(["cobalt", "obsidian", "parchment"] as const).map((variant) => (
-                        <button
+                        <LiquidGlassButton
                           key={variant}
                           type="button"
                           onClick={() => setTicketVariant(variant)}
-                          className={`px-2.5 py-1 rounded-lg text-[10px] font-mono uppercase transition-all cursor-pointer ${
-                            ticketVariant === variant
-                              ? "bg-white text-black font-bold shadow-sm"
-                              : "bg-white/5 text-white/50 hover:text-white"
-                          }`}
+                          variant={ticketVariant === variant ? "white" : "crystal"}
+                          size="sm"
+                          className="!px-2.5 !py-1 !rounded-lg !text-[10px] font-mono uppercase"
                         >
                           {variant}
-                        </button>
+                        </LiquidGlassButton>
                       ))}
                     </div>
                   </div>
@@ -677,10 +689,12 @@ export const SpecimenTicket = ({ variant = "${ticketVariant}", elevation = ${tic
 
             </div>
           </LiquidGlassCard>
+        </motion.div>
 
-          {/* ─── RIGHT COLUMN (5 Cols): COMPILED TOKEN TERMINAL ─── */}
+        {/* ─── RIGHT COLUMN (5 Cols): COMPILED TOKEN TERMINAL WITH PARALLAX ─── */}
+        <motion.div style={{ y: rightColY }} className="lg:col-span-5 flex flex-col">
           <LiquidGlassCard
-            className="lg:col-span-5 rounded-3xl border border-white/[0.1] p-6 sm:p-8 flex flex-col justify-between shadow-2xl relative"
+            className="w-full h-full rounded-3xl border border-white/[0.1] p-6 sm:p-8 flex flex-col justify-between shadow-2xl relative"
             options={{ radius: 24, scale: -90, chroma: 4, border: 0.05, mapBlur: 8, blur: 0, fallbackBlur: 0 }}
             style={{ background: "rgba(14, 14, 14, 0.95)" }}
           >
@@ -695,10 +709,12 @@ export const SpecimenTicket = ({ variant = "${ticketVariant}", elevation = ${tic
                 </div>
 
                 {/* Copy Button */}
-                <button
+                <LiquidGlassButton
                   type="button"
                   onClick={copyCode}
-                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/10 hover:bg-white/20 text-white font-mono text-[11px] transition-all cursor-pointer hover:scale-105 active:scale-95"
+                  variant="crystal"
+                  size="sm"
+                  className="!px-3 !py-1.5 !rounded-full font-mono !text-[11px] gap-1.5"
                 >
                   {copied ? (
                     <>
@@ -711,24 +727,22 @@ export const SpecimenTicket = ({ variant = "${ticketVariant}", elevation = ${tic
                       <span>Copy Spec</span>
                     </>
                   )}
-                </button>
+                </LiquidGlassButton>
               </div>
 
               {/* Format Switcher Pills: CSS / Tailwind / React */}
               <div className="flex gap-2 mb-4">
                 {(["css", "tailwind", "react"] as const).map((fmt) => (
-                  <button
+                  <LiquidGlassButton
                     key={fmt}
                     type="button"
                     onClick={() => setExportFormat(fmt)}
-                    className={`px-3 py-1 rounded-full text-[10px] font-mono uppercase transition-all cursor-pointer ${
-                      exportFormat === fmt
-                        ? "bg-[#FF5E00] text-white font-bold shadow-md shadow-[#FF5E00]/30"
-                        : "bg-white/5 text-white/50 hover:text-white hover:bg-white/10"
-                    }`}
+                    variant={exportFormat === fmt ? "orange" : "crystal"}
+                    size="sm"
+                    className="!px-3 !py-1 !rounded-full !text-[10px] font-mono uppercase"
                   >
                     {fmt === "react" ? "React Hook" : fmt.toUpperCase()}
-                  </button>
+                  </LiquidGlassButton>
                 ))}
               </div>
 
@@ -749,6 +763,7 @@ export const SpecimenTicket = ({ variant = "${ticketVariant}", elevation = ${tic
               <span className="uppercase text-white/60">Live Interactive</span>
             </div>
           </LiquidGlassCard>
+        </motion.div>
 
         </div>
 

@@ -14,6 +14,7 @@ import {
   GitBranch,
   ShieldCheck,
 } from "lucide-react";
+import LiquidGlassButton from "@/components/LiquidGlassButton";
 
 interface PipelineStep {
   id: string;
@@ -189,22 +190,24 @@ export default function AIPipeline() {
             const isCompleted = idx < currentIdx;
 
             return (
-              <button
+              <LiquidGlassButton
                 key={s.id}
                 onClick={() => setCurrentIdx(idx)}
-                className={`flex items-center gap-3 py-2 px-3 rounded-full transition-all cursor-pointer shrink-0 ${
+                variant={isSelected ? "white" : "crystal"}
+                size="sm"
+                className={`!py-1.5 !px-3 !rounded-full shrink-0 flex items-center gap-2.5 ${
                   isSelected
-                    ? "bg-white/10 text-white border border-white/20 shadow-md"
+                    ? "shadow-md text-black"
                     : isCompleted
-                    ? "text-white/60 hover:text-white"
-                    : "text-white/30 hover:text-white/60"
+                    ? "text-white/80"
+                    : "text-white/40"
                 }`}
               >
                 <div
-                  className="w-6 h-6 rounded-full flex items-center justify-center font-mono text-[10px] font-bold transition-all"
+                  className="w-5 h-5 rounded-full flex items-center justify-center font-mono text-[9px] font-bold"
                   style={{
-                    backgroundColor: isSelected ? s.accent : isCompleted ? "#10B981" : "rgba(255,255,255,0.06)",
-                    color: isSelected || isCompleted ? "#000000" : "rgba(255,255,255,0.4)",
+                    backgroundColor: isSelected ? s.accent : isCompleted ? "#10B981" : "rgba(255,255,255,0.1)",
+                    color: isSelected || isCompleted ? "#000000" : "rgba(255,255,255,0.6)",
                   }}
                 >
                   {isCompleted ? "✓" : s.step}
@@ -213,7 +216,7 @@ export default function AIPipeline() {
                 <span className="font-sans text-xs font-semibold tracking-wide">
                   {s.name}
                 </span>
-              </button>
+              </LiquidGlassButton>
             );
           })}
         </div>
@@ -311,25 +314,29 @@ export default function AIPipeline() {
 
             {/* Stepper Navigation Footer */}
             <div className="flex items-center justify-between pt-4 border-t border-white/10">
-              <button
+              <LiquidGlassButton
                 onClick={goPrev}
-                className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-white/10 text-white/60 hover:text-white hover:bg-white/5 font-mono text-xs transition-colors cursor-pointer"
+                size="sm"
+                variant="crystal"
+                className="gap-2 px-4 py-2 font-mono text-xs"
               >
                 <ArrowLeft className="w-3.5 h-3.5" />
                 <span>Previous Step</span>
-              </button>
+              </LiquidGlassButton>
 
               <span className="font-mono text-xs text-white/30">
                 {active.step} / 06
               </span>
 
-              <button
+              <LiquidGlassButton
                 onClick={goNext}
-                className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-white text-black font-sans text-xs font-semibold hover:bg-white/90 transition-all cursor-pointer shadow-md"
+                size="sm"
+                variant="white"
+                className="gap-2 px-5 py-2 font-sans text-xs font-semibold"
               >
                 <span>Next Step</span>
                 <ArrowRight className="w-3.5 h-3.5" />
-              </button>
+              </LiquidGlassButton>
             </div>
           </motion.div>
         </AnimatePresence>

@@ -1,6 +1,7 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
+import { motion, useScroll, useTransform, useSpring } from "framer-motion";
 import { profileData } from "@/data/profile";
 import {
   GraduationCap,
@@ -9,6 +10,7 @@ import {
   CheckCircle,
 } from "lucide-react";
 import { LiquidGlassCard } from "@/components/LiquidGlassCard";
+import { ParallaxOrb } from "@/components/Parallax";
 
 interface CourseItem {
   name: string;
@@ -32,12 +34,30 @@ export default function Education() {
   const edu = profileData.education;
   const [logoError, setLogoError] = useState(false);
 
+  const sectionRef = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start end", "end start"],
+  });
+
+  const smoothScroll = useSpring(scrollYProgress, {
+    stiffness: 110,
+    damping: 24,
+    restDelta: 0.001,
+  });
+
+  const cardParallaxY = useTransform(smoothScroll, [0, 1], [30, -30]);
+  const matrixParallaxY = useTransform(smoothScroll, [0, 1], [-20, 25]);
+
   return (
     <section
       id="education"
-      className="w-full px-2 sm:px-4 md:px-5 py-4 sm:py-6 scroll-mt-20 text-left select-none"
+      ref={sectionRef}
+      className="w-full px-2 sm:px-4 md:px-5 py-4 sm:py-6 scroll-mt-20 text-left select-none relative overflow-hidden"
     >
       <div className="editorial-frame w-full p-6 sm:p-8 md:p-10 relative overflow-hidden">
+        {/* Parallax Depth Orb */}
+        <ParallaxOrb color="#A800FF" speed={0.4} size={360} top="15%" right="-8%" opacity={0.12} />
         
         {/* Frame Top Header */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-white/10 pb-4 mb-6 font-mono text-xs text-white/50">
@@ -67,91 +87,100 @@ export default function Education() {
             COMPACT BENTO GRID (Left: Credentials | Right: Coursework Matrix)
             Both sides align in height for a balanced, non-bloated section
            ───────────────────────────────────────────────────────────── */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 sm:gap-6 items-stretch">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: false, amount: 0.15 }}
+          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+          className="grid grid-cols-1 lg:grid-cols-12 gap-5 sm:gap-6 items-stretch"
+        >
           
           {/* ─── LEFT COLUMN (5 Cols): Academic Credential Card (Liquid Glass) ─── */}
-          <LiquidGlassCard
-            className="lg:col-span-5 rounded-2xl sm:rounded-3xl border border-white/[0.1] p-5 sm:p-7 flex flex-col justify-between shadow-xl relative overflow-hidden"
-            options={{
-              radius: 24,
-              scale: -90,
-              chroma: 4,
-              border: 0.05,
-              mapBlur: 8,
-              blur: 0,
-              fallbackBlur: 0,
-            }}
-            style={{
-              background:
-                "radial-gradient(circle at 85% 20%, rgba(168, 0, 255, 0.14) 0%, rgba(14, 14, 14, 0.96) 65%)",
-            }}
-          >
-            {/* Top Status Bar */}
-            <div className="flex items-center justify-between border-b border-white/10 pb-3 mb-4">
-              <div className="flex items-center gap-2 font-mono text-[11px] text-white/70">
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-                <span className="uppercase font-bold tracking-wider">Active Candidate</span>
-              </div>
-              <span className="font-mono text-[10px] text-white/60 bg-white/5 border border-white/10 px-2.5 py-0.5 rounded-full font-bold">
-                {edu.years}
-              </span>
-            </div>
-
-            {/* Middle: University Crest + School + Degree */}
-            <div className="flex items-center gap-4 my-3 sm:my-4">
-              <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-white p-1.5 border-2 border-white/25 shadow-xl flex items-center justify-center shrink-0">
-                {!logoError ? (
-                  <img
-                    src="/dayananda-sagar-logo.jpg"
-                    alt="Dayananda Sagar University Crest"
-                    className="w-full h-full object-contain"
-                    onError={() => setLogoError(true)}
-                  />
-                ) : (
-                  <GraduationCap className="w-8 h-8 text-[#1254F5]" />
-                )}
-              </div>
-
-              <div className="space-y-0.5">
-                <span className="font-mono text-[9px] text-[#FF5E00] uppercase font-bold tracking-wider block">
-                  DEPARTMENT OF CST
-                </span>
-                <h3 className="font-display font-bold text-lg sm:text-xl text-white leading-tight">
-                  {edu.school}
-                </h3>
-                <p className="font-sans text-xs text-white/80 font-medium">
-                  {edu.degree}
-                </p>
-                <p className="font-sans text-[11px] text-white/40 font-light">
-                  School of Engineering • Bengaluru, India
-                </p>
-              </div>
-            </div>
-
-            {/* Bottom: CGPA Metric Block */}
-            <div className="pt-3 border-t border-white/10 flex items-center justify-between">
-              <div>
-                <div className="flex items-baseline gap-1.5">
-                  <span className="text-3xl sm:text-4xl font-display font-black text-white leading-none">
-                    {edu.cgpa}
-                  </span>
-                  <span className="font-mono text-xs text-white/40 font-bold">/ 10.0</span>
+          <motion.div style={{ y: cardParallaxY }} className="lg:col-span-5 h-full flex flex-col">
+            <LiquidGlassCard
+              className="w-full h-full rounded-2xl sm:rounded-3xl border border-white/[0.1] p-5 sm:p-7 flex flex-col justify-between shadow-xl relative overflow-hidden"
+              options={{
+                radius: 24,
+                scale: -90,
+                chroma: 4,
+                border: 0.05,
+                mapBlur: 8,
+                blur: 0,
+                fallbackBlur: 0,
+              }}
+              style={{
+                background:
+                  "radial-gradient(circle at 85% 20%, rgba(168, 0, 255, 0.14) 0%, rgba(14, 14, 14, 0.96) 65%)",
+              }}
+            >
+              {/* Top Status Bar */}
+              <div className="flex items-center justify-between border-b border-white/10 pb-3 mb-4">
+                <div className="flex items-center gap-2 font-mono text-[11px] text-white/70">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                  <span className="uppercase font-bold tracking-wider">Active Candidate</span>
                 </div>
-                <span className="font-mono text-[9px] text-white/40 uppercase tracking-widest block mt-0.5">
-                  Cumulative GPA
+                <span className="font-mono text-[10px] text-white/60 bg-white/5 border border-white/10 px-2.5 py-0.5 rounded-full font-bold">
+                  {edu.years}
                 </span>
               </div>
 
-              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/25 text-emerald-400 font-mono text-[10px] font-bold tracking-wider">
-                <Award className="w-3.5 h-3.5 text-emerald-400" />
-                <span>HONORS STANDING</span>
+              {/* Middle: University Crest + School + Degree */}
+              <div className="flex items-center gap-4 my-3 sm:my-4">
+                <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-white p-1.5 border-2 border-white/25 shadow-xl flex items-center justify-center shrink-0">
+                  {!logoError ? (
+                    <img
+                      src="/dayananda-sagar-logo.jpg"
+                      alt="Dayananda Sagar University Crest"
+                      className="w-full h-full object-contain"
+                      onError={() => setLogoError(true)}
+                    />
+                  ) : (
+                    <GraduationCap className="w-8 h-8 text-[#1254F5]" />
+                  )}
+                </div>
+
+                <div className="space-y-0.5">
+                  <span className="font-mono text-[9px] text-[#FF5E00] uppercase font-bold tracking-wider block">
+                    DEPARTMENT OF CST
+                  </span>
+                  <h3 className="font-display font-bold text-lg sm:text-xl text-white leading-tight">
+                    {edu.school}
+                  </h3>
+                  <p className="font-sans text-xs text-white/80 font-medium">
+                    {edu.degree}
+                  </p>
+                  <p className="font-sans text-[11px] text-white/40 font-light">
+                    School of Engineering • Bengaluru, India
+                  </p>
+                </div>
               </div>
-            </div>
-          </LiquidGlassCard>
+
+              {/* Bottom: CGPA Metric Block */}
+              <div className="pt-3 border-t border-white/10 flex items-center justify-between">
+                <div>
+                  <div className="flex items-baseline gap-1.5">
+                    <span className="text-3xl sm:text-4xl font-display font-black text-white leading-none">
+                      {edu.cgpa}
+                    </span>
+                    <span className="font-mono text-xs text-white/40 font-bold">/ 10.0</span>
+                  </div>
+                  <span className="font-mono text-[9px] text-white/40 uppercase tracking-widest block mt-0.5">
+                    Cumulative GPA
+                  </span>
+                </div>
+
+                <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/25 text-emerald-400 font-mono text-[10px] font-bold tracking-wider">
+                  <Award className="w-3.5 h-3.5 text-emerald-400" />
+                  <span>HONORS STANDING</span>
+                </div>
+              </div>
+            </LiquidGlassCard>
+          </motion.div>
 
           {/* ─── RIGHT COLUMN (7 Cols): Compact Coursework Matrix (Liquid Glass) ─── */}
-          <LiquidGlassCard
-            className="lg:col-span-7 rounded-2xl sm:rounded-3xl border border-white/[0.1] p-5 sm:p-7 flex flex-col justify-between shadow-xl relative"
+          <motion.div style={{ y: matrixParallaxY }} className="lg:col-span-7 h-full flex flex-col">
+            <LiquidGlassCard
+              className="w-full h-full rounded-2xl sm:rounded-3xl border border-white/[0.1] p-5 sm:p-7 flex flex-col justify-between shadow-xl relative"
             options={{
               radius: 24,
               scale: -90,
@@ -213,8 +242,9 @@ export default function Education() {
               <span>CST Department Curriculum</span>
             </div>
           </LiquidGlassCard>
+        </motion.div>
 
-        </div>
+        </motion.div>
 
         {/* Section Corner Index */}
         <div className="mt-8 pt-4 border-t border-white/10 flex items-center justify-between text-white/40 font-mono text-xs">

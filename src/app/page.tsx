@@ -1,6 +1,9 @@
-import React from "react";
+"use client";
+
+import React, { useState } from "react";
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
+import EntrancePreloader from "@/components/EntrancePreloader";
 import Manifesto from "@/components/Manifesto";
 import AboutMe from "@/components/AboutMe";
 import Skills from "@/components/Skills";
@@ -14,12 +17,23 @@ import Credentials from "@/components/Credentials";
 import ContactFooter from "@/components/ContactFooter";
 
 export default function Home() {
+  const [isEntered, setIsEntered] = useState(false);
+  const [showPreloader, setShowPreloader] = useState(true);
+
+  const handleEnter = () => {
+    setIsEntered(true);
+    setTimeout(() => {
+      setShowPreloader(false);
+    }, 1100);
+  };
+
   return (
     <>
-      <Navbar />
+      {showPreloader && <EntrancePreloader onEnter={handleEnter} />}
+      <Navbar isEntered={isEntered} />
       <main className="flex flex-col w-full relative z-10">
-        {/* Section 1: Hero (Full-Screen Viewport Poster) */}
-        <Hero />
+        {/* Section 1: Hero (Full-Screen Viewport Poster with Parallax & Assembly) */}
+        <Hero isEntered={isEntered} />
 
         {/* Section 1.1: Architectural Manifesto */}
         <Manifesto />

@@ -9,6 +9,7 @@ import {
   useMotionValue
 } from "framer-motion";
 import { Sparkles, ArrowUpRight } from "lucide-react";
+import { ParallaxOrb } from "@/components/Parallax";
 
 export default function Manifesto() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -116,6 +117,10 @@ export default function Manifesto() {
           }}
           aria-hidden="true"
         />
+
+        {/* Parallax Floating Ambient Depth Orbs */}
+        <ParallaxOrb color="#FF5E00" speed={0.4} size={360} top="15%" right="-8%" opacity={0.12} />
+        <ParallaxOrb color="#00F0FF" speed={-0.3} size={280} top="65%" left="-5%" opacity={0.08} />
 
         {/* ─────────────────────────────────────────────────────────────
             TOP 3-COLUMN MICRO-INSIGHTS (Scroll Animated & Interactive)

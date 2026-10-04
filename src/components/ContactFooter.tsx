@@ -1,12 +1,14 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { Loader2, ArrowUpRight, MapPin, Phone, Mail, CheckCircle } from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, useScroll, useTransform, useSpring } from "framer-motion";
 import { LiquidGlassCard } from "@/components/LiquidGlassCard";
+import LiquidGlassButton from "@/components/LiquidGlassButton";
+import { ParallaxOrb } from "@/components/Parallax";
 
 // Clean SVG Icons for Social Cards
 const GithubIcon = ({ className = "w-5 h-5" }: { className?: string }) => (
@@ -39,6 +41,22 @@ const contactSchema = z.object({
 type ContactFormValues = z.infer<typeof contactSchema>;
 
 export default function ContactFooter() {
+  const footerRef = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: footerRef,
+    offset: ["start end", "end start"],
+  });
+
+  const smoothScroll = useSpring(scrollYProgress, {
+    stiffness: 100,
+    damping: 24,
+    restDelta: 0.001,
+  });
+
+  const leftColY = useTransform(smoothScroll, [0, 1], [30, -20]);
+  const rightColY = useTransform(smoothScroll, [0, 1], [-20, 25]);
+  const socialCardsY = useTransform(smoothScroll, [0, 1], [25, -15]);
+
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSent, setIsSent] = useState(false);
 
@@ -78,16 +96,20 @@ export default function ContactFooter() {
   };
 
   return (
-    <footer id="connect" className="w-full px-4 sm:px-6 md:px-12 py-10 sm:py-16 bg-[#070707] text-white select-none">
-      <div className="max-w-6xl mx-auto space-y-6">
+    <footer ref={footerRef} id="connect" className="w-full px-4 sm:px-6 md:px-12 py-10 sm:py-16 bg-[#070707] text-white select-none relative overflow-hidden">
+      {/* Parallax Depth Particles */}
+      <ParallaxOrb color="#FF5E00" speed={-0.3} size={380} top="20%" right="-5%" opacity={0.08} />
+      <ParallaxOrb color="#00F0FF" speed={0.25} size={340} top="60%" left="-5%" opacity={0.07} />
+      
+      <div className="max-w-6xl mx-auto space-y-6 relative z-10">
         
         {/* ─────────────────────────────────────────────────────────────
             MAIN 2-COLUMN GRID (Matching User's Reference Layout)
            ───────────────────────────────────────────────────────────── */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 sm:gap-6 items-stretch">
           
-          {/* ─── LEFT COLUMN (5 Columns): 2 Stacked Cards ─── */}
-          <div className="lg:col-span-5 flex flex-col gap-5 sm:gap-6 justify-between">
+          {/* ─── LEFT COLUMN (5 Columns): 2 Stacked Cards with Parallax ─── */}
+          <motion.div style={{ y: leftColY }} className="lg:col-span-5 flex flex-col gap-5 sm:gap-6 justify-between">
             
             {/* TOP CARD: "Let's Work Together" & Email (with Liquid Glass) */}
             <LiquidGlassCard
@@ -155,143 +177,147 @@ export default function ContactFooter() {
               </div>
             </LiquidGlassCard>
 
-          </div>
+          </motion.div>
 
-          {/* ─── RIGHT COLUMN (7 Columns): Elegant Minimal Form Card (with Liquid Glass) ─── */}
-          <LiquidGlassCard
-            className="lg:col-span-7 rounded-[28px] sm:rounded-[32px] border border-white/[0.08] p-7 sm:p-10 relative flex flex-col justify-between shadow-[0_20px_50px_rgba(0,0,0,0.7)]"
-            options={{ radius: 28, scale: -95, chroma: 4, border: 0.05, mapBlur: 8, blur: 0, fallbackBlur: 0 }}
-            style={{
-              background: "rgba(18, 18, 18, 0.96)",
-            }}
-          >
-            {/* Success Overlay Banner */}
-            <AnimatePresence>
-              {isSent && (
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.96 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.96 }}
-                  className="absolute inset-0 bg-[#121212]/95 border border-emerald-500/30 rounded-[28px] sm:rounded-[32px] z-30 flex flex-col items-center justify-center p-6 text-center backdrop-blur-md"
-                >
-                  <div className="w-12 h-12 rounded-full bg-emerald-500/20 border border-emerald-500 flex items-center justify-center text-emerald-400 font-bold mb-3">
-                    <CheckCircle className="w-6 h-6" />
-                  </div>
-                  <h3 className="text-xl font-display font-bold text-white">Inquiry Dispatched</h3>
-                  <p className="text-xs text-white/60 mt-1 max-w-sm font-sans leading-relaxed">
-                    Opening your default email client with your message drafted to Sujith Putta.
-                  </p>
-                </motion.div>
-              )}
-            </AnimatePresence>
-
-            <form onSubmit={handleSubmit(onSubmit)} className="space-y-6 sm:space-y-7">
-              {/* Field 1: NAME */}
-              <div className="space-y-1">
-                <label className="block font-sans text-[11px] font-bold text-white/50 uppercase tracking-widest">
-                  Name
-                </label>
-                <input
-                  type="text"
-                  autoComplete="name"
-                  {...register("name")}
-                  className={`w-full bg-transparent border-b py-2 text-sm sm:text-base text-white placeholder-white/20 outline-none transition-colors ${
-                    errors.name ? "border-red-500" : "border-white/15 focus:border-[#FF5E00]"
-                  }`}
-                />
-                {errors.name && (
-                  <span className="text-[10px] text-red-400 font-mono block mt-1">{errors.name.message}</span>
+          {/* ─── RIGHT COLUMN (7 Columns): Elegant Minimal Form Card with Parallax ─── */}
+          <motion.div style={{ y: rightColY }} className="lg:col-span-7 flex flex-col">
+            <LiquidGlassCard
+              className="w-full h-full rounded-[28px] sm:rounded-[32px] border border-white/[0.08] p-7 sm:p-10 relative flex flex-col justify-between shadow-[0_20px_50px_rgba(0,0,0,0.7)]"
+              options={{ radius: 28, scale: -95, chroma: 4, border: 0.05, mapBlur: 8, blur: 0, fallbackBlur: 0 }}
+              style={{
+                background: "rgba(18, 18, 18, 0.96)",
+              }}
+            >
+              {/* Success Overlay Banner */}
+              <AnimatePresence>
+                {isSent && (
+                  <motion.div
+                    initial={{ opacity: 0, scale: 0.96 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.96 }}
+                    className="absolute inset-0 bg-[#121212]/95 border border-emerald-500/30 rounded-[28px] sm:rounded-[32px] z-30 flex flex-col items-center justify-center p-6 text-center backdrop-blur-md"
+                  >
+                    <div className="w-12 h-12 rounded-full bg-emerald-500/20 border border-emerald-500 flex items-center justify-center text-emerald-400 font-bold mb-3">
+                      <CheckCircle className="w-6 h-6" />
+                    </div>
+                    <h3 className="text-xl font-display font-bold text-white">Inquiry Dispatched</h3>
+                    <p className="text-xs text-white/60 mt-1 max-w-sm font-sans leading-relaxed">
+                      Opening your default email client with your message drafted to Sujith Putta.
+                    </p>
+                  </motion.div>
                 )}
-              </div>
+              </AnimatePresence>
 
-              {/* Field 2: EMAIL */}
-              <div className="space-y-1">
-                <label className="block font-sans text-[11px] font-bold text-white/50 uppercase tracking-widest">
-                  Email
-                </label>
-                <input
-                  type="email"
-                  autoComplete="email"
-                  {...register("email")}
-                  className={`w-full bg-transparent border-b py-2 text-sm sm:text-base text-white placeholder-white/20 outline-none transition-colors ${
-                    errors.email ? "border-red-500" : "border-white/15 focus:border-[#FF5E00]"
-                  }`}
-                />
-                {errors.email && (
-                  <span className="text-[10px] text-red-400 font-mono block mt-1">{errors.email.message}</span>
-                )}
-              </div>
-
-              {/* Field 3: 2-COLUMN ROW (CONTACT NUMBER & WEBSITE OPTIONAL) */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 sm:gap-6">
+              <form onSubmit={handleSubmit(onSubmit)} className="space-y-6 sm:space-y-7">
+                {/* Field 1: NAME */}
                 <div className="space-y-1">
                   <label className="block font-sans text-[11px] font-bold text-white/50 uppercase tracking-widest">
-                    Contact Number
-                  </label>
-                  <input
-                    type="tel"
-                    autoComplete="tel"
-                    {...register("phone")}
-                    className="w-full bg-transparent border-b border-white/15 focus:border-[#FF5E00] py-2 text-sm sm:text-base text-white placeholder-white/20 outline-none transition-colors"
-                  />
-                </div>
-
-                <div className="space-y-1">
-                  <label className="block font-sans text-[11px] font-bold text-white/50 uppercase tracking-widest">
-                    Website (Optional)
+                    Name
                   </label>
                   <input
                     type="text"
-                    placeholder="https://"
-                    {...register("website")}
-                    className="w-full bg-transparent border-b border-white/15 focus:border-[#FF5E00] py-2 text-sm sm:text-base text-white placeholder-white/20 outline-none transition-colors"
+                    autoComplete="name"
+                    {...register("name")}
+                    className={`w-full bg-transparent border-b py-2 text-sm sm:text-base text-white placeholder-white/20 outline-none transition-colors ${
+                      errors.name ? "border-red-500" : "border-white/15 focus:border-[#FF5E00]"
+                    }`}
                   />
-                </div>
-              </div>
-
-              {/* Field 4: MESSAGE */}
-              <div className="space-y-1">
-                <label className="block font-sans text-[11px] font-bold text-white/50 uppercase tracking-widest">
-                  Message
-                </label>
-                <textarea
-                  rows={3}
-                  {...register("message")}
-                  className={`w-full bg-transparent border-b py-2 text-sm sm:text-base text-white placeholder-white/20 outline-none transition-colors resize-none ${
-                    errors.message ? "border-red-500" : "border-white/15 focus:border-[#FF5E00]"
-                  }`}
-                />
-                {errors.message && (
-                  <span className="text-[10px] text-red-400 font-mono block mt-1">{errors.message.message}</span>
-                )}
-              </div>
-
-              {/* Field 5: FULL-WIDTH ORANGE GRADIENT SUBMIT BUTTON */}
-              <div className="pt-2">
-                <button
-                  type="submit"
-                  disabled={isSubmitting}
-                  className="w-full py-4 rounded-full bg-gradient-to-r from-[#FF7A00] via-[#FF5E00] to-[#E63900] hover:from-[#FF8A1A] hover:to-[#FF5E00] text-white font-sans text-xs sm:text-sm font-bold tracking-widest uppercase transition-all duration-300 shadow-[0_0_25px_rgba(255,94,0,0.35)] hover:shadow-[0_0_35px_rgba(255,94,0,0.6)] hover:scale-[1.01] active:scale-[0.99] cursor-pointer flex items-center justify-center gap-2"
-                >
-                  {isSubmitting ? (
-                    <>
-                      <Loader2 className="w-4 h-4 animate-spin" />
-                      <span>DISPATCHING...</span>
-                    </>
-                  ) : (
-                    <span>SUBMIT</span>
+                  {errors.name && (
+                    <span className="text-[10px] text-red-400 font-mono block mt-1">{errors.name.message}</span>
                   )}
-                </button>
-              </div>
-            </form>
-          </LiquidGlassCard>
+                </div>
+
+                {/* Field 2: EMAIL */}
+                <div className="space-y-1">
+                  <label className="block font-sans text-[11px] font-bold text-white/50 uppercase tracking-widest">
+                    Email
+                  </label>
+                  <input
+                    type="email"
+                    autoComplete="email"
+                    {...register("email")}
+                    className={`w-full bg-transparent border-b py-2 text-sm sm:text-base text-white placeholder-white/20 outline-none transition-colors ${
+                      errors.email ? "border-red-500" : "border-white/15 focus:border-[#FF5E00]"
+                    }`}
+                  />
+                  {errors.email && (
+                    <span className="text-[10px] text-red-400 font-mono block mt-1">{errors.email.message}</span>
+                  )}
+                </div>
+
+                {/* Field 3: 2-COLUMN ROW (CONTACT NUMBER & WEBSITE OPTIONAL) */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 sm:gap-6">
+                  <div className="space-y-1">
+                    <label className="block font-sans text-[11px] font-bold text-white/50 uppercase tracking-widest">
+                      Contact Number
+                    </label>
+                    <input
+                      type="tel"
+                      autoComplete="tel"
+                      {...register("phone")}
+                      className="w-full bg-transparent border-b border-white/15 focus:border-[#FF5E00] py-2 text-sm sm:text-base text-white placeholder-white/20 outline-none transition-colors"
+                    />
+                  </div>
+
+                  <div className="space-y-1">
+                    <label className="block font-sans text-[11px] font-bold text-white/50 uppercase tracking-widest">
+                      Website (Optional)
+                    </label>
+                    <input
+                      type="text"
+                      placeholder="https://"
+                      {...register("website")}
+                      className="w-full bg-transparent border-b border-white/15 focus:border-[#FF5E00] py-2 text-sm sm:text-base text-white placeholder-white/20 outline-none transition-colors"
+                    />
+                  </div>
+                </div>
+
+                {/* Field 4: MESSAGE */}
+                <div className="space-y-1">
+                  <label className="block font-sans text-[11px] font-bold text-white/50 uppercase tracking-widest">
+                    Message
+                  </label>
+                  <textarea
+                    rows={3}
+                    {...register("message")}
+                    className={`w-full bg-transparent border-b py-2 text-sm sm:text-base text-white placeholder-white/20 outline-none transition-colors resize-none ${
+                      errors.message ? "border-red-500" : "border-white/15 focus:border-[#FF5E00]"
+                    }`}
+                  />
+                  {errors.message && (
+                    <span className="text-[10px] text-red-400 font-mono block mt-1">{errors.message.message}</span>
+                  )}
+                </div>
+
+                {/* Field 5: FULL-WIDTH LIQUID GLASS SUBMIT BUTTON */}
+                <div className="pt-2">
+                  <LiquidGlassButton
+                    type="submit"
+                    disabled={isSubmitting}
+                    variant="orange"
+                    size="lg"
+                    className="w-full text-xs sm:text-sm font-bold tracking-widest uppercase py-4 shadow-[0_0_25px_rgba(255,94,0,0.45)] hover:shadow-[0_0_40px_rgba(255,94,0,0.7)]"
+                  >
+                    {isSubmitting ? (
+                      <>
+                        <Loader2 className="w-4 h-4 animate-spin" />
+                        <span>DISPATCHING...</span>
+                      </>
+                    ) : (
+                      <span>SUBMIT</span>
+                    )}
+                  </LiquidGlassButton>
+                </div>
+              </form>
+            </LiquidGlassCard>
+          </motion.div>
 
         </div>
 
         {/* ─────────────────────────────────────────────────────────────
             BOTTOM ROW: 3 EQUAL SOCIAL SQUIRCLE CARDS (with Liquid Glass)
            ───────────────────────────────────────────────────────────── */}
-        <div className="grid grid-cols-3 gap-3 sm:gap-5 pt-2">
+        <motion.div style={{ y: socialCardsY }} className="grid grid-cols-3 gap-3 sm:gap-5 pt-2">
           
           {/* Card 1: GitHub */}
           <LiquidGlassCard
@@ -344,7 +370,7 @@ export default function ContactFooter() {
             </a>
           </LiquidGlassCard>
 
-        </div>
+        </motion.div>
 
         {/* ─────────────────────────────────────────────────────────────
             CENTERED COPYRIGHT LINE (from Reference Image)

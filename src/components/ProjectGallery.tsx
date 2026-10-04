@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useRef } from "react";
-import { motion, AnimatePresence, useInView, useScroll, useTransform } from "framer-motion";
+import { motion, AnimatePresence, useInView, useScroll, useTransform, useSpring } from "framer-motion";
 import { profileData } from "@/data/profile";
 import {
   ChevronLeft,
@@ -17,6 +17,8 @@ import {
   Ticket
 } from "lucide-react";
 import { LiquidGlassCard } from "@/components/LiquidGlassCard";
+import LiquidGlassButton from "@/components/LiquidGlassButton";
+import { ParallaxOrb } from "@/components/Parallax";
 
 // ─────────────────────────────────────────────────────────────
 // REALISTIC VECTOR BARCODE COMPONENT (From Image 4)
@@ -83,27 +85,27 @@ function DineInGoWidget() {
             <label className="text-white/50 text-[9px] uppercase font-mono">Available Time Slots</label>
             <div className="grid grid-cols-3 gap-1.5">
               {["07:00 PM", "08:00 PM", "09:00 PM"].map((t) => (
-                <button
+                <LiquidGlassButton
                   key={t}
                   onClick={() => setSelectedTime(t)}
-                  className={`py-1 rounded text-[10px] border transition-all cursor-pointer ${
-                    selectedTime === t
-                      ? "border-[#FF5E00] text-[#FF5E00] bg-[#FF5E00]/10 font-bold"
-                      : "border-white/10 text-white/60 hover:border-white/25"
-                  }`}
+                  variant={selectedTime === t ? "orange" : "crystal"}
+                  size="sm"
+                  className="!py-1 !rounded !text-[10px]"
                 >
                   {t}
-                </button>
+                </LiquidGlassButton>
               ))}
             </div>
           </div>
 
-          <button
+          <LiquidGlassButton
             onClick={handleBook}
-            className="w-full mt-2 bg-[#FF5E00] hover:bg-[#FF7A00] text-white font-bold py-1.5 rounded-lg transition-colors text-xs cursor-pointer shadow-[0_0_12px_rgba(255,94,0,0.4)]"
+            variant="orange"
+            size="sm"
+            className="w-full mt-2 !py-1.5 !rounded-lg text-xs font-bold shadow-[0_0_12px_rgba(255,94,0,0.4)]"
           >
             Confirm Reservation
-          </button>
+          </LiquidGlassButton>
         </div>
       )}
 
@@ -123,12 +125,14 @@ function DineInGoWidget() {
           <p className="text-[10px] text-white/60 font-mono">
             Booking secured for {selectedTime}. Firebase session synced.
           </p>
-          <button
+          <LiquidGlassButton
             onClick={() => setBookingStep("idle")}
-            className="mt-1 text-[10px] text-[#FF5E00] underline font-mono cursor-pointer"
+            variant="crystal"
+            size="sm"
+            className="mt-1 !py-0.5 !px-2.5 !text-[10px] font-mono text-[#FF5E00]"
           >
             New Reservation
-          </button>
+          </LiquidGlassButton>
         </div>
       )}
     </div>
@@ -222,20 +226,24 @@ function NEXORAWidget() {
       </div>
 
       <div className="border-t border-white/10 pt-1.5 flex gap-2">
-        <button
+        <LiquidGlassButton
           onClick={() => runRAG("F16 wing stress anomaly", "Anomaly localized at joint L24. Struct fatigue: 12%. Check mandated.")}
           disabled={pipelineStep > 0 && pipelineStep < 5}
-          className="flex-1 text-left bg-white/10 hover:bg-[#00F0FF]/15 hover:text-[#00F0FF] border border-white/15 py-1 px-2 rounded transition-colors text-[8px] truncate"
+          variant="crystal"
+          size="sm"
+          className="flex-1 !justify-start !text-left !py-1 !px-2 !rounded !text-[8px] truncate"
         >
           &gt; Query F16 Structural logs
-        </button>
-        <button
+        </LiquidGlassButton>
+        <LiquidGlassButton
           onClick={() => runRAG("Access permissions audit", "Access Approved. Authenticated via RBAC Level 2 Clearance.")}
           disabled={pipelineStep > 0 && pipelineStep < 5}
-          className="flex-1 text-left bg-white/10 hover:bg-[#00F0FF]/15 hover:text-[#00F0FF] border border-white/15 py-1 px-2 rounded transition-colors text-[8px] truncate"
+          variant="crystal"
+          size="sm"
+          className="flex-1 !justify-start !text-left !py-1 !px-2 !rounded !text-[8px] truncate"
         >
           &gt; Run RBAC clearance test
-        </button>
+        </LiquidGlassButton>
       </div>
     </div>
   );
@@ -303,26 +311,22 @@ function LifeFlowWidget() {
 
       <div className="space-y-1.5 flex-1 pt-1.5">
         <div className="grid grid-cols-2 gap-1.5">
-          <button
+          <LiquidGlassButton
             onClick={() => handleTemplateChange("hospital")}
-            className={`py-1 rounded text-[9px] font-mono border transition-all cursor-pointer ${
-              selectedTemplate === "hospital"
-                ? "border-[#10B981] text-[#10B981] bg-[#10B981]/15 font-bold"
-                : "border-white/10 text-white/50"
-            }`}
+            variant={selectedTemplate === "hospital" ? "lime" : "crystal"}
+            size="sm"
+            className="!py-1 !rounded font-mono !text-[9px]"
           >
             Hospital Admission
-          </button>
-          <button
+          </LiquidGlassButton>
+          <LiquidGlassButton
             onClick={() => handleTemplateChange("passport")}
-            className={`py-1 rounded text-[9px] font-mono border transition-all cursor-pointer ${
-              selectedTemplate === "passport"
-                ? "border-[#10B981] text-[#10B981] bg-[#10B981]/15 font-bold"
-                : "border-white/10 text-white/50"
-            }`}
+            variant={selectedTemplate === "passport" ? "lime" : "crystal"}
+            size="sm"
+            className="!py-1 !rounded font-mono !text-[9px]"
           >
             Passport Application
-          </button>
+          </LiquidGlassButton>
         </div>
 
         <div className="space-y-1">
@@ -357,13 +361,15 @@ function LifeFlowWidget() {
 
       <div className="border-t border-white/10 pt-2">
         {verifyStatus !== "verified" ? (
-          <button
+          <LiquidGlassButton
             onClick={runVerification}
             disabled={verifyStatus === "verifying"}
-            className="w-full bg-[#10B981] hover:bg-[#059669] text-black font-bold py-1.5 rounded-lg transition-colors text-[10px] cursor-pointer"
+            variant="lime"
+            size="sm"
+            className="w-full !py-1.5 !rounded-lg !text-[10px] font-bold text-black"
           >
             {verifyStatus === "verifying" ? "Validating Submissions..." : "Run AI Case Verification"}
-          </button>
+          </LiquidGlassButton>
         ) : (
           <div className="text-center text-[9px] font-mono text-emerald-400 font-bold">
             ✓ Complete Workflow Checklist Validated
@@ -414,24 +420,30 @@ function SpitchWidget() {
       </div>
 
       <div className="border-t border-white/10 pt-2 grid grid-cols-3 gap-1">
-        <button
+        <LiquidGlassButton
           onClick={() => runCommand("Gemini Vision Scan", "Scanned viewport: React component tree checks out.")}
-          className="bg-white/5 hover:bg-white/10 border border-white/10 py-1 rounded text-[8px] font-mono"
+          variant="crystal"
+          size="sm"
+          className="!py-1 !rounded !text-[8px] font-mono"
         >
           👁️ Vision
-        </button>
-        <button
+        </LiquidGlassButton>
+        <LiquidGlassButton
           onClick={() => runCommand("Launch Selenium", "Chrome headless node dispatched.")}
-          className="bg-white/5 hover:bg-white/10 border border-white/10 py-1 rounded text-[8px] font-mono"
+          variant="crystal"
+          size="sm"
+          className="!py-1 !rounded !text-[8px] font-mono"
         >
           🌐 Selenium
-        </button>
-        <button
+        </LiquidGlassButton>
+        <LiquidGlassButton
           onClick={() => runCommand("Play Spotify track", "Spotify window focus secure.")}
-          className="bg-white/5 hover:bg-white/10 border border-white/10 py-1 rounded text-[8px] font-mono"
+          variant="crystal"
+          size="sm"
+          className="!py-1 !rounded !text-[8px] font-mono"
         >
           🎵 Spotify
-        </button>
+        </LiquidGlassButton>
       </div>
     </div>
   );
@@ -571,23 +583,27 @@ function ESAWidget() {
       {/* Interactive Controls */}
       <div className="border-t border-white/10 pt-1.5 flex items-center gap-1.5">
         {phase === "healthy" ? (
-          <button
+          <LiquidGlassButton
             onClick={triggerSpike}
-            className="flex-1 bg-[#1F51FF] hover:bg-[#3B82F6] text-white font-bold py-1 px-2 rounded transition-colors text-[8px] flex items-center justify-center gap-1 cursor-pointer shadow-[0_0_10px_rgba(31,81,255,0.4)]"
+            variant="crystal"
+            size="sm"
+            className="flex-1 !py-1 !px-2 !rounded text-[8px] font-bold text-sky-400 border-sky-500/30 flex items-center justify-center gap-1"
           >
             <span>⚡ Trigger UPI Bank Outage & Auto-Remediate</span>
-          </button>
+          </LiquidGlassButton>
         ) : phase === "resolved" ? (
           <div className="flex-1 flex items-center justify-between">
             <span className="text-emerald-400 font-bold text-[8px] flex items-center gap-1">
               ✓ 72.3% Failure Window Cut (4.1s)
             </span>
-            <button
+            <LiquidGlassButton
               onClick={resetState}
-              className="bg-white/10 hover:bg-white/20 text-white font-bold py-0.5 px-2 rounded text-[8px] cursor-pointer"
+              variant="crystal"
+              size="sm"
+              className="!py-0.5 !px-2 !rounded text-[8px] font-bold"
             >
               Reset Stream
-            </button>
+            </LiquidGlassButton>
           </div>
         ) : (
           <div className="flex-1 flex items-center justify-center gap-2 py-0.5 text-[8px] text-[#60A5FA]">
@@ -1024,16 +1040,33 @@ export default function ProjectGallery() {
     }
   };
 
+  const galleryRef = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: galleryRef,
+    offset: ["start end", "end start"],
+  });
+
+  const smoothScroll = useSpring(scrollYProgress, {
+    stiffness: 100,
+    damping: 24,
+    restDelta: 0.001,
+  });
+
+  const fannedDeckY = useTransform(smoothScroll, [0, 0.55], [35, -20]);
+  const ribbonDeckY = useTransform(smoothScroll, [0.35, 1], [30, -25]);
+
   return (
-    <section id="showcase" className="w-full px-2 sm:px-4 md:px-5 py-4 sm:py-6 flex flex-col gap-10 text-left">
+    <section id="showcase" ref={galleryRef} className="w-full px-2 sm:px-4 md:px-5 py-4 sm:py-6 flex flex-col gap-10 text-left relative overflow-hidden">
 
       {/* ─────────────────────────────────────────────────────────────
           SECTION FRAME 1: OVERLAPPING FANNED CARD CAROUSEL (Image 3)
          ───────────────────────────────────────────────────────────── */}
       <div className="editorial-frame w-full p-6 sm:p-10 md:p-12 relative overflow-hidden">
-        
+        {/* Parallax Depth Orb */}
+        <ParallaxOrb color="#00F0FF" speed={0.35} size={380} top="15%" right="-8%" opacity={0.1} />
+
         {/* Frame Top Header */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-white/10 pb-6 mb-8 font-mono text-xs text-white/50">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-white/10 pb-6 mb-8 font-mono text-xs text-white/50 relative z-10">
           <div className="flex items-center gap-2">
             <span className="w-2 h-2 rounded-full bg-[#00F0FF] animate-pulse" />
             <span className="uppercase tracking-widest text-white/70">
@@ -1047,7 +1080,7 @@ export default function ProjectGallery() {
         </div>
 
         {/* Title */}
-        <div className="mb-10 text-center sm:text-left">
+        <div className="mb-10 text-center sm:text-left relative z-10">
           <h2 className="font-serif text-5xl sm:text-6xl md:text-7xl text-white tracking-tight leading-none font-normal">
             Featured Systems<sup className="font-sans text-xs sm:text-sm font-mono text-white/50 ml-1.5 top-[-1.5em] sm:top-[-2.2em] font-normal">(03)</sup>
           </h2>
@@ -1057,7 +1090,10 @@ export default function ProjectGallery() {
         </div>
 
         {/* 3D FANNED CAROUSEL STACK CONTAINER (Matches Image 3) */}
-        <div className="relative w-full h-[480px] sm:h-[540px] flex items-center justify-center perspective-carousel select-none my-4">
+        <motion.div
+          style={{ y: fannedDeckY }}
+          className="relative w-full h-[480px] sm:h-[540px] flex items-center justify-center perspective-carousel select-none my-4"
+        >
           
           {/* Controls */}
           <LiquidGlassCard
@@ -1179,7 +1215,7 @@ export default function ProjectGallery() {
             })}
           </div>
 
-        </div>
+        </motion.div>
 
         {/* Frame Footer */}
         <div className="border-t border-white/10 mt-6 pt-6 flex items-center justify-between text-white/40 font-mono text-xs">
@@ -1196,9 +1232,12 @@ export default function ProjectGallery() {
           SECTION FRAME 2: HORIZONTAL SPECIMEN TICKET RIBBON
          ───────────────────────────────────────────────────────────── */}
       <div className="editorial-frame w-full p-6 sm:p-10 md:p-12 relative overflow-hidden">
+        {/* Parallax Orbs for Multi-plane Depth */}
+        <ParallaxOrb color="#FF5E00" speed={-0.3} size={360} top="15%" left="-6%" opacity={0.08} />
+        <ParallaxOrb color="#00F0FF" speed={0.35} size={340} top="65%" right="-8%" opacity={0.07} />
         
         {/* Frame Top Header */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-white/10 pb-6 mb-8 font-mono text-xs text-white/50">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-white/10 pb-6 mb-8 font-mono text-xs text-white/50 relative z-10">
           <div className="flex items-center gap-2">
             <span className="w-2 h-2 rounded-full bg-[#FF5E00] animate-pulse" />
             <span className="uppercase tracking-widest text-white/70">
@@ -1212,7 +1251,7 @@ export default function ProjectGallery() {
         </div>
 
         {/* Title & Quick Controls */}
-        <div className="mb-8 text-center sm:text-left flex flex-col md:flex-row md:items-end justify-between gap-6">
+        <div className="mb-8 text-center sm:text-left flex flex-col md:flex-row md:items-end justify-between gap-6 relative z-10">
           <div>
             <h2 className="font-serif text-5xl sm:text-6xl md:text-7xl text-white tracking-tight leading-none font-normal">
               Product Specimen Tickets<sup className="font-sans text-xs sm:text-sm font-mono text-white/50 ml-1.5 top-[-1.5em] sm:top-[-2.2em] font-normal">(04)</sup>
@@ -1224,55 +1263,59 @@ export default function ProjectGallery() {
 
           {/* Quick Ribbon Navigation Controls */}
           <div className="flex items-center gap-2 self-center sm:self-start md:self-end shrink-0">
-            <button
+            <LiquidGlassButton
               onClick={handlePrevRibbon}
               aria-label="Previous ticket"
-              className="p-3 rounded-full bg-white/5 hover:bg-white/15 text-white border border-white/15 transition-all hover:scale-105 active:scale-95 cursor-pointer flex items-center justify-center"
+              size="sm"
+              variant="crystal"
+              className="p-3 rounded-full"
             >
               <ChevronLeft className="w-4 h-4" />
-            </button>
+            </LiquidGlassButton>
             <div className="font-mono text-xs text-white/60 px-3.5 py-2 rounded-full border border-white/10 bg-white/5 flex items-center gap-2 select-none">
               <Ticket className="w-3.5 h-3.5 text-[#FF5E00]" />
               <span>0{activeRibbonIdx + 1} / 0{showcaseItems.length}</span>
             </div>
-            <button
+            <LiquidGlassButton
               onClick={handleNextRibbon}
               aria-label="Next ticket"
-              className="p-3 rounded-full bg-white/5 hover:bg-white/15 text-white border border-white/15 transition-all hover:scale-105 active:scale-95 cursor-pointer flex items-center justify-center"
+              size="sm"
+              variant="crystal"
+              className="p-3 rounded-full"
             >
               <ChevronRight className="w-4 h-4" />
-            </button>
+            </LiquidGlassButton>
           </div>
         </div>
 
         {/* TICKET RIBBON TABS SELECTOR */}
-        <div className="flex items-center gap-2 overflow-x-auto pb-4 mb-6 scrollbar-none">
+        <div className="flex items-center gap-2 overflow-x-auto pb-4 mb-6 scrollbar-none relative z-10">
           {showcaseItems.map((item, idx) => {
             const isActive = activeRibbonIdx === idx;
             return (
-              <button
+              <LiquidGlassButton
                 key={item.id}
                 onClick={() => scrollToTicket(idx)}
-                className={`font-mono text-xs px-4 py-2 rounded-full transition-all whitespace-nowrap cursor-pointer flex items-center gap-2 shrink-0 border ${
-                  isActive
-                    ? "bg-white text-black font-bold border-white shadow-[0_0_15px_rgba(255,255,255,0.25)]"
-                    : "bg-white/5 text-white/60 hover:text-white border-white/10 hover:border-white/20"
+                size="sm"
+                variant={isActive ? "white" : "crystal"}
+                className={`font-mono text-xs px-4 py-2 rounded-full whitespace-nowrap shrink-0 ${
+                  isActive ? "text-black font-bold shadow-[0_0_20px_rgba(255,255,255,0.35)]" : "text-white/70"
                 }`}
               >
                 <span className={`w-1.5 h-1.5 rounded-full ${isActive ? "bg-[#FF5E00]" : "bg-white/30"}`} />
                 <span>0{idx + 1} // {item.name.toUpperCase()}</span>
                 <span className="opacity-50 text-[10px]">({item.style.split("&")[0].trim()})</span>
-              </button>
+              </LiquidGlassButton>
             );
           })}
         </div>
 
-        {/* HORIZONTAL CONTINUOUS TICKET RIBBON TRACK */}
-        <div
+        {/* HORIZONTAL CONTINUOUS TICKET RIBBON TRACK WITH PARALLAX */}
+        <motion.div
+          style={{ y: ribbonDeckY }}
           ref={ribbonTrackRef}
           onScroll={handleRibbonScroll}
-          className="w-full flex flex-row overflow-x-auto snap-x snap-mandatory gap-6 sm:gap-8 pb-8 pt-2 scrollbar-none scroll-smooth select-none cursor-grab active:cursor-grabbing"
-          style={{ WebkitOverflowScrolling: "touch" }}
+          className="w-full flex flex-row overflow-x-auto snap-x snap-mandatory gap-6 sm:gap-8 pb-8 pt-2 scrollbar-none scroll-smooth select-none cursor-grab active:cursor-grabbing relative z-10"
         >
           {showcaseItems.map((item, idx) => (
             <div
@@ -1282,7 +1325,7 @@ export default function ProjectGallery() {
               <HorizontalTicketRibbon item={item} idx={idx} />
             </div>
           ))}
-        </div>
+        </motion.div>
 
         {/* RIBBON FOOTER WITH PERFORATION HINT & CONTROLS */}
         <div className="border-t border-white/10 mt-6 pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-white/40 font-mono text-xs">

@@ -4,8 +4,13 @@ import React, { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence, useScroll, useSpring, useTransform } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
 import { useLiquidGlass } from "@/hooks/useLiquidGlass";
+import LiquidGlassButton from "@/components/LiquidGlassButton";
 
-export default function Navbar() {
+interface NavbarProps {
+  isEntered?: boolean;
+}
+
+export default function Navbar({ isEntered = true }: NavbarProps) {
   const [isOpen, setIsOpen] = useState(false);
   const navRef = useRef<HTMLDivElement>(null);
   const mobileDrawerRef = useRef<HTMLDivElement>(null);
@@ -57,7 +62,12 @@ export default function Navbar() {
         style={{ scaleX }}
       />
 
-      <nav className="fixed top-4 left-1/2 -translate-x-1/2 z-50 w-[94%] max-w-6xl">
+      <motion.nav
+        initial={{ y: -80, opacity: 0 }}
+        animate={isEntered ? { y: 0, opacity: 1 } : { y: -80, opacity: 0 }}
+        transition={{ type: "spring", stiffness: 120, damping: 20, delay: 0.25 }}
+        className="fixed top-4 left-1/2 -translate-x-1/2 z-50 w-[94%] max-w-6xl"
+      >
         <div
           ref={navRef}
           className="bg-[#0C0C0C]/35 py-2.5 px-5 sm:px-6 rounded-full flex items-center justify-between border border-white/15 transition-all duration-300 shadow-[0_20px_50px_rgba(0,0,0,0.5),inset_0_1px_1px_rgba(255,255,255,0.45),inset_0_-4px_14px_rgba(255,255,255,0.05),inset_0_0_0_1px_rgba(255,255,255,0.12)] hover:border-white/25"
@@ -89,19 +99,23 @@ export default function Navbar() {
 
         {/* Right CTA */}
         <div className="hidden sm:flex items-center gap-3">
-          <a
+          <LiquidGlassButton
             href="#connect"
-            className="group relative inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full text-xs font-semibold bg-white text-black hover:bg-white/95 transition-all shadow-[0_0_15px_rgba(255,255,255,0.25)] hover:shadow-[0_0_20px_rgba(255,94,0,0.4)]"
+            size="sm"
+            variant="crystal"
+            className="text-white font-sans text-xs font-semibold shadow-[0_4px_20px_rgba(0,0,0,0.4),inset_0_1px_2px_rgba(255,255,255,0.85)] border-white/30"
           >
             <span>Let&apos;s Talk</span>
-            <ArrowUpRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-          </a>
+            <ArrowUpRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform text-[#FF5E00]" />
+          </LiquidGlassButton>
         </div>
 
         {/* Mobile Toggle Button */}
-        <button
+        <LiquidGlassButton
           onClick={() => setIsOpen(!isOpen)}
-          className="md:hidden p-2 text-white/80 hover:text-white rounded-full bg-white/5 border border-white/10 transition-colors"
+          variant="crystal"
+          size="sm"
+          className="md:hidden !p-2 text-white/80 hover:text-white !rounded-full"
           aria-label="Toggle menu"
         >
           {isOpen ? (
@@ -115,7 +129,7 @@ export default function Navbar() {
               <rect x="2" y="11.5" width="12" height="1.5" rx="0.75" />
             </svg>
           )}
-        </button>
+        </LiquidGlassButton>
       </div>
 
       {/* Mobile Drawer menu */}
@@ -142,19 +156,20 @@ export default function Navbar() {
             ))}
 
             <div className="pt-2 border-t border-white/10 mt-1">
-              <a
+              <LiquidGlassButton
                 href="#connect"
                 onClick={() => setIsOpen(false)}
-                className="w-full py-2.5 rounded-full text-xs font-semibold bg-white text-black flex items-center justify-center gap-1.5 shadow-[0_0_15px_rgba(255,255,255,0.2)]"
+                variant="white"
+                className="w-full py-2.5 !rounded-full text-xs font-semibold flex items-center justify-center gap-1.5"
               >
                 <span>Let&apos;s Talk</span>
                 <ArrowUpRight className="w-3.5 h-3.5" />
-              </a>
+              </LiquidGlassButton>
             </div>
           </motion.div>
         )}
       </AnimatePresence>
-    </nav>
+    </motion.nav>
     </>
   );
 }

@@ -5,6 +5,8 @@ import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion"
 import { profileData } from "@/data/profile";
 import { Search, X, Code, CheckCircle, Sparkles, ExternalLink } from "lucide-react";
 import { LiquidGlassCard } from "@/components/LiquidGlassCard";
+import { LiquidGlassButton } from "@/components/LiquidGlassButton";
+import { ParallaxOrb } from "@/components/Parallax";
 
 // ─────────────────────────────────────────────────────────────
 // AUTHENTIC RETRO GRAPHIC EMBLEMS (From Image 2)
@@ -194,7 +196,8 @@ function ScrollCollectorCard({
   });
 
   const rotateX = useTransform(scrollYProgress, [0, 1], [18, 0]);
-  const y = useTransform(scrollYProgress, [0, 1], [35, 0]);
+  const y = useTransform(scrollYProgress, [0, 1], idx % 2 === 0 ? [55, -20] : [20, 25]);
+  const rotateZ = useTransform(scrollYProgress, [0, 1], idx % 2 === 0 ? [-2, 0] : [2, 0]);
   const opacity = useTransform(scrollYProgress, [0, 0.6], [0.4, 1]);
   const scale = useTransform(scrollYProgress, [0, 1], [0.95, 1]);
 
@@ -205,6 +208,7 @@ function ScrollCollectorCard({
       ref={cardRef}
       style={{
         rotateX,
+        rotateZ,
         y,
         opacity,
         scale,
@@ -271,8 +275,12 @@ export default function Skills() {
       {/* ─────────────────────────────────────────────────────────────
           SECTION FRAME HEADER
          ───────────────────────────────────────────────────────────── */}
-      <div className="editorial-frame w-full p-6 sm:p-10 md:p-12 relative">
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-white/10 pb-6 mb-8 font-mono text-xs text-white/50">
+      <div className="editorial-frame w-full p-6 sm:p-10 md:p-12 relative overflow-hidden">
+        {/* Parallax Ambient Orbs */}
+        <ParallaxOrb color="#FF7A00" speed={0.4} size={360} top="20%" right="-6%" opacity={0.09} />
+        <ParallaxOrb color="#00F0FF" speed={-0.35} size={280} top="70%" left="-5%" opacity={0.07} />
+
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-white/10 pb-6 mb-8 font-mono text-xs text-white/50 relative z-10">
           <div className="flex items-center gap-2">
             <span className="w-2 h-2 rounded-full bg-[#FF5E00] animate-pulse" />
             <span className="uppercase tracking-widest text-white/70">ARCHITECTURAL DOMAINS // EDITION 2026</span>
@@ -319,7 +327,14 @@ export default function Skills() {
           <div className="mb-10 p-5 rounded-2xl bg-[#111111] border border-white/15">
             <div className="flex items-center justify-between text-xs font-mono text-white/50 mb-3 border-b border-white/10 pb-2">
               <span>FOUND {filteredSkills.length} MATCHES FOR &ldquo;{searchQuery}&rdquo;</span>
-              <button onClick={() => setSearchQuery("")} className="underline hover:text-white">Clear</button>
+              <LiquidGlassButton
+                onClick={() => setSearchQuery("")}
+                variant="crystal"
+                size="sm"
+                className="!py-0.5 !px-2.5 !text-[10px]"
+              >
+                Clear
+              </LiquidGlassButton>
             </div>
             <div className="flex flex-wrap gap-2">
               {filteredSkills.map((s, idx) => (
@@ -373,12 +388,15 @@ export default function Skills() {
                 className="border border-white/20 rounded-2xl p-6 sm:p-8 text-white relative"
                 options={{ radius: 16, scale: -95, chroma: 5, border: 0.05, mapBlur: 10, blur: 0, fallbackBlur: 0 }}
               >
-                <button
+                <LiquidGlassButton
                   onClick={() => setSelectedCard(null)}
-                  className="absolute top-4 right-4 p-2 rounded-full bg-white/5 hover:bg-white/10 text-white/60 hover:text-white transition-colors"
+                  variant="crystal"
+                  size="sm"
+                  className="absolute top-4 right-4 !p-2 !rounded-full text-white/70 hover:text-white"
+                  aria-label="Close specification"
                 >
                   <X className="w-4 h-4" />
-                </button>
+                </LiquidGlassButton>
 
                 <div className="flex flex-col md:flex-row md:items-start justify-between gap-6 mb-6">
                   <div>

@@ -12,6 +12,7 @@ import {
   Sparkles,
   ArrowUpRight,
 } from "lucide-react";
+import LiquidGlassButton from "@/components/LiquidGlassButton";
 
 interface CredentialCardProps {
   cred: (typeof profileData.credentials)[0];
@@ -120,15 +121,17 @@ function CredentialCard({
           {/* ─── 6. BOTTOM-RIGHT: ACTION BUTTON (in place of toggle switch) ─── */}
           <div className="absolute right-5 sm:right-7 bottom-4 sm:bottom-5 z-20 flex items-center">
             {cred.link ? (
-              <a
+              <LiquidGlassButton
                 href={cred.link}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-1.5 sm:gap-2 px-3.5 sm:px-4 py-1.5 sm:py-2 rounded-full bg-[#7AD31E] hover:bg-[#8EF028] text-black font-sans text-xs font-bold transition-all duration-200 shadow-[0_0_15px_rgba(122,211,30,0.35)] hover:shadow-[0_0_22px_rgba(122,211,30,0.6)] hover:scale-105 active:scale-95 cursor-pointer"
+                variant="lime"
+                size="sm"
+                className="font-bold text-xs"
               >
                 <span>Verify Badge</span>
                 <ArrowUpRight className="w-3.5 h-3.5 stroke-[2.5]" />
-              </a>
+              </LiquidGlassButton>
             ) : (
               <span className="inline-flex items-center gap-1.5 px-3 sm:px-3.5 py-1.5 rounded-full bg-white/10 border border-white/15 text-white/70 font-mono text-[11px] font-medium">
                 <CheckCircle className="w-3.5 h-3.5 text-[#7AD31E]" />

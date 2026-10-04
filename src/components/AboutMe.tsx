@@ -2,9 +2,10 @@
 
 import React, { useRef } from "react";
 import Image from "next/image";
-import { motion } from "framer-motion";
+import { motion, useScroll, useTransform, useSpring } from "framer-motion";
 import { Mail, ChevronDown, Sparkles } from "lucide-react";
 import { useLiquidGlass } from "@/hooks/useLiquidGlass";
+import { ParallaxOrb } from "@/components/Parallax";
 
 export default function AboutMe() {
   const introGlassRef = useRef<HTMLDivElement>(null);
@@ -56,10 +57,30 @@ export default function AboutMe() {
     fallbackBlur: 0,
   });
 
+  const sectionRef = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start end", "end start"],
+  });
+
+  const smoothScroll = useSpring(scrollYProgress, {
+    stiffness: 110,
+    damping: 24,
+    restDelta: 0.001,
+  });
+
+  const leftPosterY = useTransform(smoothScroll, [0, 1], [30, -30]);
+  const rightIntroY = useTransform(smoothScroll, [0, 1], [-20, 20]);
+  const rightTouchY = useTransform(smoothScroll, [0, 1], [35, -20]);
+
   return (
-    <section id="about" className="w-full px-2 sm:px-4 md:px-5 py-3 sm:py-4 scroll-mt-20 select-none text-left">
+    <section id="about" ref={sectionRef} className="w-full px-2 sm:px-4 md:px-5 py-3 sm:py-4 scroll-mt-20 select-none text-left relative overflow-hidden">
       <div className="editorial-frame w-full p-6 sm:p-10 md:p-12 relative overflow-hidden">
         
+        {/* Parallax Floating Ambient Depth Orbs */}
+        <ParallaxOrb color="#00E5FF" speed={0.35} size={340} top="20%" left="-6%" opacity={0.1} />
+        <ParallaxOrb color="#FF5E00" speed={-0.3} size={300} top="65%" right="-5%" opacity={0.08} />
+
         {/* Frame Top Header */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-white/10 pb-6 mb-8 font-mono text-xs text-white/50">
           <div className="flex items-center gap-2">
@@ -87,8 +108,9 @@ export default function AboutMe() {
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
+            viewport={{ once: false, amount: 0.15 }}
             transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+            style={{ y: leftPosterY }}
             className="lg:col-span-5 rounded-[2rem] border border-white/15 bg-gradient-to-b from-[#181818] via-[#111111] to-[#080808] p-6 sm:p-8 flex flex-col justify-between relative overflow-hidden shadow-[0_25px_60px_-15px_rgba(0,0,0,0.8)] min-h-[580px] lg:min-h-[660px] group"
           >
             {/* Top Text Header */}
@@ -139,8 +161,9 @@ export default function AboutMe() {
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
+              viewport={{ once: false, amount: 0.15 }}
               transition={{ duration: 0.7, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+              style={{ y: rightIntroY }}
               className="space-y-3.5"
             >
               {/* Header with Chevron */}
@@ -265,8 +288,9 @@ export default function AboutMe() {
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
+              viewport={{ once: false, amount: 0.15 }}
               transition={{ duration: 0.7, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+              style={{ y: rightTouchY }}
               className="space-y-3.5"
             >
               {/* Header with Chevron */}

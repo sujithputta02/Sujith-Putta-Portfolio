@@ -7,10 +7,13 @@ import {
   AnimatePresence,
   useMotionValue,
   useSpring,
-  useTransform
+  useTransform,
+  useScroll
 } from "framer-motion";
 import { ArrowUpRight, Mail, ChevronDown } from "lucide-react";
 import { useLiquidGlass } from "@/hooks/useLiquidGlass";
+import { LiquidGlassCard } from "@/components/LiquidGlassCard";
+import LiquidGlassButton from "@/components/LiquidGlassButton";
 
 const nameWords = [
   {
@@ -51,7 +54,11 @@ const ROTATING_ROLES = [
   }
 ];
 
-export default function Hero() {
+interface HeroProps {
+  isEntered?: boolean;
+}
+
+export default function Hero({ isEntered = true }: HeroProps) {
   const [hoveredIdx, setHoveredIdx] = useState<number | null>(null);
   const [pulseCount, setPulseCount] = useState(0);
   const [isImageHovered, setIsImageHovered] = useState(false);
@@ -78,6 +85,26 @@ export default function Hero() {
   useEffect(() => {
     setIsTouchDevice("ontouchstart" in window || navigator.maxTouchPoints > 0);
   }, []);
+
+  // Viewport Scroll Parallax
+  const heroRef = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: heroRef,
+    offset: ["start start", "end start"],
+  });
+
+  const smoothHeroScroll = useSpring(scrollYProgress, {
+    stiffness: 110,
+    damping: 24,
+    restDelta: 0.001,
+  });
+
+  // Staggered multi-plane parallax transforms
+  const gridParallaxY = useTransform(smoothHeroScroll, [0, 1], [0, 95]);
+  const textParallaxY = useTransform(smoothHeroScroll, [0, 1], [0, -135]);
+  const portraitParallaxY = useTransform(smoothHeroScroll, [0, 1], [0, -75]);
+  const bottomBarParallaxY = useTransform(smoothHeroScroll, [0, 1], [0, 50]);
+  const heroFade = useTransform(smoothHeroScroll, [0, 0.9], [1, 0.25]);
 
   // 3D tilt angles derived from cursor
   const rotateX = useTransform(springY, [-120, 120], [3.5, -3.5]);
@@ -110,22 +137,28 @@ export default function Hero() {
   return (
     <section
       id="hero"
-      className="relative w-full h-[100dvh] min-h-[560px] sm:min-h-[580px] md:min-h-[600px] flex flex-col justify-between bg-[#0A0A0A] px-4 sm:px-8 md:px-12 pt-24 sm:pt-28 md:pt-20 lg:pt-18 pb-5 sm:pb-6 select-none overflow-hidden"
+      ref={heroRef}
+      className="relative w-full h-[100dvh] min-h-[560px] sm:min-h-[580px] md:min-h-[600px] flex flex-col justify-between bg-[#0A0A0A] px-4 sm:px-8 md:px-12 pt-28 sm:pt-32 md:pt-32 lg:pt-32 pb-5 sm:pb-6 select-none overflow-hidden"
     >
       {/* ─────────────────────────────────────────────────────────────
           1. TECHNICAL ARCHITECTURAL GRID BACKGROUND (Exact match to reference)
          ───────────────────────────────────────────────────────────── */}
-      <div
+      <motion.div
+        style={{ y: gridParallaxY }}
         className="absolute inset-0 pointer-events-none"
-        style={{
-          backgroundImage: `
-            linear-gradient(to right, rgba(255, 255, 255, 0.08) 1px, transparent 1px),
-            linear-gradient(to bottom, rgba(255, 255, 255, 0.08) 1px, transparent 1px)
-          `,
-          backgroundSize: "48px 48px",
-        }}
         aria-hidden="true"
-      />
+      >
+        <div
+          className="w-full h-[120%]"
+          style={{
+            backgroundImage: `
+              linear-gradient(to right, rgba(255, 255, 255, 0.08) 1px, transparent 1px),
+              linear-gradient(to bottom, rgba(255, 255, 255, 0.08) 1px, transparent 1px)
+            `,
+            backgroundSize: "48px 48px",
+          }}
+        />
+      </motion.div>
 
       {/* Subtle Analog Radial Vignette */}
       <div
@@ -134,10 +167,15 @@ export default function Hero() {
       />
 
       {/* ─────────────────────────────────────────────────────────────
-          2. TOP BAR: MINIMAL SWISS BRUTALIST + ACID LIME ACCENT
+          2. TOP BAR: MINIMAL SWISS BRUTALIST + ACID LIME ACCENT + LIQUID GLASS HELLO
           Generous top spacing to completely clear floating navbar
          ───────────────────────────────────────────────────────────── */}
-      <div className="relative z-30 flex items-center justify-between font-mono text-[10px] sm:text-xs text-white/60 tracking-wider border-b border-white/10 pb-3">
+      <motion.div
+        initial={{ opacity: 0, y: -25 }}
+        animate={isEntered ? { opacity: 1, y: 0 } : { opacity: 0, y: -25 }}
+        transition={{ duration: 0.7, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
+        className="relative z-30 flex items-center justify-between font-mono text-[10px] sm:text-xs text-white/60 tracking-wider border-b border-white/10 pb-3"
+      >
         <div className="flex items-center gap-2 sm:gap-3">
           <span className="w-2 h-2 rounded-full bg-[#D4FF00] animate-pulse shrink-0" />
           <span className="uppercase font-bold text-white/90 tracking-widest text-[10px] sm:text-xs">
@@ -154,17 +192,19 @@ export default function Hero() {
           </div>
 
           {/* Electric Acid-Lime Accent Pill Button */}
-          <a
+          <LiquidGlassButton
             href="#contact"
-            className="group px-3.5 sm:px-5 py-1.5 sm:py-2 rounded-full bg-[#D4FF00] hover:bg-[#BFFF00] text-black font-mono font-black text-[10px] sm:text-xs uppercase tracking-wider transition-all duration-300 hover:scale-105 active:scale-95 shadow-[0_0_20px_rgba(212,255,0,0.35)] flex items-center gap-1.5 sm:gap-2 cursor-pointer shrink-0"
+            variant="lime"
+            size="sm"
+            className="font-black text-[10px] sm:text-xs tracking-wider"
           >
             <span>GET IN TOUCH</span>
-            <span className="w-4 h-4 sm:w-5 sm:h-5 rounded-full bg-black flex items-center justify-center text-[#D4FF00] shrink-0 group-hover:rotate-45 transition-transform duration-300">
+            <span className="w-4 h-4 sm:w-5 sm:h-5 rounded-full bg-black/85 flex items-center justify-center text-[#D4FF00] shrink-0 group-hover:rotate-45 transition-transform duration-300">
               <ArrowUpRight className="w-3 h-3 sm:w-3.5 sm:h-3.5 stroke-[2.5]" />
             </span>
-          </a>
+          </LiquidGlassButton>
         </div>
-      </div>
+      </motion.div>
 
       {/* ─────────────────────────────────────────────────────────────
           3. MONUMENTAL SLANTED BRUTALIST TYPOGRAPHY "SUJITH PUTTA"
@@ -181,6 +221,8 @@ export default function Hero() {
         style={{
           rotateX,
           rotateY,
+          y: textParallaxY,
+          opacity: heroFade,
           transformStyle: "preserve-3d",
           perspective: 1000,
         }}
@@ -207,6 +249,22 @@ export default function Hero() {
               return (
                 <motion.div
                   key={item.id}
+                  initial={{ opacity: 0, y: 70, scale: 0.75, rotateZ: -8 }}
+                  animate={
+                    isEntered
+                      ? {
+                          opacity: 1,
+                          y: pulseCount > 0 ? [0, -6, 0] : 0,
+                          scale: pulseCount > 0 ? [1, 1.04, 1] : 1,
+                          rotateZ: 0,
+                        }
+                      : { opacity: 0, y: 70, scale: 0.75, rotateZ: -8 }
+                  }
+                  transition={{
+                    duration: 0.75,
+                    delay: isEntered ? 0.15 + (wIdx * 6 + lIdx) * 0.04 : 0,
+                    ease: [0.16, 1, 0.3, 1],
+                  }}
                   onMouseEnter={() => setHoveredIdx(globalIdx)}
                   onMouseLeave={() => setHoveredIdx(null)}
                   onTouchStart={() => setHoveredIdx(globalIdx)}
@@ -219,15 +277,6 @@ export default function Hero() {
                     y: -4,
                     transition: { type: "spring", stiffness: 500, damping: 15 },
                   }}
-                  animate={
-                    pulseCount > 0
-                      ? {
-                        scale: [1, 1.04, 1],
-                        y: [0, -6, 0],
-                        transition: { duration: 0.4, delay: globalIdx * 0.02 },
-                      }
-                      : {}
-                  }
                   className="relative inline-block"
                 >
                   {/* SLANTED EDITORIAL BRUTALIST LETTER WITH SHARP SEPARATION CUT */}
@@ -257,18 +306,20 @@ export default function Hero() {
           - Larger, commanding presence with butter-smooth feather on desktop (md+)
          ───────────────────────────────────────────────────────────── */}
       <motion.div
-        style={{
-          x: imageX,
-          y: imageY,
-        }}
-        transition={{ type: "spring", stiffness: 180, damping: 24 }}
+        initial={{ opacity: 0, y: 100, scale: 0.94 }}
+        animate={isEntered ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.94 }}
+        transition={{ duration: 0.85, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
+        style={{ y: portraitParallaxY }}
         className="absolute bottom-0 left-1/2 -translate-x-1/2 z-20 pointer-events-auto hidden md:flex items-end justify-center select-none"
         onMouseEnter={() => setIsImageHovered(true)}
         onMouseLeave={() => setIsImageHovered(false)}
       >
-        <div
+        <motion.div
+          transition={{ type: "spring", stiffness: 180, damping: 24 }}
           className="relative flex items-end justify-center"
           style={{
+            x: imageX,
+            y: imageY,
             maskImage: "radial-gradient(ellipse 92% 76% at 50% 26%, #000 36%, rgba(0,0,0,0.85) 54%, rgba(0,0,0,0.2) 74%, transparent 92%)",
             WebkitMaskImage: "radial-gradient(ellipse 92% 76% at 50% 26%, #000 36%, rgba(0,0,0,0.85) 54%, rgba(0,0,0,0.2) 74%, transparent 92%)",
           }}
@@ -286,7 +337,7 @@ export default function Hero() {
                 : "grayscale contrast-110 brightness-95 scale-100"
             }`}
           />
-        </div>
+        </motion.div>
       </motion.div>
 
       {/* FULL-WIDTH SEAMLESS FLOOR GRADIENT: Blends bottom smoothly into grid floor across entire width */}
@@ -298,7 +349,13 @@ export default function Hero() {
       {/* ─────────────────────────────────────────────────────────────
           5. BOTTOM BAR: METADATA & DYNAMIC ROTATING ROLES
          ───────────────────────────────────────────────────────────── */}
-      <div className="relative z-30 w-full flex flex-col md:flex-row items-start md:items-end justify-between gap-3 sm:gap-4 pointer-events-none bg-gradient-to-t from-[#0A0A0A] via-[#0A0A0A]/85 to-transparent pt-4 sm:pt-0">
+      <motion.div
+        initial={{ opacity: 0, y: 40 }}
+        animate={isEntered ? { opacity: 1 } : { opacity: 0 }}
+        transition={{ duration: 0.8, delay: 0.55, ease: [0.16, 1, 0.3, 1] }}
+        style={{ y: bottomBarParallaxY }}
+        className="relative z-30 w-full flex flex-col md:flex-row items-start md:items-end justify-between gap-3 sm:gap-4 pointer-events-none bg-gradient-to-t from-[#0A0A0A] via-[#0A0A0A]/85 to-transparent pt-4 sm:pt-0"
+      >
 
         {/* Left Wing: Architectural Identity & Dynamic Rotating Roles */}
         <div className="text-left space-y-1 max-w-xs sm:max-w-sm md:max-w-md pointer-events-auto">
@@ -352,21 +409,25 @@ export default function Hero() {
         {/* Right Wing: Dual Action Buttons & Coordinates */}
         <div className="flex flex-col items-start md:items-end gap-2 shrink-0 pointer-events-auto w-full md:w-auto">
           <div className="flex items-center gap-2 sm:gap-3 w-full xs:w-auto">
-            <a
+            <LiquidGlassButton
               href="#showcase"
-              className="inline-flex items-center justify-center gap-1.5 px-4 sm:px-5 py-2 sm:py-2.5 rounded-full bg-white text-black hover:bg-white/90 font-sans text-[11px] sm:text-xs font-bold tracking-wide shadow-[0_0_25px_rgba(255,255,255,0.25)] transition-all hover:scale-105 active:scale-95 group flex-1 xs:flex-initial text-center"
+              variant="white"
+              size="md"
+              className="flex-1 xs:flex-initial font-sans font-bold"
             >
               <span>Explore Works</span>
               <ArrowUpRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-            </a>
+            </LiquidGlassButton>
 
-            <a
+            <LiquidGlassButton
               href="#contact"
-              className="inline-flex items-center justify-center gap-1.5 px-4 sm:px-5 py-2 sm:py-2.5 rounded-full text-white/90 hover:text-white font-sans text-[11px] sm:text-xs font-semibold tracking-wide border border-white/20 hover:border-white/40 transition-all hover:scale-105 active:scale-95 flex-1 xs:flex-initial text-center backdrop-blur-md"
+              variant="crystal"
+              size="md"
+              className="flex-1 xs:flex-initial font-sans font-semibold border-white/20"
             >
               <Mail className="w-3.5 h-3.5 text-[#D4FF00]" />
               <span>Contact</span>
-            </a>
+            </LiquidGlassButton>
           </div>
 
           <div className="hidden md:flex items-center gap-3 font-mono text-[10px] text-white/40">
@@ -376,7 +437,7 @@ export default function Hero() {
           </div>
         </div>
 
-      </div>
+      </motion.div>
     </section>
   );
 }
