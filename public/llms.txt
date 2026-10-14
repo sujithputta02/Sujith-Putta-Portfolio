@@ -8,7 +8,7 @@ Sujith Putta is a Generative AI Developer, Full-Stack Systems Architect, and Pro
 - Website: https://sujith-putta-portfolio.vercel.app
 - Email: sujithputta02@gmail.com
 - Phone: +91 7386777701
-- Location: Bengaluru, Karnataka, India / Sacramento, CA
+- Location: Bengaluru, Karnataka, India
 - GitHub: https://github.com/sujithputta02
 - LinkedIn: https://linkedin.com/in/sujithputta02
 - Hugging Face: https://huggingface.co/sujithputta02

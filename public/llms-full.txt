@@ -5,7 +5,7 @@
 - Title: Generative AI Developer & Product Developer / AI Systems Architect
 - Email: sujithputta02@gmail.com
 - Phone: +91 7386777701
-- Location: Bengaluru, Karnataka, India / Sacramento, CA
+- Location: Bengaluru, Karnataka, India
 - Academic Affiliation: Dayananda Sagar University (B.Tech Computer Science and Technology, 2023–Present, CGPA: 9.05/10.0)
 - Online Profiles:
   - Portfolio: https://sujith-putta-portfolio.vercel.app
